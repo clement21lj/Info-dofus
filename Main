@@ -1,0 +1,21 @@
+/////////////////////
+///PROGRAMME MAIN///
+///////////////////
+
+//Ce programme comporte seulement le "main()" qui initialise allegro et appelle le sous-programme "menu()"
+
+
+//-----------------------------------------------------------------------------------------------------------------//
+///Bibliothèques///
+#include <HEADER.h>
+
+
+///PROGRAMME MAIN///
+int main()
+{
+    allegro_init();			//macro d’initialisation
+
+    menu();     //Appel du menu
+
+    return 0;
+} END_OF_MAIN() ; 			//macro de fin
