@@ -8,7 +8,7 @@
 
 //-----------------------------------------------------------------------------------------------------------------//
 ///Bibliothèques///
-#include <HEADER.h>
+#include "header.h"
 
 
 //-----------------------------------------------------------------------------------------------------------------//
@@ -20,16 +20,16 @@ void initialisation_allegro()
     //mouse_b&1 : bouton gauche
     //mouse_b&2 : bouton droit
     show_mouse(screen);
-    
+
     install_keyboard(); //initialisation clavier
-    
+
     set_color_depth(desktop_color_depth());                      //Mode de couleur (avant mode graphique)
-    if((set_gfx_mode(GFX_AUTODETECT_WINDOWED,800,600,0,0))!=0)   //Fenêtre en 800-600, qu'on peut modifier avec la valeur la plus grande de nos ordis 
+    if((set_gfx_mode(GFX_AUTODETECT_WINDOWED,800,600,0,0))!=0)   //Fenêtre en 800-600, qu'on peut modifier avec la valeur la plus grande de nos ordis
     {
         allegro_message("Pb de mode graphique");
         allegro_exit();
         exit(EXIT_FAILURE);
-    }   
+    }
 }
 
 //-----------------------------------------------------------------------------------------------------------------//
