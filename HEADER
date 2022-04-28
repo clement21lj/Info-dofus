@@ -1,0 +1,51 @@
+////////////////////
+///BIBLIOTHEQUES///
+//////////////////
+#ifndef HEADER_H_INCLUDED
+#define HEADER_H_INCLUDED
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <allegro.h>
+
+
+
+
+/////////////////
+///STRUCTURES///
+///////////////
+typedef struct joueur       //PAS FINIE je(Clément) la finirai
+{
+    char nom_utilisateur [20];
+    int type_perso;     //Chaque type de personnage disponible correspond a un muméro qui lui est attribué (cf code sous-programme choix des personnages)
+    //int objet_magique;  //Chaque objet correspond à un numéro qui lui est attribué (cf code sous-programme objets magiques)
+    //int niv_perso;
+    int PV_perso;       //Points de Vie
+    int PA_perso;       //Points d'Attaque
+    int PM_perso;       //Points de Mouvement 
+}t_joueur
+
+
+
+
+/////////////////////////////////
+///PROTOTYPES SOUS-PROGRAMMES///
+///////////////////////////////
+
+//FONCTIONS INT
+
+
+
+//FONCTIONS VOID
+void menu();
+void initialisation_allegro();
+void nouvelle_partie();
+void sauvegarder_partie();
+void charger_partie();
+void regles_jeu();
+void noms_createurs();
+void quitter_jeu();
+
+
+#endif // HEADER_H_INCLUDED
