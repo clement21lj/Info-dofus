@@ -1,0 +1,38 @@
+///////////////////////////////////////////
+///PROGRAMME D'INITIALISATION ET DE FIN///
+/////////////////////////////////////////
+
+//Ce sous-programme comporte le sous-programme d'initialisation allegro, le sous-programme d'affichage des règles
+//le sous-programme d'affichage des noms des créateurs et le sous-programme pour quitter le jeu
+
+
+//-----------------------------------------------------------------------------------------------------------------//
+///Bibliothèques///
+#include <HEADER.h>
+
+
+//-----------------------------------------------------------------------------------------------------------------//
+
+///SOUS-PROGRAMME INITIALISATION ALLEGRO///
+void initialisation_allegro()
+{
+    install_mouse(); //initialisation souris
+    //mouse_b&1 : bouton gauche
+    //mouse_b&2 : bouton droit
+    show_mouse(screen);
+    
+    install_keyboard(); //initialisation clavier
+    
+    set_color_depth(desktop_color_depth());                      //Mode de couleur (avant mode graphique)
+    if((set_gfx_mode(GFX_AUTODETECT_WINDOWED,800,600,0,0))!=0)   //Fenêtre en 800-600, qu'on peut modifier avec la valeur la plus grande de nos ordis 
+    {
+        allegro_message("Pb de mode graphique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }   
+}
+
+//-----------------------------------------------------------------------------------------------------------------//
+
+//On fera les autres programmes plus tard
+//Je (Clément)ferai le programme pour quitter, j'ai déjà un truc en tête que j'ai commencé à faire
