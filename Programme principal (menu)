@@ -14,6 +14,10 @@
 ///SOUS-PROGRAMME MENU///
 void menu()
 {
+    //Appel sous-programme d'initialisation allegro
+    initialisation_allegro();
+    
+    
     ///ALLEGRO : affichage de l'interface de menu 
     //si possible les options arrivent petit à petit en fondu après que la base du menu soit apparu
     
@@ -71,4 +75,3 @@ void menu()
 }
 
 //-----------------------------------------------------------------------------------------------------------------//
-
