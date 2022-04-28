@@ -1,0 +1,74 @@
+/////////////////////////////////
+///PROGRAMME PRINCIPAL / MENU///
+///////////////////////////////
+
+//Ce sous-programme comporte le menu qui est appelé par le main (et le seul), et il appelle lui même les autres 
+//sous-programme nécessaires en fonctions des choix de l'utilisateur
+
+
+//-----------------------------------------------------------------------------------------------------------------//
+///Bibliothèques///
+#include <HEADER.h>
+
+
+///SOUS-PROGRAMME MENU///
+void menu()
+{
+    ///ALLEGRO : affichage de l'interface de menu 
+    //si possible les options arrivent petit à petit en fondu après que la base du menu soit apparu
+    
+    //Les options (à afficher avec Allegro): 
+    //  -Nouvelle partie
+    //  -Sauvegarder une partie
+    //  -Charger une partie
+    //  -Règles du jeu
+    //  -Noms des créateurs
+    //  -Quitter
+    
+    
+    ///ALLEGRO : if l'utilisateur clique sur "Nouvelle partie" 
+    //(faire avec les coordonnées du rectangle d'affichage de l'option)
+    if()
+    {
+        nouvelle_partie();
+    }
+    
+    
+    ///ALLEGRO : if l'utilisateur clique sur "Sauvegarder une partie" 
+    if()
+    {
+        sauvegarder_partie();
+    }
+    
+    
+    ///ALLEGRO : if l'utilisateur clique sur "Charger une partie" 
+    if()
+    {
+        charger_partie();
+    }
+    
+    
+    ///ALLEGRO : if l'utilisateur clique sur "Règles du jeu" 
+    if()
+    {
+        regles_jeu();
+    }
+    
+    
+    ///ALLEGRO : if l'utilisateur clique sur "Noms des créateurs" 
+    if()
+    {
+        noms_createurs();
+    }
+    
+    
+    ///ALLEGRO : if l'utilisateur clique sur "Quitter" 
+    if()
+    {
+        quitter_jeu();
+    }
+    
+}
+
+//-----------------------------------------------------------------------------------------------------------------//
+
