@@ -14,63 +14,68 @@
 ///SOUS-PROGRAMME MENU///
 void menu()
 {
+    //Déclarations variables
+    int quitter=0;
+    
     //Appel sous-programme d'initialisation allegro
     initialisation_allegro();
     
+    do{
+        ///ALLEGRO : affichage de l'interface de menu 
+        //si possible les options arrivent petit à petit en fondu après que la base du menu soit apparu
+        
+        //Les options (à afficher avec Allegro): 
+        //  -Nouvelle partie
+        //  -Sauvegarder une partie
+        //  -Charger une partie
+        //  -Règles du jeu
+        //  -Noms des créateurs
+        //  -Quitter
+        
+        
+        ///ALLEGRO : if l'utilisateur clique sur "Nouvelle partie" 
+        //(faire avec les coordonnées du rectangle d'affichage de l'option)
+        if()
+        {
+            nouvelle_partie();
+        }
+        
+        
+        ///ALLEGRO : if l'utilisateur clique sur "Sauvegarder une partie" 
+        if()
+        {
+            sauvegarder_partie();
+        }
+        
+        
+        ///ALLEGRO : if l'utilisateur clique sur "Charger une partie" 
+        if()
+        {
+            charger_partie();
+        }
+        
+        
+        ///ALLEGRO : if l'utilisateur clique sur "Règles du jeu" 
+        if()
+        {
+            regles_jeu();
+        }
+        
+        
+        ///ALLEGRO : if l'utilisateur clique sur "Noms des créateurs" 
+        if()
+        {
+            noms_createurs();
+        }
+        
+        
+        ///ALLEGRO : if l'utilisateur clique sur "Quitter" 
+        if()
+        {
+            quitter_jeu();
+        }
     
-    ///ALLEGRO : affichage de l'interface de menu 
-    //si possible les options arrivent petit à petit en fondu après que la base du menu soit apparu
-    
-    //Les options (à afficher avec Allegro): 
-    //  -Nouvelle partie
-    //  -Sauvegarder une partie
-    //  -Charger une partie
-    //  -Règles du jeu
-    //  -Noms des créateurs
-    //  -Quitter
-    
-    
-    ///ALLEGRO : if l'utilisateur clique sur "Nouvelle partie" 
-    //(faire avec les coordonnées du rectangle d'affichage de l'option)
-    if()
-    {
-        nouvelle_partie();
-    }
-    
-    
-    ///ALLEGRO : if l'utilisateur clique sur "Sauvegarder une partie" 
-    if()
-    {
-        sauvegarder_partie();
-    }
-    
-    
-    ///ALLEGRO : if l'utilisateur clique sur "Charger une partie" 
-    if()
-    {
-        charger_partie();
-    }
-    
-    
-    ///ALLEGRO : if l'utilisateur clique sur "Règles du jeu" 
-    if()
-    {
-        regles_jeu();
-    }
-    
-    
-    ///ALLEGRO : if l'utilisateur clique sur "Noms des créateurs" 
-    if()
-    {
-        noms_createurs();
-    }
-    
-    
-    ///ALLEGRO : if l'utilisateur clique sur "Quitter" 
-    if()
-    {
-        quitter_jeu();
-    }
+    }while(quitter!=1)
     
 }
 
