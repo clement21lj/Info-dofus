@@ -1,0 +1,50 @@
+#include "header.h"
+
+int main()
+{
+    initialisation();
+
+    //création du buffer
+    BITMAP *buffer;
+    buffer = create_bitmap(SCREEN_W, SCREEN_H); // création du double buffer.
+    if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pb creation buffer...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    clear_bitmap(buffer);
+
+    BITMAP *image; // initialisation de buffer.
+
+    image=load_bitmap("MAP JEU FINAL.bmp",NULL); // décalaration et initialisation de l'image.
+
+    if (!image) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pas pu trouver barrejoueur.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    while(!key[KEY_ESC])
+    {
+        clear_bitmap(buffer);
+
+        blit(image,buffer,0,0, (SCREEN_W-image->w)/2, (SCREEN_H-image->h)/2, SCREEN_W, SCREEN_H); // met l'image sur le buffer
+
+        rectfill(buffer, 992, 0, 1000, 650, makecol(0,0,0)); // ligne verticale droite.
+        rectfill(buffer, 0, 0, 8, 650, makecol(0,0,0)); // ligne verticale gauche.
+        rectfill(buffer, 0, 0, 1000, 8, makecol(0,0,0)); // ligne horizontale en haut.
+        rectfill(buffer, 0, 650, 1000, 642, makecol(0,0,0)); // ligne horizontale en bas.
+
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sorts
+        rectfill(buffer, 8, 8, 190, 220, makecol(64,157,83)); // emplacement caracteristiques.
+        rectfill(buffer, 900, 190, 990, 8, makecol(64,157,83)); // emplacement ordre des joueurs 
+
+
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    }
+    allegro_exit();
+    return 0;
+}
+END_OF_MAIN();
