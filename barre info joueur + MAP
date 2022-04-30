@@ -1,4 +1,24 @@
-#include "header.h"
+#include <stdlib>
+#include <stdio>
+
+
+void initialisation()
+{
+allegro_init();
+
+    install_keyboard();
+    install_mouse();
+
+    set_color_depth(desktop_color_depth());
+    if((set_gfx_mode(GFX_AUTODETECT_WINDOWED,1000,650,0,0))!=0)
+    {
+        allegro_message("Probleme de mode graphique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    show_mouse(screen);
+}
+
 
 int main()
 {
