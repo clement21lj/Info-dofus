@@ -20,6 +20,8 @@ allegro_init();
 }
 
 
+#include "header.h"
+
 int main()
 {
     initialisation();
@@ -59,8 +61,25 @@ int main()
 
         rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sorts
         rectfill(buffer, 8, 8, 190, 220, makecol(64,157,83)); // emplacement caracteristiques.
-        rectfill(buffer, 900, 190, 990, 8, makecol(64,157,83)); // emplacement ordre des joueurs 
+        rectfill(buffer, 900, 188, 990, 8, makecol(64,157,83)); // emplacement ordre des joueurs
 
+        rectfill(buffer, 900, 8, 990, 47, makecol(0,0,0)); // joueur 1
+        rectfill(buffer, 900, 47, 990, 94, makecol(255,0,0)); // joueur 2
+        rectfill(buffer, 900, 94, 990,141, makecol(0,255,0)); // joueur 3
+        rectfill(buffer, 900, 141, 990, 188, makecol(0,0,255)); // joueur 4
+
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement PV.
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement PA.
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement PM.
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement corps à corps.
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sort 1.
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sort 2.
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sort 3.
+        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sort 4.
+        
+        
+        
+        
 
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     }
