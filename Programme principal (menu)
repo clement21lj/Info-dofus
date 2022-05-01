@@ -14,69 +14,187 @@
 ///SOUS-PROGRAMME MENU///
 void menu()
 {
+    ///AFFICHAGE ECRAN ACCUEUIL
+
     //Déclarations variables
     int quitter=0;
 
-    //Appel sous-programme d'initialisation allegro
+     //initialisation allegro mis dans un sous-programme
     initialisation_allegro();
 
+     // BITMAP servant de buffer d'affichage (double buffer)
+    BITMAP *buffer;
+
+     // initialisation d'entree.
+    BITMAP *imentrer;
+
+    // initialisation de l'écran du menu
+    BITMAP *menu;
+
+     //téléchargement des polices
+    FONT *police = NULL; /// Initialisation Polices
+    police = load_font("police.pcx",NULL,NULL);
+    if(!police)
+        allegro_message("Erreur chargement police");
+    //telechargement musique
+    MIDI *music;
+    music = load_midi("musique.mid");
+    if (!music)
+        allegro_message("Erreur chargement de musique!");
+
+    // CREATION DU BUFFER D'AFFICHAGE à la taille de l'écran
+    buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pb creation buffer...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    clear_bitmap(buffer);
+
+    // création du double buffer.
+    imentrer = create_bitmap(SCREEN_W, SCREEN_H);
+
+    // décalaration et initialisation de l'image.
+    imentrer=load_bitmap("entrer.bmp",NULL);
+
+    // on verifie que l'image a bien été chargée au cas où.
+    if (!imentrer)
+    {
+        allegro_message("pas pu entrer.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+
+
     do{
-        ///ALLEGRO : affichage de l'interface de menu
-        //si possible les options arrivent petit à petit en fondu après que la base du menu soit apparu
+        clear_bitmap(buffer);
+        blit(imentrer, buffer, 0, 0,(SCREEN_W-imentrer->w)/2, (SCREEN_H-imentrer->h)/2, imentrer->w, imentrer->h);
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-        //Les options (à afficher avec Allegro):
-        //  -Nouvelle partie
-        //  -Sauvegarder une partie
-        //  -Charger une partie
-        //  -Règles du jeu
-        //  -Noms des créateurs
-        //  -Quitter
+        // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
+        textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
 
-
-        ///ALLEGRO : if l'utilisateur clique sur "Nouvelle partie"
-        //(faire avec les coordonnées du rectangle d'affichage de l'option)
-        if()
+        //affichage entrer
+        textout_ex(imentrer, police, "ENTRER",SCREEN_W-555, SCREEN_H-130, makecol(191, 142, 12), -1);
+        if (mouse_x>=440 && mouse_x <=540 && mouse_y >= 460 && mouse_y <= 520)
         {
-            nouvelle_partie();
-        }
+            textout_ex(imentrer, police, "ENTRER",SCREEN_W-555, SCREEN_H-130, makecol(0, 147, 0), -1);
 
 
-        ///ALLEGRO : if l'utilisateur clique sur "Sauvegarder une partie"
-        if()
-        {
-            sauvegarder_partie();
-        }
 
 
-        ///ALLEGRO : if l'utilisateur clique sur "Charger une partie"
-        if()
-        {
-            charger_partie();
-        }
+            ///AFFICHAGE MENU
+
+            if (mouse_b & 1)
+            {
+                destroy_bitmap(imentrer);
+                clear_bitmap(buffer);
+                   // décalaration et initialisation de l'image.
+                menu=load_bitmap("menu.bmp",NULL);
+                 // on verifie que l'image a bien été chargée au cas où.
+                if (!menu)
+                {
+                    allegro_message("pas pu entrer.bmp");
+                    allegro_exit();
+                    exit(EXIT_FAILURE);
+                }
+                blit(menu, buffer, 0, 0,(SCREEN_W-imentrer->w)/2, (SCREEN_H-imentrer->h)/2, imentrer->w, imentrer->h);
+                blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 
-        ///ALLEGRO : if l'utilisateur clique sur "Règles du jeu"
-        if()
-        {
-            regles_jeu();
-        }
 
 
-        ///ALLEGRO : if l'utilisateur clique sur "Noms des créateurs"
-        if()
-        {
-            noms_createurs();
-        }
+                ///NOUVELLE PARTIE
+
+                textout_ex(menu, police, "NOUVELLE",435, 325, makecol(191, 142, 12), -1);
+                textout_ex(menu, police, "PARTIE",452, 355, makecol(191, 142, 12), -1);
+                if (mouse_x>=369 && mouse_x <=279 && mouse_y >= 629 && mouse_y <= 406){
+                    textout_ex(menu, police, "NOUVELLE",435, 325, makecol(255, 255, 255), -1);
+                    textout_ex(menu, police, "PARTIE",452, 355, makecol(255, 255, 255), -1);
+                    if (mouse_b & 1){
+
+                            destroy_bitmap(menu);
+
+                            nouvelle_partie(buffer);
+                    }
+                }
 
 
-        ///ALLEGRO : if l'utilisateur clique sur "Quitter"
-        if()
-        {
-            quitter_jeu();
-        }
 
-    }while(quitter!=1);
 
+                ///SAUVEGARDE
+
+                textout_ex(menu, police, "Sauvegarder",85, 325, makecol(191, 142, 12), -1);
+                textout_ex(menu, police, "la partie",97, 355, makecol(191, 142, 12), -1);
+                if (mouse_x>=42 && mouse_x <=303 && mouse_y >= 282 && mouse_y <= 404){
+                    textout_ex(menu, police, "Sauvegarder",435, 325, makecol(255, 255, 255), -1);
+                    textout_ex(menu, police, "la partie",452, 355, makecol(255, 255, 255), -1);
+                    if (mouse_b & 1){
+
+                           //sauvegarder_partie();
+                }
+            }
+
+
+
+                ///CHARGER PARTIE
+
+                textout_ex(menu, police, "Charger partie",710, 325, makecol(191, 142, 12), -1);
+                textout_ex(menu, police, "en cours",758, 355, makecol(191, 142, 12), -1);
+                if (mouse_x>=695 && mouse_x <=277 && mouse_y >= 955 && mouse_y <= 405){
+                    textout_ex(menu, police, "Charger partie",435, 325, makecol(255, 255, 255), -1);
+                    textout_ex(menu, police, "en cours",452, 355, makecol(255, 255, 255), -1);
+                    if (mouse_b & 1){
+
+                            //charger_partie();
+                }
+            }
+
+
+
+                ///REGLES DU JEU
+
+                textout_ex(menu, police, "AIDE",307, 498, makecol(191, 142, 12), -1);
+                if (mouse_x>=260 && mouse_x <=470 && mouse_y >= 420 && mouse_y <= 545){
+                    textout_ex(menu, police, "AIDE",435, 325, makecol(255, 255, 255), -1);
+                    if (mouse_b & 1){
+
+                            //regles_jeu();
+                }
+            }
+
+
+
+                ///CREATEURS
+
+                textout_ex(menu, police, "Createurs",425, 138, makecol(191, 142, 12), -1);
+                if (mouse_x>=415 && mouse_x <=110 && mouse_y >= 585 && mouse_y <= 190){
+                    textout_ex(menu, police, "Createurs",435, 325, makecol(255, 255, 255), -1);
+                    if (mouse_b & 1){
+
+                            //noms_createurs();
+                }
+            }
+
+
+
+            ///QUITTER
+
+                textout_ex(menu, police, "QUITTER",605, 498, makecol(191, 142, 12), -1);
+                if (mouse_x>=575 && mouse_x <=470 && mouse_y >= 740 && mouse_y <= 545){
+                    textout_ex(menu, police, "QUITTER",435, 325, makecol(255, 255, 255), -1);
+                    if (mouse_b & 1){
+
+                            //quitter_jeu();
+                }
+            }
+         }
+     }
+    } while(quitter!=1);
+    rest(10);
+    allegro_exit();
 }
 
 //-----------------------------------------------------------------------------------------------------------------//
