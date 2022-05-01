@@ -1,0 +1,23 @@
+#include <header.h>
+
+void nouvelle_partie(buffer)
+{
+    clear_bitmap(buffer);
+
+     // initialisation d'image selection joueur.
+    BITMAP *imjoueur;
+    imjoueur = create_bitmap(SCREEN_W, SCREEN_H);
+    // décalaration et initialisation de l'image.
+    imjoueur=load_bitmap("imjoueur.bmp",NULL);
+
+    // on verifie que l'image a bien été chargée au cas où.
+    if (!imjoueur)
+    {
+        allegro_message("pas pu ouvrir imjoueur.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    blit(imjoueur, buffer, 0, 0,(SCREEN_W-imjoueur->w)/2, (SCREEN_H-imjoueur->h)/2, imjoueur->w, imjoueur->h);
+    blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+}
