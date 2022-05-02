@@ -17,7 +17,7 @@ void menu()
     ///AFFICHAGE ECRAN ACCUEUIL
 
     //Déclarations variables
-    int quitter=0;
+    int* quitter=0;
 
      //initialisation allegro mis dans un sous-programme
     initialisation_allegro();
@@ -187,7 +187,7 @@ void menu()
                     textout_ex(menu, police, "QUITTER",435, 325, makecol(255, 255, 255), -1);
                     if (mouse_b & 1){
 
-                            //quitter_jeu();
+                            quitter_jeu(quitter);
                 }
             }
          }
