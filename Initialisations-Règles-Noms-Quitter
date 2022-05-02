@@ -35,4 +35,21 @@ void initialisation_allegro()
 //-----------------------------------------------------------------------------------------------------------------//
 
 //On fera les autres programmes plus tard
-//Je (Clément)ferai le programme pour quitter, j'ai déjà un truc en tête que j'ai commencé à faire
+
+
+
+
+//-----------------------------------------------------------------------------------------------------------------//
+
+///SOUS-PROGRAMME POUR QUITTER LE JEU///
+void quitter_jeu(int* variable_quitter)
+{
+    //destroy_bitmap();     A FAIRE AVEC TOUTES LES BITMAP QU'ON AURA
+    
+    allegro_message("Vous avez quitté le jeu, merci d'avoir joué !");
+    
+    variable_quitter=1;
+    allegro_exit();
+}
+
+//-----------------------------------------------------------------------------------------------------------------//
