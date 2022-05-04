@@ -55,11 +55,11 @@ int main()
         rectfill(buffer, 0, 0, 8, 650, makecol(0,0,0)); // ligne verticale gauche.
         rectfill(buffer, 0, 0, 1000, 8, makecol(0,0,0)); // ligne horizontale en haut.
         rectfill(buffer, 0, 650, 1000, 642, makecol(0,0,0)); // ligne horizontale en bas.
-        /*
-        rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sorts
+
+        //rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sorts
         rectfill(buffer, 8, 8, 190, 220, makecol(64,157,83)); // emplacement caracteristiques.
-        rectfill(buffer, 900, 188, 990, 8, makecol(64,157,83)); // emplacement ordre des joueurs
-        */
+        //rectfill(buffer, 900, 188, 990, 8, makecol(64,157,83)); // emplacement ordre des joueurs
+
         rectfill(buffer, 900, 8, 990, 47, makecol(0,0,0)); // joueur 1
         rectfill(buffer, 900, 47, 990, 94, makecol(255,0,0)); // joueur 2
         rectfill(buffer, 900, 94, 990,141, makecol(0,255,0)); // joueur 3
@@ -73,8 +73,6 @@ int main()
         rectfill(buffer, 517, 600, 588, 642, makecol(0,0,255)); // emplacement sort 2.
         rectfill(buffer, 588, 600, 659, 642, makecol(255,255,0)); // emplacement sort 3.
         rectfill(buffer, 659, 600, 730, 642, makecol(255,0,255)); // emplacement sort 4.
-
-
 
 
 
