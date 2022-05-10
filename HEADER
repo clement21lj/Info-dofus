@@ -15,17 +15,63 @@
 /////////////////
 ///STRUCTURES///
 ///////////////
+
+//Structure case
+typedef struct coord_case  //Puis tableau de structure case (60x40)
+{
+    int coord_x;        //Coordonnées x de la case
+    int coord_y;        //Coordonnées y de la case
+}t_coord_case;
+
+//Structure des caractéristiques de l'attaque d'un perso
+typedef struct carac_attaque_perso
+{
+    char attaque[20];
+    int attaque_pv;
+    int attaque_pa;
+}t_carac_attaque_perso;
+
+//Structures des attaques des différents perso
+typedef struct attaques_perso
+{
+    t_carac_attaque_perso attaque_1;
+    t_carac_attaque_perso attaque_2;
+    t_carac_attaque_perso attaque_3;
+    t_carac_attaque_perso attaque_4;
+    t_carac_attaque_perso attaque_5;
+}t_attaques_perso;
+
+//Structure PNJ (OPTION)    On verra ça à la fin mais j'ai (Clément) des bonnes idées pour ça
+typedef struct carac_PNJ
+{
+    int attaque_pv;
+    int attaque_pa;
+    int numero_case_aleatoire;
+}t_struct_PNJ;
+
+//Structure des types de personnages (4 types dispo)
+typedef struct type_perso
+{
+    t_attaques_perso 1_nain;
+    t_attaques_perso 2_sorcier;
+    t_attaques_perso 3_elfe;
+    t_attaques_perso 4_orque;
+}t_type_perso;
+
+//Structure joueur (toutes les données du joueur)
 typedef struct joueur       //PAS FINIE je(Clément) la finirai
 {
     char nom_utilisateur [20];
-    int type_perso;     //Chaque type de personnage disponible correspond a un muméro qui lui est attribué (cf code sous-programme choix des personnages)
-    //int objet_magique;  //Chaque objet correspond à un numéro qui lui est attribué (cf code sous-programme objets magiques)
-    //int niv_perso;
+    t_type_perso type_perso;     //Chaque type de personnage disponible
+    int numero_perso;          //Numero pour savoir quelle classe de personnage le joueur possède (1:nain, 2:sorcier, 3:elfe, 4:orque)
     int PV_perso;       //Points de Vie
     int PA_perso;       //Points d'Attaque
-    int PM_perso;       //Points de Mouvement 
-}t_joueur
-
+    int PM_perso;       //Points de Mouvement
+    int nb_tours_survecu;//Nombre de tours survécus par le joueur, permettant d'établir le classement à la fin
+    //int coord_x;        //Coordonnées x du personnage
+    //int coord_y;        //Coordonnées y du personnage
+    int numero_case;    //numero de la case du tableau de structures de cases (CREER UN TABLEAU DE STUCTURES DE CASES)
+}t_joueur;
 
 
 
