@@ -1,0 +1,82 @@
+#include "header.h"
+
+//a jouter en parametre : int tabPerso Dispo[NB_PERSO_DISPO]
+
+t_joueur *initialisationJoueur()
+{
+  char ident[100];
+  t_joueur *joueur = NULL;;
+  joueur = (t_joueur *)malloc(sizeof(t_joueur));
+  if(joueur == NULL)
+    printf("Erreur dans l'allocation dynamique d'un joueur\n");
+
+  ///donnes perso
+  joueur->PV_perso = PV_NOUVEAU_PERSO;
+  joueur->PA_perso = PA_NOUVEAU_PERSO;
+  joueur->PM_perso = PM_NOUVEAU_PERSO;
+
+  //joueur->numero_perso=choixPerso(tabPersoDispo, joueur); //appelle sous prog selection perso
+
+  joueur->nb_tours_survecu = 0;//aucun tour pour l'instant
+
+
+
+  //ss prog saisi de l'ident
+  //joueur->prenom = (char *) malloc(sizeof(char) * strlen(mot));
+  //strcpy(joueur->prenom, buffer);
+
+  return joueur;
+
+}
+
+
+void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
+{
+
+    BITMAP *buffer;
+
+    // CREATION DU BUFFER D'AFFICHAGE à la taille de l'écran
+    buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pb creation buffer...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    clear_bitmap(buffer);
+
+
+    int nbjoueurs = 0;
+
+    //int tabPersoDispo[NB_PERSO_DISPO] = {NAIN, ELFE, ORQUE, SORCIER};
+
+
+  ///affichage choix nb joueurs
+    nbjoueurs = affichage_nouvelle_partie(buffer);
+
+    jeuDofus->nbJoueurs = nbjoueurs;
+    jeuDofus->tabJoueur = (t_joueur **)malloc(sizeof(t_joueur*)*nbjoueurs);
+    if(jeuDofus->tabJoueur == NULL)
+    printf("Erreur dans l'allocation dynamique du tableau de joueur\n");
+    for(int i = 0; i < nbjoueurs; i++) {
+    jeuDofus->tabJoueur[i] = initialisationJoueur(); //envoyer tabPersoDispo en parametre
+  }
+
+
+}
+
+
+
+void initialisationNouvellePartie(t_jeuDofus *jeuDofus)
+{
+  //initialisationMap();
+  initialisationDesJoueurs(jeuDofus);
+}
+
+void nouvellePartie(t_jeuDofus *jeuDofus)
+{
+  initialisationNouvellePartie(jeuDofus);
+
+  //boucleDeJeu(jeuDofus);
+}
+
