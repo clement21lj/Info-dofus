@@ -1,0 +1,160 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <allegro.h>
+
+
+void initialisation_allegro()
+{
+    allegro_init();
+
+    install_keyboard();
+    install_mouse();
+
+    set_color_depth(desktop_color_depth());
+    if((set_gfx_mode(GFX_AUTODETECT_WINDOWED,1000,600,0,0))!=0)
+    {
+        allegro_message("Probleme de mode graphique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    show_mouse(screen); // pour voir le pointeur de la souris
+}
+
+
+int main()
+{
+    initialisation_allegro();
+
+    int terrain[40][60]; // lignes puis colonnes
+    int i,j;
+
+    //ouverture ficher texte pour le déplacement.
+    FILE* fichier = NULL;
+    fichier = fopen("fichier texte cases map naya.txt", "r"); // on met le ficher en lecture seule (pour eviter de faire une erreur).
+    if (fichier == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("fichier non trouvé...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    //création du buffer
+    BITMAP *buffer;
+    buffer = create_bitmap(SCREEN_W, SCREEN_H); // création du double buffer.
+    if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pb creation buffer...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    clear_bitmap(buffer);
+
+    BITMAP *image; // initialisation de buffer.
+
+    image=load_bitmap("mapvf.bmp",NULL); // décalaration et initialisation de l'image.
+
+    if (!image) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pas pu trouver mapvf.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    for (i=0; i<40; i++)
+    {
+        for (j=0; j<60; j++)
+        {
+            terrain[i][j] = fgetc(fichier);
+        }
+    }
+    
+    
+    joueur.deplacment = 1; // 1 peut se deplacer et 0 ne peux pas se deplacer. corresponds aux points de mouvements.
+    do // debut d'un tour
+    {
+        if (deplacement == 1)
+        {
+            if (mouse_b)
+            {
+                 
+            }
+        }
+    }while () // fin d'un tour
+
+    
+
+
+    while(!key[KEY_ESC])
+    {
+        clear_bitmap(buffer);
+
+        blit(image,buffer,0,0, (SCREEN_W-image->w)/2, (SCREEN_H-image->h)/2, SCREEN_W, SCREEN_H); // met l'image sur le buffer
+
+        rectfill(buffer, 992, 0, 1000, 650, makecol(0,0,0)); // ligne verticale droite.
+        rectfill(buffer, 0, 0, 8, 650, makecol(0,0,0)); // ligne verticale gauche.
+        rectfill(buffer, 0, 0, 1000, 8, makecol(0,0,0)); // ligne horizontale en haut.
+        rectfill(buffer, 0, 650, 1000, 642, makecol(0,0,0)); // ligne horizontale en bas.
+
+        //rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sorts
+        rectfill(buffer, 8, 8, 190, 220, makecol(64,157,83)); // emplacement caracteristiques.
+        //rectfill(buffer, 900, 188, 990, 8, makecol(64,157,83)); // emplacement ordre des joueurs
+
+        rectfill(buffer, 900, 8, 990, 47, makecol(0,0,0)); // joueur 1
+        rectfill(buffer, 900, 47, 990, 94, makecol(255,0,0)); // joueur 2
+        rectfill(buffer, 900, 94, 990,141, makecol(0,255,0)); // joueur 3
+        rectfill(buffer, 900, 141, 990, 188, makecol(0,0,255)); // joueur 4
+
+        rectfill(buffer, 270, 600, 375, 614, makecol(255,0,0)); // emplacement PV.
+        rectfill(buffer, 270, 614, 375, 628, makecol(0,255,0)); // emplacement PA.
+        rectfill(buffer, 270, 628, 375, 642, makecol(0,0,255)); // emplacement PM.
+        rectfill(buffer, 375, 600, 447, 642, makecol(255,0,0)); // emplacement corps à corps.
+        rectfill(buffer, 447, 600, 517, 642, makecol(0,255,0)); // emplacement sort 1.
+        rectfill(buffer, 517, 600, 588, 642, makecol(0,0,255)); // emplacement sort 2.
+        rectfill(buffer, 588, 600, 659, 642, makecol(255,255,0)); // emplacement sort 3.
+        rectfill(buffer, 659, 600, 730, 642, makecol(255,0,255)); // emplacement sort 4.
+
+
+
+        /*while (mon_fichier != EOF)
+        {
+            compteur++;
+            if (compteur == 60)
+                posx++;
+            if (posx == 60)
+            {
+                posy++;
+                posx = 0;
+            }
+
+
+
+        }
+
+        if (mouse_x != posx)
+        {
+            while (posx!=mouse_x)
+            {
+                posx++;
+            }
+        }
+        if (mouse_y != posy)
+        {
+            while (posy != mouse_y)
+            {
+                posy++;
+            }
+        }
+        position = fgetc(fichier);
+        textprintf_ex(buffer,font,60,300,makecol(255,255,255),makecol(0,0,0),"%d",position);
+        */
+
+
+
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        rest (10);
+    }
+    fclose(fichier); // On ferme le fichier pour liberer la place.
+    allegro_exit();
+    return 0;
+}
+END_OF_MAIN();
