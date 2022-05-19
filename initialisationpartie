@@ -299,6 +299,7 @@ void choixPseudo(BITMAP* buffer, t_joueur* joueur)
 */
 
 
+
 void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
 {
     //char ident[100];
@@ -323,7 +324,7 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
         ///deuxieme :
         strcpy(joueur->attaques.attaque_1.attaque,"epee");
         joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=10;
+        joueur->attaques.attaque_1.attaque_pa=15;
         ///troisième:
         strcpy(joueur->attaques.attaque_1.attaque,"hache");
         joueur->attaques.attaque_1.attaque_pv=10;
@@ -339,8 +340,9 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
 
 
         joueur->numero_perso=NAIN;
+        strmp(joueur->nomperso,"nain");
         ///joueur->numero_case= ?????????
-    break;
+        break;
 
     case 2:
         ///premiere attaque :
@@ -354,22 +356,23 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
         ///troisième:
         strcpy(joueur->attaques.attaque_1.attaque,"poignard");
         joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=20;
+        joueur->attaques.attaque_1.attaque_pa=10;
         ///quatrième:
         strcpy(joueur->attaques.attaque_1.attaque,"barrage");
-        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
         ///cinquieme :
         strcpy(joueur->attaques.attaque_1.attaque,"dormor");
         joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=15;
+        joueur->attaques.attaque_1.attaque_pa=10;
 
 
         joueur->numero_perso=SORCIER;
+        strmp(joueur->nomperso,"sorcier");
         ///joueur->numero_case= ?????????
 
 
-break;
+        break;
     case 3:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"anneau");
@@ -378,10 +381,10 @@ break;
         ///deuxieme :
         strcpy(joueur->attaques.attaque_1.attaque,"arc");
         joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=10;
+        joueur->attaques.attaque_1.attaque_pa=20;
         ///troisième:
         strcpy(joueur->attaques.attaque_1.attaque,"epee");
-        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pv=5;
         joueur->attaques.attaque_1.attaque_pa=20;
         ///quatrième:
         strcpy(joueur->attaques.attaque_1.attaque,"epeeelfique");
@@ -389,13 +392,14 @@ break;
         joueur->attaques.attaque_1.attaque_pa=5;
         ///cinquieme :
         strcpy(joueur->attaques.attaque_1.attaque,"lame");
-        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=15;
 
 
         joueur->numero_perso=ELFE;
+        strmp(joueur->nomperso,"elfe");
         ///joueur->numero_case= ?????????
-    break;
+        break;
     case 4:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"coup");
@@ -403,7 +407,7 @@ break;
         joueur->attaques.attaque_1.attaque_pa=5;
         ///deuxieme :
         strcpy(joueur->attaques.attaque_1.attaque,"dague");
-        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pv=15;
         joueur->attaques.attaque_1.attaque_pa=10;
         ///troisième:
         strcpy(joueur->attaques.attaque_1.attaque,"epeearwen");
@@ -415,18 +419,18 @@ break;
         joueur->attaques.attaque_1.attaque_pa=5;
         ///cinquieme :
         strcpy(joueur->attaques.attaque_1.attaque,"lame");
-        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=15;
 
 
         joueur->numero_perso=ORQUE;
+        strmp(joueur->nomperso,"orque");
         ///joueur->numero_case= ?????????
 
         break;
     default:
-break;
+        break;
     }
-
 
 
 
