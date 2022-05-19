@@ -11,36 +11,38 @@
 #include "header.h"
 
 
-///SOUS-PROGRAMME MENU///
-void menu()
+void MenuPrincipal()
 {
-    ///AFFICHAGE ECRAN ACCUEUIL
+    t_jeuDofus* jeuDofus = NULL;
+    jeuDofus = (t_jeuDofus *)malloc(sizeof(t_jeuDofus));
+    if(jeuDofus==NULL)
+        printf("Erreur lors de l'initialisation de la structure de jeu \n");
+    ///AFFICHAGE ECRAN ACCUEIL
 
     //Déclarations variables
-    int* quitter=0;
+    int quitter=0;
 
-     //initialisation allegro mis dans un sous-programme
+    //initialisation allegro mis dans un sous-programme
     initialisation_allegro();
 
-     // BITMAP servant de buffer d'affichage (double buffer)
+    // BITMAP servant de buffer d'affichage (double buffer)
     BITMAP *buffer;
 
-     // initialisation d'entree.
+    // initialisation d'entree.
     BITMAP *imentrer;
 
     // initialisation de l'écran du menu
     BITMAP *menu;
 
-     //téléchargement des polices
+    //Image de séléction du nombre de joueur
+    BITMAP *imjoueur;
+
+    //téléchargement des polices
     FONT *police = NULL; /// Initialisation Polices
     police = load_font("police.pcx",NULL,NULL);
     if(!police)
         allegro_message("Erreur chargement police");
-    //telechargement musique
-    MIDI *music;
-    music = load_midi("musique.mid");
-    if (!music)
-        allegro_message("Erreur chargement de musique!");
+
 
     // CREATION DU BUFFER D'AFFICHAGE à la taille de l'écran
     buffer = create_bitmap(SCREEN_W, SCREEN_H);
@@ -52,149 +54,210 @@ void menu()
     }
     clear_bitmap(buffer);
 
-    // création du double buffer.
-    imentrer = create_bitmap(SCREEN_W, SCREEN_H);
 
-    // décalaration et initialisation de l'image.
+    /// décalaration et initialisation de l'image.
     imentrer=load_bitmap("entrer.bmp",NULL);
-
     // on verifie que l'image a bien été chargée au cas où.
-    if (!imentrer)
+    if(!imentrer)
     {
         allegro_message("pas pu entrer.bmp");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
 
+    imjoueur = create_bitmap(SCREEN_W, SCREEN_H);
+    imjoueur=load_bitmap("nbjoueur.bmp",NULL);
+    // on verifie que l'image a bien été chargée au cas où.
+    if (!imjoueur)
+    {
+        allegro_message("pas pu imjoueur.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
+    menu=load_bitmap("menu.bmp",NULL);
+    // on verifie que l'image a bien été chargée au cas où.
+    if(!menu)
+    {
+        allegro_message("pas pu entrer.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
-    do{
+    ///Boucle de jeu
+
+    do
+    {
         clear_bitmap(buffer);
-        blit(imentrer, buffer, 0, 0,(SCREEN_W-imentrer->w)/2, (SCREEN_H-imentrer->h)/2, imentrer->w, imentrer->h);
-        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
         // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
         textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
 
-        //affichage entrer
-        textout_ex(imentrer, police, "ENTRER",SCREEN_W-555, SCREEN_H-130, makecol(191, 142, 12), -1);
-        if (mouse_x>=440 && mouse_x <=540 && mouse_y >= 460 && mouse_y <= 520)
+        //Affichage image d'entrée sur buffer
+        blit(imentrer, buffer, 0, 0,(SCREEN_W-imentrer->w)/2, (SCREEN_H-imentrer->h)/2, imentrer->w, imentrer->h);
+        //affichage entrer sur buffer
+        textout_ex(buffer, police, "ENTRER",SCREEN_W-555, SCREEN_H-130, makecol(191, 142, 12), -1);
+        if(mouse_x>=413 && mouse_x <=578 && mouse_y >= 449 && mouse_y <= 512)      //Si on passe la souris sur la touche elle change de couleur
         {
-            textout_ex(imentrer, police, "ENTRER",SCREEN_W-555, SCREEN_H-130, makecol(0, 147, 0), -1);
+            textout_ex(buffer, police, "ENTRER",SCREEN_W-555, SCREEN_H-130, makecol(0, 147, 0), -1);
+        }
+        if(mouse_b & 1 && mouse_x>=413 && mouse_x <=578 && mouse_y >= 449 && mouse_y <= 512)
+        {
+            quitter=1;
+        }
+
+        //Affichage du buffer sur l'écran
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    }
+    while(quitter!=1);
+
+    quitter=0;
+
+    do
+    {
+        clear_bitmap(buffer);
+
+        /// Afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
+        textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
+
+        ///Affichage de l'image du menu sur le buffer
+        blit(menu, buffer, 0, 0,(SCREEN_W-imentrer->w)/2, (SCREEN_H-imentrer->h)/2, imentrer->w, imentrer->h);
 
 
 
 
-            ///AFFICHAGE MENU
+        ///NOUVELLE PARTIE
+        textout_ex(buffer, police, "NOUVELLE",435, 325, makecol(191, 142, 12), -1);
+        textout_ex(buffer, police, "PARTIE",452, 355, makecol(191, 142, 12), -1);
+        if(mouse_x>=362 && mouse_x <=634 && mouse_y >= 277 && mouse_y <= 412)          //Si on passe la souris sur la touche elle change de couleur
+        {
+            textout_ex(buffer, police, "NOUVELLE",435, 325, makecol(255, 255, 255), -1);
+            textout_ex(buffer, police, "PARTIE",452, 355, makecol(255, 255, 255), -1);
+        }
+        if(mouse_b & 1 && mouse_x>=362 && mouse_x <=634 && mouse_y >= 277 && mouse_y <= 412)        //Si on clique dessus, on appelle le sous-programme "nouvelle partie"
+        {
+            //do{
+            //Nouvelle partie
+            clear_bitmap(buffer);
+            nouvellePartie(jeuDofus);
+            //quitter=1;
+            //allegro_message("Vous etes dans nouvelle partie");
 
-            if (mouse_b & 1)
-            {
-                destroy_bitmap(imentrer);
-                clear_bitmap(buffer);
-                   // décalaration et initialisation de l'image.
-                menu=load_bitmap("menu.bmp",NULL);
-                 // on verifie que l'image a bien été chargée au cas où.
-                if (!menu)
-                {
-                    allegro_message("pas pu entrer.bmp");
-                    allegro_exit();
-                    exit(EXIT_FAILURE);
-                }
-                blit(menu, buffer, 0, 0,(SCREEN_W-imentrer->w)/2, (SCREEN_H-imentrer->h)/2, imentrer->w, imentrer->h);
-                blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
-
-
-
-                ///NOUVELLE PARTIE
-
-                textout_ex(menu, police, "NOUVELLE",435, 325, makecol(191, 142, 12), -1);
-                textout_ex(menu, police, "PARTIE",452, 355, makecol(191, 142, 12), -1);
-                if (mouse_x>=369 && mouse_x <=279 && mouse_y >= 629 && mouse_y <= 406){
-                    textout_ex(menu, police, "NOUVELLE",435, 325, makecol(255, 255, 255), -1);
-                    textout_ex(menu, police, "PARTIE",452, 355, makecol(255, 255, 255), -1);
-                    if (mouse_b & 1){
-
-                            destroy_bitmap(menu);
-
-                            nouvelle_partie(buffer);
-                    }
-                }
+            //}while(quitter!=1);
+            //quitter=0;
+        }
 
 
 
-
-                ///SAUVEGARDE
-
-                textout_ex(menu, police, "Sauvegarder",85, 325, makecol(191, 142, 12), -1);
-                textout_ex(menu, police, "la partie",97, 355, makecol(191, 142, 12), -1);
-                if (mouse_x>=42 && mouse_x <=303 && mouse_y >= 282 && mouse_y <= 404){
-                    textout_ex(menu, police, "Sauvegarder",435, 325, makecol(255, 255, 255), -1);
-                    textout_ex(menu, police, "la partie",452, 355, makecol(255, 255, 255), -1);
-                    if (mouse_b & 1){
-
-                           //sauvegarder_partie();
-                }
-            }
-
-
-
-                ///CHARGER PARTIE
-
-                textout_ex(menu, police, "Charger partie",710, 325, makecol(191, 142, 12), -1);
-                textout_ex(menu, police, "en cours",758, 355, makecol(191, 142, 12), -1);
-                if (mouse_x>=695 && mouse_x <=277 && mouse_y >= 955 && mouse_y <= 405){
-                    textout_ex(menu, police, "Charger partie",435, 325, makecol(255, 255, 255), -1);
-                    textout_ex(menu, police, "en cours",452, 355, makecol(255, 255, 255), -1);
-                    if (mouse_b & 1){
-
-                            //charger_partie();
-                }
-            }
+        ///SAUVEGARDE
+        textout_ex(buffer, police, "Sauvegarder",85, 325, makecol(191, 142, 12), -1);
+        textout_ex(buffer, police, "la partie",97, 355, makecol(191, 142, 12), -1);
+        if (mouse_x>=39 && mouse_x <=311 && mouse_y >= 276 && mouse_y <= 412)       //Si on passe la souris sur la touche elle change de couleur
+        {
+            textout_ex(buffer, police, "Sauvegarder",85, 325, makecol(255, 255, 255), -1);
+            textout_ex(buffer, police, "la partie",97, 355, makecol(255, 255, 255), -1);
+        }
+        if(mouse_b & 1 && mouse_x>=39 && mouse_x <=311 && mouse_y >= 276 && mouse_y <= 412)         //Si on clique dessus, on appelle le sous-programme "sauvegarde"
+        {
+            //do{
+            //Sauvegarde
+            allegro_message("Vous etes dans sauvegarde");
+            //quitter=1;
+            //}while(quitter!=1);
+            //quitter=0;
+        }
 
 
 
-                ///REGLES DU JEU
-
-                textout_ex(menu, police, "AIDE",307, 498, makecol(191, 142, 12), -1);
-                if (mouse_x>=260 && mouse_x <=470 && mouse_y >= 420 && mouse_y <= 545){
-                    textout_ex(menu, police, "AIDE",435, 325, makecol(255, 255, 255), -1);
-                    if (mouse_b & 1){
-
-                            //regles_jeu();
-                }
-            }
-
-
-
-                ///CREATEURS
-
-                textout_ex(menu, police, "Createurs",425, 138, makecol(191, 142, 12), -1);
-                if (mouse_x>=415 && mouse_x <=110 && mouse_y >= 585 && mouse_y <= 190){
-                    textout_ex(menu, police, "Createurs",435, 325, makecol(255, 255, 255), -1);
-                    if (mouse_b & 1){
-
-                            //noms_createurs();
-                }
-            }
+        ///CHARGER PARTIE
+        textout_ex(buffer, police, "Charger partie",710, 325, makecol(191, 142, 12), -1);
+        textout_ex(buffer, police, "en cours",758, 355, makecol(191, 142, 12), -1);
+        if (mouse_x>=689 && mouse_x <=963 && mouse_y >= 276 && mouse_y <= 412)              //Si on passe la souris sur la touche elle change de couleur
+        {
+            textout_ex(buffer, police, "Charger partie",710, 325, makecol(255, 255, 255), -1);
+            textout_ex(buffer, police, "en cours",758, 355, makecol(255, 255, 255), -1);
+        }
+        if(mouse_b & 1 && mouse_x>=689 && mouse_x <=963 && mouse_y >= 276 && mouse_y <= 412)        //Si on clique dessus, on appelle le sous-programme "charger partie"
+        {
+            //do{
+            //Charger partie
+            allegro_message("Vous etes dans chargement partie");
+            //quitter=1;
+            //}while(quitter!=1);
+            //quitter=0;
+        }
 
 
 
-            ///QUITTER
+        ///REGLES DU JEU
+        textout_ex(buffer, police, "AIDE",307, 498, makecol(191, 142, 12), -1);
+        if (mouse_x>=258 && mouse_x <=424 && mouse_y >= 469 && mouse_y <= 549)          //Si on passe la souris sur la touche elle change de couleur
+        {
+            textout_ex(buffer, police, "AIDE",307, 498, makecol(255, 255, 255), -1);
+        }
+        if(mouse_b & 1 && mouse_x>=258 && mouse_x <=424 && mouse_y >= 469 && mouse_y <= 549)        //Si on clique dessus, on appelle le sous-programme "Règles du jeu"
+        {
+            //do{
+            //Règles du jeu
+            allegro_message("Vous etes dans aide");
+            //quitter=1;
+            //}while(quitter!=1);
+            //quitter=0;
+        }
 
-                textout_ex(menu, police, "QUITTER",605, 498, makecol(191, 142, 12), -1);
-                if (mouse_x>=575 && mouse_x <=470 && mouse_y >= 740 && mouse_y <= 545){
-                    textout_ex(menu, police, "QUITTER",435, 325, makecol(255, 255, 255), -1);
-                    if (mouse_b & 1){
 
-                            quitter_jeu(quitter);
-                }
-            }
-         }
-     }
-    } while(quitter!=1);
-    rest(10);
-    allegro_exit();
+        ///CREATEURS
+        textout_ex(buffer, police, "Createurs",425, 138, makecol(191, 142, 12), -1);
+        if (mouse_x>=411 && mouse_x <=588 && mouse_y >= 108 && mouse_y <= 197)      //Si on passe la souris sur la touche elle change de couleur
+        {
+            textout_ex(buffer, police, "Createurs",425, 138, makecol(255, 255, 255), -1);
+        }
+        if(mouse_b & 1 && mouse_x>=411 && mouse_x <=588 && mouse_y >= 108 && mouse_y <= 197)        //Si on clique dessus, on appelle le sous-programme "Créateurs"
+        {
+            //do{
+            //Créateurs
+            allegro_message("Vous etes dans créateurs");
+            //quitter=1;
+            //}while(quitter!=1);
+            //quitter=0;
+        }
+
+
+
+        ///QUITTER
+        textout_ex(buffer, police, "QUITTER",605, 498, makecol(191, 142, 12), -1);
+        if (mouse_x>=574 && mouse_x <=742 && mouse_y >= 469 && mouse_y <= 549)      //Si on passe la souris sur la touche elle change de couleur
+        {
+            textout_ex(buffer, police, "QUITTER",605, 498, makecol(255, 255, 255), -1);
+        }
+        if(mouse_b & 1 && mouse_x>=574 && mouse_x <=742 && mouse_y >= 469 && mouse_y <= 549)        //Si on clique dessus, on appelle le sous-programme "Quitter"
+        {
+            //do{
+            //Quitter
+            allegro_message("Vous etes dans quitter");
+            //quitter=1;
+            //}while(quitter!=1);
+            //quitter=0;
+        }
+
+
+
+
+        ///Affichage du buffer sur l'écran
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+
+    }
+    while(quitter!=1);
+
+
+    destroy_bitmap(buffer);
+    destroy_bitmap(imentrer);
+    destroy_bitmap(menu);
+    destroy_bitmap(imjoueur);
+    //destroy_bitmap(police);
 }
+
 
 //-----------------------------------------------------------------------------------------------------------------//
