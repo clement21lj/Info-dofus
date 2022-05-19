@@ -186,7 +186,6 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur)
 
 }
 
-
 /*
 void choixPseudo(BITMAP* buffer, t_joueur* joueur)
 {
@@ -255,7 +254,7 @@ void choixPseudo(BITMAP* buffer, t_joueur* joueur)
       /*  do{
             gets(*joueur->prenom);
             fin=1;
-        }while(fin!=1); */
+        }while(fin!=1); 
 
         // afficher le pseudo en train d'être saisi
         //textout_ex(buffer, police, pseudo_tmp, ((SCREEN_W-690)/2)+10, 285, makecol(255, 255, 255), -1);
@@ -268,7 +267,7 @@ void choixPseudo(BITMAP* buffer, t_joueur* joueur)
             fin=1;
 
             // récupérer la touche avec readkey() : équivalent allegro du getch()
-     /*       touche=readkey();
+            touche=readkey();
 
             // a partir de l'info de touche on obtient le caractère en castant en char
             carac=(char)touche;
@@ -285,7 +284,7 @@ void choixPseudo(BITMAP* buffer, t_joueur* joueur)
             {
                 strcpy(pseudo_tmp, "");
             }
-*/
+
         }
 
         //Affichage du buffer sur l'écran
