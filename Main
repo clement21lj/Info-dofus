@@ -15,7 +15,11 @@ int main()
 {
     allegro_init();			//macro d’initialisation
 
-    menu();     //Appel du menu
+    MenuPrincipal();
+
+
+     //Sortie d'allegro
+    allegro_exit();
 
     return 0;
 } END_OF_MAIN() ; 			//macro de fin
