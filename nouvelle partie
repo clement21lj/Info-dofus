@@ -1,3 +1,6 @@
+///Bibliothèques///
+#include "header.h"
+
 int affichage_nouvelle_partie(BITMAP* buffer1)
 {
         //allegro_message("Je suis dans nouvelle partie");
