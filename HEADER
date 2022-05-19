@@ -10,7 +10,17 @@
 #include <allegro.h>
 
 
+///gestion des joueurs :
+#define  PV_NOUVEAU_PERSO 100
+#define  PA_NOUVEAU_PERSO 100
+#define  PM_NOUVEAU_PERSO 100
 
+#define NAIN        1
+#define SORCIER     2
+#define ELFE        3
+#define ORQUE       4
+
+#define nbperso  4
 
 /////////////////
 ///STRUCTURES///
