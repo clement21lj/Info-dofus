@@ -59,20 +59,28 @@ typedef struct type_perso
 }t_type_perso;
 
 //Structure joueur (toutes les données du joueur)
-typedef struct joueur       //PAS FINIE je(Clément) la finirai
+typedef struct joueur       //
 {
-    char nom_utilisateur [20];
-    t_type_perso type_perso;     //Chaque type de personnage disponible
+    char *prenom;
+    //t_type_perso *perso[nbperso];     //Chaque type de personnage disponible
+    t_attaques_perso attaques;
     int numero_perso;          //Numero pour savoir quelle classe de personnage le joueur possède (1:nain, 2:sorcier, 3:elfe, 4:orque)
     int PV_perso;       //Points de Vie
     int PA_perso;       //Points d'Attaque
     int PM_perso;       //Points de Mouvement
     int nb_tours_survecu;//Nombre de tours survécus par le joueur, permettant d'établir le classement à la fin
-    int coord_x;        //Coordonnées x du personnage
-    int coord_y;        //Coordonnées y du personnage
-    int deplacement;
-    //int numero_case;    //numero de la case du tableau de structures de cases (CREER UN TABLEAU DE STUCTURES DE CASES)
+    //int coord_x;        //Coordonnées x du personnage
+    //int coord_y;        //Coordonnées y du personnage
+    int numero_case;    //numero de la case du tableau de structures de cases (CREER UN TABLEAU DE STUCTURES DE CASES)
 }t_joueur;
+
+typedef struct jeuDofus {
+  //t_mapJeu mapJeu;
+  t_joueur *tabJoueur;
+  int nbJoueurs;
+} t_jeuDofus;
+
+
 
 
 
@@ -85,14 +93,20 @@ typedef struct joueur       //PAS FINIE je(Clément) la finirai
 
 
 //FONCTIONS VOID
-void menu();
+void MenuPrincipal();
 void initialisation_allegro();
-void nouvelle_partie();
+void nouvellePartie(t_jeuDofus *jeuDofus);
 void sauvegarder_partie();
 void charger_partie();
 void regles_jeu();
 void noms_createurs();
 void quitter_jeu();
+void InitialisationNouvellePartie();
+int affichage_nouvelle_partie(BITMAP* buffer1);
+void initialisationDesJoueurs(t_jeuDofus *jeuDofus);
+void initialisationJoueur(BITMAP* buffer, t_joueur* joueur);
+
+void choixPerso(BITMAP*buffer, t_joueur *joueur);
 
 
 #endif // HEADER_H_INCLUDED
