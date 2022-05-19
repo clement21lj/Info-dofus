@@ -2,32 +2,419 @@
 
 //a jouter en parametre : int tabPerso Dispo[NB_PERSO_DISPO]
 
-t_joueur *initialisationJoueur()
+void choixPerso(BITMAP*buffer, t_joueur *joueur)
 {
-  char ident[100];
-  t_joueur *joueur = NULL;;
-  joueur = (t_joueur *)malloc(sizeof(t_joueur));
-  if(joueur == NULL)
-    printf("Erreur dans l'allocation dynamique d'un joueur\n");
 
-  ///donnes perso
-  joueur->PV_perso = PV_NOUVEAU_PERSO;
-  joueur->PA_perso = PA_NOUVEAU_PERSO;
-  joueur->PM_perso = PM_NOUVEAU_PERSO;
+// BITMAP servant de buffer d'affichage (double buffer)
+    //BITMAP *buffer;
+    int quitter =0;
 
-  //joueur->numero_perso=choixPerso(tabPersoDispo, joueur); //appelle sous prog selection perso
+    printf("Bien entre ds le ss prgrm");
 
-  joueur->nb_tours_survecu = 0;//aucun tour pour l'instant
+    // initialisation d'entree.
+    BITMAP *imchoix;
+
+    BITMAP *imnain;
+    imnain=load_bitmap("imnain.bmp",NULL);
+
+    BITMAP *imorc;
+    imorc=load_bitmap("imorc.bmp",NULL);
+
+    BITMAP *imsorcier;
+    imsorcier=load_bitmap("imsorcier.bmp",NULL);
+
+    BITMAP *imelfe;
+    imelfe=load_bitmap("imelfe.bmp",NULL);
+
+    BITMAP*nain;
+    nain=load_bitmap("nain.bmp",NULL);
+    BITMAP*elfe;
+    elfe=load_bitmap("elfe.bmp",NULL);
+    BITMAP*hobbit;
+    hobbit=load_bitmap("hobbit.bmp",NULL);
+    BITMAP*sorcier;
+    sorcier=load_bitmap("sorcier.bmp",NULL);
 
 
 
-  //ss prog saisi de l'ident
-  //joueur->prenom = (char *) malloc(sizeof(char) * strlen(mot));
-  //strcpy(joueur->prenom, buffer);
+    //téléchargement des polices
+    FONT *police = NULL; /// Initialisation Polices
+    police = load_font("police.pcx",NULL,NULL);
+    if(!police)
+        allegro_message("Erreur chargement police");
 
-  return joueur;
+
+    // CREATION DU BUFFER D'AFFICHAGE à la taille de l'écran
+    /*buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pb creation buffer...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }*/
+    clear_bitmap(buffer);
+
+    // création du double buffer.
+    imchoix = create_bitmap(SCREEN_W, SCREEN_H);
+
+    // décalaration et initialisation de l'image.
+    imchoix=load_bitmap("choixjoueur.bmp",NULL);
+
+    // on verifie que l'image a bien été chargée au cas où.
+    if (!imchoix)
+    {
+        allegro_message("pas pu imjoueur.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    do
+    {
+
+        blit(imchoix, buffer, 0, 0,(SCREEN_W-imchoix->w)/2, (SCREEN_H-imchoix->h)/2, imchoix->w, imchoix->h);
+
+        // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
+        textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
+
+
+        textout_ex(buffer, police, "CHOISIS TON PERSONNAGE",270, 70, makecol(255,255,255), -1);
+
+        //faire une boucle tant que tout les joueurs n'ont pas selectionner leur personnage on continue
+        //une fois que tous les joueurs on selectionne leur perso on detemrine l'ordre des joueurs, on affiche cet ordre
+
+        ///NAIN
+        //masked_stretch_blit(imchoix,imnain, 0, 0, nain->w, nain->h, 40, 185, 200, 200);
+        draw_sprite(buffer,imnain,45,195);
+        textout_ex(buffer, police, "NAIN",90, 155, makecol(255, 255, 255), -1);
+        if (mouse_x>=65 && mouse_x <=235 && mouse_y >= 207 && mouse_y <= 365)
+        {
+            draw_sprite(buffer,nain,20,400);
+        }
+        rect(buffer,30,520,200,560,makecol(255,255,255));
+        textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(255,255,255), -1);
+        if (mouse_x>=30 && mouse_x <=200 && mouse_y >= 520 && mouse_y <= 560)
+        {
+            textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(0, 147, 0), -1);
+        }
+        if (mouse_b & 1 && mouse_x>=30 && mouse_x <=200 && mouse_y >= 520 && mouse_y <= 560)
+        {
+            joueur->numero_perso = 1; //ancien choix
+            quitter =1;
+        }
+
+
+
+
+        ///ORQUE
+        draw_sprite(buffer,imorc,275,190);
+        textout_ex(buffer, police, "ORQUE",330, 155, makecol(255, 255, 255), -1);
+        if (mouse_x>=310 && mouse_x <=445 && mouse_y >= 207 && mouse_y <= 365)
+        {
+            draw_sprite(buffer,hobbit,260,400);
+        }
+        rect(buffer,280,520,460,560,makecol(255,255,255));
+        textout_ex(buffer, police, "JE VALIDE",290, 530, makecol(255,255,255), -1);
+        if (mouse_x>=280 && mouse_x <=460 && mouse_y >= 520 && mouse_y <= 560)
+        {
+            textout_ex(buffer, police, "JE VALIDE",290, 530, makecol(0, 147, 0), -1);
+        }
+        if (mouse_b & 1 && mouse_x>=280 && mouse_x <=460 && mouse_y >= 520 && mouse_y <= 560)
+        {
+
+            joueur->numero_perso = 4; //ancien
+            quitter =1;
+        }
+
+
+
+        ///ELFE
+        draw_sprite(buffer,imelfe,500,185);
+        textout_ex(buffer, police, "ELFE",555, 155, makecol(255, 255, 255), -1);
+        if (mouse_x>=535 && mouse_x <=675 && mouse_y >= 207 && mouse_y <= 365)
+        {
+            draw_sprite(buffer,elfe,500,400);
+        }
+        rect(buffer,530,520,710,560,makecol(255,255,255));
+        textout_ex(buffer, police, "JE VALIDE",540, 530, makecol(255,255,255), -1);
+        if (mouse_x>=530 && mouse_x <=710 && mouse_y >= 520 && mouse_y <= 560)
+        {
+            textout_ex(buffer, police, "JE VALIDE",540, 530, makecol(0, 147, 0), -1);
+        }
+        if (mouse_b & 1 && mouse_x>=530 && mouse_x <=710 && mouse_y >= 520 && mouse_y <= 560)
+        {
+
+            joueur->numero_perso = 3;
+            quitter =1;
+        }
+
+
+
+
+        ///SORCIER
+        draw_sprite(buffer,imsorcier,730,195);
+        textout_ex(buffer, police, "SORCIER",780, 155, makecol(255, 255, 255), -1);
+        if (mouse_x>=755 && mouse_x <=906 && mouse_y >= 207 && mouse_y <= 365)
+        {
+            draw_sprite(buffer,sorcier,740,400);
+        }
+        rect(buffer,760,520,940,560,makecol(255,255,255));
+        textout_ex(buffer, police, "JE VALIDE",770, 530, makecol(255,255,255), -1);
+        if (mouse_x>=760 && mouse_x <=940 && mouse_y >= 520 && mouse_y <= 560)
+        {
+            textout_ex(buffer, police, "JE VALIDE",770, 530, makecol(0, 147, 0), -1);
+        }
+        if (mouse_b & 1 && mouse_x>=760 && mouse_x <=940 && mouse_y >= 520 && mouse_y <= 560)
+        {
+
+            joueur->numero_perso = 2;
+            quitter =1;
+        }
+
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    }
+    while(quitter!=1);
+
+    destroy_bitmap(imnain);
+    destroy_bitmap(imorc);
+    destroy_bitmap(imsorcier);
+    destroy_bitmap(imchoix);
+    destroy_bitmap(imelfe);
+    destroy_bitmap(nain);
+    destroy_bitmap(sorcier);
+    destroy_bitmap(elfe);
+    destroy_bitmap(hobbit);
 
 }
+
+void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
+{
+    //char ident[100];
+
+    ///donnes perso
+    joueur->PV_perso = PV_NOUVEAU_PERSO;
+    joueur->PA_perso = PA_NOUVEAU_PERSO;
+    joueur->PM_perso = PM_NOUVEAU_PERSO;
+    joueur->nb_tours_survecu=0;
+
+    //joueur->numero_perso=choixPerso(buffer,joueur); //appelle sous prog selection perso
+    choixPerso(buffer, joueur);
+    printf("%d", joueur->numero_perso);
+
+    switch(joueur->numero_perso)
+    {
+    case 1:
+        ///premiere attaque :
+        strcpy(joueur->attaques.attaque_1.attaque,"belier");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///deuxieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"epee");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=10;
+        ///troisième:
+        strcpy(joueur->attaques.attaque_1.attaque,"hache");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=20;
+        ///quatrième:
+        strcpy(joueur->attaques.attaque_1.attaque,"javelot");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///cinquieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"massue");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=15;
+
+
+        joueur->numero_perso=NAIN;
+        ///joueur->numero_case= ?????????
+    break;
+
+    case 2:
+        ///premiere attaque :
+        strcpy(joueur->attaques.attaque_1.attaque,"boulefeu");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///deuxieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"baton");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=10;
+        ///troisième:
+        strcpy(joueur->attaques.attaque_1.attaque,"poignard");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=20;
+        ///quatrième:
+        strcpy(joueur->attaques.attaque_1.attaque,"barrage");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///cinquieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"dormor");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=15;
+
+
+        joueur->numero_perso=SORCIER;
+        ///joueur->numero_case= ?????????
+
+
+break;
+    case 3:
+        ///premiere attaque :
+        strcpy(joueur->attaques.attaque_1.attaque,"anneau");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///deuxieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"arc");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=10;
+        ///troisième:
+        strcpy(joueur->attaques.attaque_1.attaque,"epee");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=20;
+        ///quatrième:
+        strcpy(joueur->attaques.attaque_1.attaque,"epeeelfique");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///cinquieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"lame");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=15;
+
+
+        joueur->numero_perso=ELFE;
+        ///joueur->numero_case= ?????????
+    break;
+    case 4:
+        ///premiere attaque :
+        strcpy(joueur->attaques.attaque_1.attaque,"coup");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///deuxieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"dague");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=10;
+        ///troisième:
+        strcpy(joueur->attaques.attaque_1.attaque,"epeearwen");
+        joueur->attaques.attaque_1.attaque_pv=10;
+        joueur->attaques.attaque_1.attaque_pa=20;
+        ///quatrième:
+        strcpy(joueur->attaques.attaque_1.attaque,"epeethorin");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=5;
+        ///cinquieme :
+        strcpy(joueur->attaques.attaque_1.attaque,"lame");
+        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pa=15;
+
+
+        joueur->numero_perso=ORQUE;
+        ///joueur->numero_case= ?????????
+
+        break;
+    default:
+break;
+    }
+
+
+
+
+    //ss prog saisi de l'ident
+    //joueur->prenom = (char *) malloc(sizeof(char) * strlen(mot));
+    //strcpy(joueur->prenom, buffer);
+
+}
+
+int affichage_nouvelle_partie(BITMAP* buffer1)
+{
+    //allegro_message("Je suis dans nouvelle partie");
+    int quitter=0;
+    int nombre = 0;
+    printf("Yo");
+    //Image de séléction du nombre de joueur
+    BITMAP *imjoueur;
+
+    imjoueur = create_bitmap(SCREEN_W, SCREEN_H);
+    imjoueur=load_bitmap("nbjoueur.bmp",NULL);
+    // on verifie que l'image a bien été chargée au cas où.
+    if (!imjoueur)
+    {
+        allegro_message("pas pu imjoueur.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    //téléchargement des polices
+    FONT *police = NULL; /// Initialisation Polices
+    police = load_font("police.pcx",NULL,NULL);
+    if(!police)
+    {
+        allegro_message("Erreur chargement police");
+    }
+
+
+    do
+    {
+
+        //allegro_message("Bonsoir");
+
+        blit(imjoueur, buffer1, 0, 0,(SCREEN_W-imjoueur->w)/2, (SCREEN_H-imjoueur->h)/2, imjoueur->w, imjoueur->h);
+
+        // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
+        textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
+
+
+        textout_ex(buffer1, police, "NOMBRE DE JOUEURS",340, 260, makecol(244, 187, 91), -1);
+
+        textout_ex(buffer1, police, "TROIS",460, 440, makecol(244, 187, 91), -1);
+        if (mouse_x>=425 && mouse_x <=576 && mouse_y >= 419 && mouse_y <= 481)
+        {
+            textout_ex(buffer1, police, "TROIS",460, 440, makecol(255, 255, 255), -1);
+        }
+        if (mouse_b & 1 && mouse_x>=425 && mouse_x <=576 && mouse_y >= 419 && mouse_y <= 481)
+        {
+            nombre = 3;
+            quitter =1;
+
+        }
+
+        textout_ex(buffer1, police, "DEUX",250, 440, makecol(244, 187, 91), -1);
+
+        if (mouse_x>=205 && mouse_x <=415 && mouse_y >= 365 && mouse_y <= 485)
+        {
+            textout_ex(buffer1, police, "DEUX",250, 440, makecol(255, 255, 255), -1);
+        }
+        if (mouse_b & 1 && mouse_x>=205 && mouse_x <=415 && mouse_y >= 365 && mouse_y <= 485)
+        {
+            nombre = 2;
+            quitter =1;
+
+        }
+
+
+        textout_ex(buffer1, police, "QUATRE",665, 440, makecol(244, 187, 91), -1);
+        if (mouse_x>=642 && mouse_x <=791 && mouse_y >= 418 && mouse_y <= 478)
+        {
+            textout_ex(buffer1, police, "QUATRE",665, 440, makecol(255, 255, 255), -1);
+
+        }
+        if (mouse_b & 1 && mouse_x>=642 && mouse_x <=791 && mouse_y >= 418 && mouse_y <= 478)
+        {
+            nombre = 4;
+            quitter =1;
+
+        }
+
+
+        //Affichage du buffer sur l'écran
+        blit(buffer1, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    }
+    while(quitter!=1);
+
+    destroy_bitmap(imjoueur);
+
+    return nombre;
+}
+
 
 
 void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
@@ -35,8 +422,13 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 
     BITMAP *buffer;
 
+    //init dofus
+    jeuDofus->nbJoueurs = 0;
+    jeuDofus->tabJoueur = NULL;
+
     // CREATION DU BUFFER D'AFFICHAGE à la taille de l'écran
     buffer = create_bitmap(SCREEN_W, SCREEN_H);
+
     if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
     {
         allegro_message("pb creation buffer...");
@@ -45,22 +437,23 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
     }
     clear_bitmap(buffer);
 
-
-    int nbjoueurs = 0;
-
     //int tabPersoDispo[NB_PERSO_DISPO] = {NAIN, ELFE, ORQUE, SORCIER};
 
+printf("test");
+    ///affichage choix nb joueurs
+    jeuDofus->nbJoueurs = affichage_nouvelle_partie(buffer);
+    printf("%d", jeuDofus->nbJoueurs);
 
-  ///affichage choix nb joueurs
-    nbjoueurs = affichage_nouvelle_partie(buffer);
-
-    jeuDofus->nbJoueurs = nbjoueurs;
-    jeuDofus->tabJoueur = (t_joueur **)malloc(sizeof(t_joueur*)*nbjoueurs);
+    //allocation dynamique et vérification
+    jeuDofus->tabJoueur = (t_joueur*)malloc(sizeof(t_joueur)*(jeuDofus->nbJoueurs));
     if(jeuDofus->tabJoueur == NULL)
-    printf("Erreur dans l'allocation dynamique du tableau de joueur\n");
-    for(int i = 0; i < nbjoueurs; i++) {
-    jeuDofus->tabJoueur[i] = initialisationJoueur(); //envoyer tabPersoDispo en parametre
-  }
+        printf("Erreur dans l'allocation dynamique du tableau de joueur\n");
+
+    //remplissage du tableau de structure joueur alloué dyn
+    for(int i = 0; i < jeuDofus->nbJoueurs; i++)
+    {
+        initialisationJoueur(buffer, &(jeuDofus->tabJoueur[i])); //envoyer tabPersoDispo en parametre
+    }
 
 
 }
@@ -69,14 +462,16 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 
 void initialisationNouvellePartie(t_jeuDofus *jeuDofus)
 {
-  //initialisationMap();
-  initialisationDesJoueurs(jeuDofus);
+    //initialisationMap();
+    printf("initialisation \n");
+    initialisationDesJoueurs(jeuDofus);
 }
 
 void nouvellePartie(t_jeuDofus *jeuDofus)
 {
-  initialisationNouvellePartie(jeuDofus);
+    printf("Nouvelle partie ! ");
+    initialisationNouvellePartie(jeuDofus);
 
-  //boucleDeJeu(jeuDofus);
+    //boucleDeJeu(jeuDofus);
 }
 
