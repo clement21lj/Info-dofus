@@ -10,17 +10,7 @@
 #include <allegro.h>
 
 
-///gestion des joueurs :
-#define  PV_NOUVEAU_PERSO 100
-#define  PA_NOUVEAU_PERSO 100
-#define  PM_NOUVEAU_PERSO 100
 
-#define NAIN        1
-#define SORCIER     2
-#define ELFE        3
-#define ORQUE       4
-
-#define nbperso  4
 
 /////////////////
 ///STRUCTURES///
@@ -62,10 +52,10 @@ typedef struct carac_PNJ
 //Structure des types de personnages (4 types dispo)
 typedef struct type_perso
 {
-    t_attaques_perso 1_nain;
-    t_attaques_perso 2_sorcier;
-    t_attaques_perso 3_elfe;
-    t_attaques_perso 4_orque;
+    t_attaques_perso nain_1;
+    t_attaques_perso sorcier_2;
+    t_attaques_perso elfe_3;
+    t_attaques_perso orque_4;
 }t_type_perso;
 
 //Structure joueur (toutes les données du joueur)
