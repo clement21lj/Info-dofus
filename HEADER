@@ -106,8 +106,9 @@ void InitialisationNouvellePartie();
 int affichage_nouvelle_partie(BITMAP* buffer1);
 void initialisationDesJoueurs(t_jeuDofus *jeuDofus);
 void initialisationJoueur(BITMAP* buffer, t_joueur* joueur);
-
 void choixPerso(BITMAP*buffer, t_joueur *joueur);
+void boucleDeJeu(t_jeuDofus *jeuDofus);
+void affichagemap(t_jeuDofus *jeuDofus);
 
 
 #endif // HEADER_H_INCLUDED
