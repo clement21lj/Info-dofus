@@ -472,6 +472,6 @@ void nouvellePartie(t_jeuDofus *jeuDofus)
     printf("Nouvelle partie ! ");
     initialisationNouvellePartie(jeuDofus);
 
-    //boucleDeJeu(jeuDofus);
+    boucleDeJeu(jeuDofus);
 }
 
