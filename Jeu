@@ -1,0 +1,207 @@
+#include "header.h"
+
+void boucleDeJeu(t_jeuDofus *jeuDofus){
+
+    affichagemap(jeuDofus);
+
+}
+
+void affichagemap(t_jeuDofus *jeuDofus){
+     // BITMAP servant de buffer d'affichage (double buffer)
+    BITMAP *buffer;
+
+    // initialisation d'entree.
+    BITMAP *map;
+
+    BITMAP*perso;
+    perso=load_bitmap("petitperso.bmp",NULL);
+
+    BITMAP*elfe;
+    elfe=load_bitmap("imelfe.bmp",NULL);
+    BITMAP*nain;
+    nain=load_bitmap("imnain.bmp",NULL);
+    BITMAP*orque;
+    orque=load_bitmap("imorc.bmp",NULL);
+    BITMAP*sorcier;
+    sorcier=load_bitmap("imsorcier.bmp",NULL);
+
+    BITMAP*fleche;
+    fleche=load_bitmap("fleche2.bmp",NULL);
+
+
+    //load des bitmaps attaques du l'elfe
+    BITMAP*elfeanneau;
+    elfeanneau=load_bitmap("attaquesperso/elfe/anneauelfique.bmp",NULL);
+    BITMAP*elfearc;
+    elfearc=load_bitmap("attaquesperso/elfe/arc.bmp",NULL);
+    BITMAP*elfeepee1;
+    elfeepee1=load_bitmap("attaquesperso/elfe/epeeelfique.bmp",NULL);
+    BITMAP*elfeepee2;
+    elfeepee2=load_bitmap("attaquesperso/elfe/epee.bmp",NULL);
+    BITMAP*elfelame;
+    elfelame=load_bitmap("attaquesperso/elfe/lameelfique.bmp",NULL);
+
+    //load des bitmaps attaques du nain
+    BITMAP*nainbelier;
+    nainbelier=load_bitmap("attaquesperso/nain/belier.bmp",NULL);
+    BITMAP*nainepee;
+    nainepee=load_bitmap("attaquesperso/nain/epee.bmp",NULL);
+    BITMAP*nainhache;
+    nainhache=load_bitmap("attaquesperso/nain/hache.bmp",NULL);
+    BITMAP*nainjavelot;
+    nainjavelot=load_bitmap("attaquesperso/nain/javelot.bmp",NULL);
+    BITMAP*nainmassue;
+    nainmassue=load_bitmap("attaquesperso/nain/massue.bmp",NULL);
+
+    //load des bitmaps attaques de l'orque
+    BITMAP*orquecoup;
+    orquecoup=load_bitmap("attaquesperso/orque/couppied.bmp",NULL);
+    BITMAP*orquedague;
+    orquedague=load_bitmap("attaquesperso/orque/dague.bmp",NULL);
+    BITMAP*orqueepee1;
+    orqueepee1=load_bitmap("attaquesperso/orque/epeearwen.bmp",NULL);
+    BITMAP*orqueepee2;
+    orqueepee2=load_bitmap("attaquesperso/orque/epeethorin.bmp",NULL);
+    BITMAP*orquelame;
+    orquelame=load_bitmap("attaquesperso/orque/lame-ki-koupe.bmp",NULL);
+
+    //load des bitmaps attaques du sorcier
+    BITMAP*boulefeu;
+    boulefeu=load_bitmap("attaquesperso/sorcier/boulefeu.bmp",NULL);
+    BITMAP*baton;
+    baton=load_bitmap("attaquesperso/sorcier/baton.bmp",NULL);
+    BITMAP*poignard;
+    poignard=load_bitmap("attaquesperso/sorcier/poignard.bmp",NULL);
+    BITMAP*barrage;
+    barrage=load_bitmap("attaquesperso/sorcier/barrage.bmp",NULL);
+    BITMAP*dormor;
+    dormor=load_bitmap("attaquesperso/sorcier/dormor.bmp",NULL);
+
+
+
+
+    //téléchargement des polices
+    FONT *police = NULL; /// Initialisation Polices
+    police = load_font("police.pcx",NULL,NULL);
+    if(!police)
+        allegro_message("Erreur chargement police");
+
+    // CREATION DU BUFFER D'AFFICHAGE à la taille de l'écran
+    buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pb creation buffer...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    clear_bitmap(buffer);
+
+    // création du double buffer.
+    map = create_bitmap(SCREEN_W, SCREEN_H);
+
+    // décalaration et initialisation de l'image.
+    map =load_bitmap("mapvf.bmp",NULL);
+
+    // on verifie que l'image a bien été chargée au cas où.
+    if (!map)
+    {
+        allegro_message("pas pu mapvf.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    while(!key[KEY_ESC])
+    {
+
+        blit(map, buffer, 0, 0,(SCREEN_W-map->w)/2, (SCREEN_H-map->h)/2, map->w, map->h);
+
+        // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
+        textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
+
+
+        line(buffer, 388, 555, 686, 555, makecol(255,255,255));
+        line(buffer, 388, 528, 388, 599, makecol(255,255,255));
+        line(buffer, 448, 555, 448, 599, makecol(255,255,255));
+        line(buffer, 508, 555, 508, 599, makecol(255,255,255));
+        line(buffer, 568, 555, 568, 599, makecol(255,255,255));
+        line(buffer, 628, 555, 628, 599, makecol(255,255,255));
+
+        textprintf_ex(buffer,font,397,537,makecol(255,255,255), -1,"PV :");
+        textprintf_ex(buffer,font,497,537,makecol(255,255,255), -1,"PM :");
+        textprintf_ex(buffer,font,597,537,makecol(255,255,255), -1,"PA :");
+
+
+
+
+        ///si 4 joueurs
+        stretch_sprite (buffer, elfe, 810, 10, 70, 65);
+        rect(buffer,883,33,980,50,makecol(0,0,0));
+        stretch_sprite (buffer, nain, 815, 70, 65, 60);
+        rect(buffer,883,93,980,110,makecol(0,0,0));
+        stretch_sprite (buffer, orque, 818, 130, 60, 55);
+        rect(buffer,883,153,980,170,makecol(0,0,0));
+        stretch_sprite (buffer, sorcier, 815, 190, 65, 60);
+        rect(buffer,883,213,980,230,makecol(0,0,0));
+
+
+
+
+
+        /*//si c'est le tour de l'elfe de jouer
+        draw_sprite(buffer,fleche,785,25);
+        stretch_sprite (buffer, elfe, 318, 535 , 60, 55);
+        stretch_sprite (buffer, elfeanneau, 395, 558 , 45, 40);
+        stretch_sprite (buffer, elfearc, 455, 560 , 45, 40);
+        stretch_sprite (buffer, elfeepee1, 515, 560 , 45, 40);
+        stretch_sprite (buffer, elfeepee2, 574, 560 , 45, 40);
+        stretch_sprite (buffer, elfelame, 635, 560 , 45, 40);*/
+
+
+        /*//si c'est le tour du nain de jouer
+        draw_sprite(buffer,fleche,785,85);
+        stretch_sprite (buffer, nain, 318, 535 , 60, 55);
+        stretch_sprite (buffer, nainbelier, 395, 558 , 45, 40);
+        stretch_sprite (buffer, nainepee, 455, 560 , 45, 40);
+        stretch_sprite (buffer, nainhache, 515, 560 , 45, 40);
+        stretch_sprite (buffer, nainjavelot, 574, 560 , 45, 40);
+        stretch_sprite (buffer, nainmassue, 635, 560 , 45, 40);*/
+
+        /*//si c'est le tour du Orque de jouer
+        draw_sprite(buffer,fleche,785,135);
+        stretch_sprite (buffer, orque, 318, 535 , 60, 55);
+        stretch_sprite (buffer, orquecoup, 395, 558 , 45, 40);
+        stretch_sprite (buffer, orquedague, 455, 560 , 45, 40);
+        stretch_sprite (buffer, orqueepee1, 515, 560 , 45, 40);
+        stretch_sprite (buffer, orqueepee2, 574, 560 , 45, 40);
+        stretch_sprite (buffer, orquelame, 635, 560 , 45, 40);*/
+
+        //si c'est le tour du sorcier de jouer
+        draw_sprite(buffer,fleche,784,195);
+        stretch_sprite (buffer, sorcier, 318, 535, 60, 55);
+        stretch_sprite (buffer, boulefeu, 395, 558, 45, 40);
+        stretch_sprite (buffer, baton, 455, 560, 45, 40);
+        stretch_sprite (buffer, poignard, 515, 560, 45, 40);
+        stretch_sprite (buffer, barrage, 574, 560, 45, 40);
+        stretch_sprite (buffer, dormor, 635, 560, 45, 40);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+
+
+
+
+    }
+
+}
