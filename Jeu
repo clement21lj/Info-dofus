@@ -1,12 +1,129 @@
+                                                ////////////////////////////
+                                                ///SOUS-PROGRAMMES DE JEU///
+                                                ////////////////////////////
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+///////////////////
+///BIBLIOTHEQUE///
+/////////////////
 #include "header.h"
 
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+//////////////////////////
+///SP DE BOUCLE DE JEU///
+////////////////////////
 void boucleDeJeu(t_jeuDofus *jeuDofus){
 
-    affichagemap(jeuDofus);
+    ///DECLARATIONS///
+    // BITMAP servant de buffer d'affichage (double buffer)
+    BITMAP *buffer;
 
-}
+    //Tableaux
+    t_joueur tablotemp[jeuDofus->nbJoueurs];
+    tablotemp = (t_joueur*)malloc(sizeof(t_joueur)*(jeuDofus->nbJoueurs));
+    if(tablotemp == NULL)
+    {
+        printf("Erreur dans l'allocation dynamique du tableau de joueur temp\n");
+    }
 
-void affichagemap(t_jeuDofus *jeuDofus){
+    //Variables
+    int i=0;    //compteur pour le joueur dont c'est le tour
+    int j=0, m=0;    //compteurs pouvant servir à ce qu'on veut (notamment tirage ordre des joueurs)
+    int nombre_joueur_temp=0;   //Variable temporaire contenant le nombre de joueurs
+    int random_player=0;    //Tirage aléatoire du numéro du joueur qui va être placé dans le tableau des joueurs
+    int joueur_elimine=0;   //compteur du nombre de joueur éliminé pour savoir quand il n'en reste qu'un (#Kohlanta)
+    int fin_tour=0;     //Variable égale à 0 tant que le tour du joueur n'est pas fini
+    int fin_jeu=0;      //Variable égale à 0 tant que le jeu n'est pas fini
+
+
+
+
+    ///MELANGE ORDRE JOUEURS///
+    for(j=0; j<jeuDofus->nbJoueurs; j++)    //On copie le tableau de joueurs dans un tableau temporaire dans lequel on va tirer les joueurs au sort
+    {
+        tablotemp[j]=jeuDofus->tabJoueur[j];
+    }
+    nombre_joueur_temp=jeuDofus->nbJoueurs; //la variable nombre joueur temporaire prend la valeur de la variable nombre de joueur car elle va être modifiée dans une boucle
+    for(j=0; j<jeuDofus->nbJoueurs; j++) //Boucle qui défile pour tirer chaque joueur au sort et le placer dans le tableau de joueurs
+    {
+        random_player=rand()%(nombre_joueur_temp); //Fonction random qui tire un numero de joueur
+        jeuDofus->tabJoueur[j]=tablotemp[random_player]; //On place la structure du joueur tiré dans le tableau de joueurs (tableau déinitif)
+
+        for(m=random_player; m<nombre_joueur_temp-1; m++) //Boucle qui va replacer les joueurs dans le tableau temporaire en retirant celui qui vient d'être tiré et placer dans le tableau définitif
+        {
+            tablotemp[m]=tablotemp[m+1]; //Replacement des joueurs dans le tableau en les rassemblant au début du tableau
+        }
+        nombre_joueur_temp--; //Diminution de la variable de nombre de joueur temporaire pour que le tirage se fasse avec un joueur en moins
+    }
+    //OPTION : écran d'affichage de l'ordre des joueurs avec leur bitmap de perso et leur nom (en reprenant le programme de choix de perso)
+
+
+
+
+
+
+    ///BOUCLE DE JEU///
+    do{
+        for(i=0; i<jeuDofus->nbJoueurs; i++)
+        {
+
+            ///REINITIALISATION PA ET PM DU JOUEUR - ET MISE A JOUR NOMBRE DE TOURS SURVECU
+            jeuDofus->tabJoueur[i]->PM_perso=3;
+            jeuDofus->tabJoueur[i]->PA_perso=100;
+            jeuDofus->tabJoueur[i]->nb_tours_survecu++;
+
+            do{
+
+                ///AFFICHAGE
+                buffer=affichagemap(jeuDofus, i);   //Sp qui affiche la map, l'ordre des joueurs, et les données du joueur en train de jouer
+                //IMPORTANT : ADAPTER AFFICHAGE POUR PERSO AVEC NUM PERSO
+
+                ///INDICATIONS : A RAJOUTER DANS AFFICHAGE MAP
+                //Dire : Veuillez cliquer sur votre perso pour se déplacer, sélecionner une attaque ou mettre fin au tour
+                //S'il a appuyé sur une attaque dire : Vous pouvez attaquer, revenir en arrière en cliquant a nouveau sur l'attaque, ou mettre fin au tour
+
+                ///DEPLACEMENTS
+                //if(mouse & 1 && mouse_x>jeuDofus->tabJoueur[i]->)     //IMPORTANT A FAIRE AVEC TABLEAU CASES
+                //-> si il appuie sur la case tabcase[jeuDofus->tabJoueur[i]->numero_case_colone][jeuDofus->tabJoueur[i]->numero_case_ligne]->coord_x
+                //Et pareil avec coord_y et déterminer zone de la case
+                sp_deplacements(jeuDofus, buffer, i);  //Sp qui propose des déplacements et les applique, en fonction des PM du joueur en cours
+
+                ///ATTAQUES
+                //S'il appuie sur le bouton d'attaque
+                sp_attaques(jeuDofus, buffer, i);   //Sp qui propose des zones d'attaque en fonctions de l'attaque sélectionnée
+
+                ///FIN DU TOUR
+                //S'il appuie sur le bouton joueur suivant
+                fin_tour=1
+
+
+
+            }while(fin_tour!=1); // Tant que le tour du joueur en cours n'est pas fini
+
+            ///TEST DE VIE DU JOUEUR///
+            if(jeuDofus->tabJoueur[i]->PV_perso<=0)
+            {
+                //sp de suppression du joueur, je (Clément) le ferai
+                joueur_elimine++;
+                if(joueur_elimine=jeuDofus->nbJoueurs-1)
+                {
+                    //sp de fin de partie (classement + écran de fin)
+                }
+            }
+
+
+        }//Fin boucle for (fait passer les joueurs dans l'ordre
+
+
+    }while(fin_jeu!=1);     // Tant que le jeu n'est pas fini      ->OPTION : mettre une possibilité de faire echap pour revenir au menu
+
+}//FIN DU SOUS-PROGRAMME DE BOUCLE DE JEU
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+BITMAP* affichagemap(t_jeuDofus *jeuDofus, int num_joueur){
      // BITMAP servant de buffer d'affichage (double buffer)
     BITMAP *buffer;
 
@@ -109,8 +226,8 @@ void affichagemap(t_jeuDofus *jeuDofus){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    while(!key[KEY_ESC])
-    {
+    //while(!key[KEY_ESC])
+    //{
 
         blit(map, buffer, 0, 0,(SCREEN_W-map->w)/2, (SCREEN_H-map->h)/2, map->w, map->h);
 
@@ -198,10 +315,13 @@ void affichagemap(t_jeuDofus *jeuDofus){
 
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+    return buffer;
 
 
 
-
-    }
+    //}
 
 }
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
