@@ -1,0 +1,65 @@
+t_cases initialisationCase(enum typeCase typeDeLaCase, int x, int y){
+    t_cases nouvelleCase;
+    nouvelleCase.x=x;
+    nouvelleCase.y=y;
+    nouvelleCase.typeDeLaCase=typeDeLaCase;
+    return nouvelleCase;
+}
+
+void changementTypeCase(t_jeuDofus *jeuDofus, int x, int y, enum typeCase typeDeLaCase){
+    jeuDofus->mapJeu[x][y].typeDeLaCase= typeDeLaCase;
+}
+
+void affichageDebugMapConsoleText(t_jeuDofus *jeuDofus){
+    printf("DEBUG du plateau : \n\n\n");
+   for(int i = 0; i < NB_LIGNES; i ++){
+    for(int j = 0; j < NB_COLONNES; j++){
+         printf("Case [%d][%d] : type : %d / x : %d / y = %d\n",i,j,jeuDofus->mapJeu[i][j].typeDeLaCase,jeuDofus->mapJeu[i][j].x, jeuDofus->mapJeu[i][j].y );
+    }
+   }
+}
+void affichageDebugMapConsoleDessin(t_jeuDofus *jeuDofus){
+    printf("DEBUG PLATEAU DESSIN : \n\n\n");
+    for(int i= 0; i < NB_LIGNES; i++){
+        for(int j = 0; j < NB_COLONNES; j++){
+            if(jeuDofus->mapJeu[i][j].typeDeLaCase != CHEMIN)
+             printf("%d", jeuDofus->mapJeu[i][j].typeDeLaCase);
+        else printf(" ");
+        }
+        printf("\n");
+    }
+}
+void initialisationPlateauDeJeu(t_jeuDofus *jeuDofus){
+
+///initialisation des cases par defaut sur inaccessible
+    for(int i = 0; i < NB_LIGNES; i ++)
+        for(int j = 0; j < NB_COLONNES; j++){
+            jeuDofus->mapJeu[i][j]=initialisationCase(INACCESSIBLE, i, j);
+        }
+
+   ///initialisation des couloirs :
+   for(int i =0; i < NB_LIGNES; i++){
+        for(int j = 0; j < NB_COLONNES; j++){
+            if((i==14)||(i==10 && j >3)||(i==7 && j>7 && j<12)||(i==12 && j>19 && j <25)||(i==5 && j >10 && j<21)||(i==0 && j>7 && j<12)
+               ||(j==8 && i >0 && i < 11)||(j==3 && i >13 && i < 19)||(j==4 && i > 6 && i < 11)||(j==5 && i >9 && i < 15)||(j==11 && i <6)||(j==13 && i>2 && i<6)||(j==14 && i>2 && i < 6)
+               ||(j==16 && i < 6)||(j==19 && i >4 && i < 11)||(j==24 && i>9))
+                changementTypeCase(jeuDofus, i, j, CHEMIN);
+
+        }
+   }
+
+   ///initialisation des cases de spawn
+   for(int i = 0; i < jeuDofus->nbJoueurs; i++){
+    if(strcmp(jeuDofus->tabJoueur[i].nomperso,"orque")==0)
+        changementTypeCase(jeuDofus, 0, 8, SPAWN_ORQUE);
+    else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"elfe")==0)
+        changementTypeCase(jeuDofus, 14, 0, SPAWN_ELFE);
+    else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"nain")==0)
+        changementTypeCase(jeuDofus, 10, 26, SPAWN_NAIN);
+    else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"sorcier")==0)
+        changementTypeCase(jeuDofus, 18, 24, SPAWN_SORCIER);
+   }
+
+   affichageDebugMapConsoleText(jeuDofus);
+   affichageDebugMapConsoleDessin(jeuDofus);
+}
