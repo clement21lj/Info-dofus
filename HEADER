@@ -20,6 +20,7 @@
 #define SORCIER     2
 #define ELFE        3
 #define ORQUE       4
+#define SAISIE_MAX   10
 
 #define nbperso  4
 
@@ -126,6 +127,7 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur);
 
 void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur);
 void boucleDeJeu(t_jeuDofus *jeuDofus);
+char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur);
 
 //void affichagemap(t_jeuDofus *jeuDofus);
 
