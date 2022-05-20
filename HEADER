@@ -124,7 +124,7 @@ void InitialisationNouvellePartie();
 void initialisationDesJoueurs(t_jeuDofus *jeuDofus);
 void initialisationJoueur(BITMAP* buffer, t_joueur* joueur);
 
-void choixPerso(BITMAP*buffer, t_joueur *joueur);
+void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur);
 void boucleDeJeu(t_jeuDofus *jeuDofus);
 
 //void affichagemap(t_jeuDofus *jeuDofus);
