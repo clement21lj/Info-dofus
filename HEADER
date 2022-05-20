@@ -86,8 +86,8 @@ typedef struct joueur       //PAS FINIE je(Clément) la finirai
     int nb_tours_survecu;//Nombre de tours survécus par le joueur, permettant d'établir le classement à la fin
     //int coord_x;        //Coordonnées x du personnage
     //int coord_y;        //Coordonnées y du personnage
-    int numero_case_ligne;    //numero de la ligne du tableau de cases à 2 dimensions
-    int numero_case_colone;     //numero de la colonne du tableau de cases à 2 dimensions
+    //int numero_case_ligne;    //numero de la ligne du tableau de cases à 2 dimensions
+    //int numero_case_colone;     //numero de la colonne du tableau de cases à 2 dimensions
 }t_joueur;
 
 typedef struct jeuDofus {
