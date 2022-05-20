@@ -21,9 +21,9 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){
     BITMAP *buffer;
 
     //Tableaux
-    t_joueur tablotemp[jeuDofus->nbJoueurs];
-    tablotemp = (t_joueur*)malloc(sizeof(t_joueur)*(jeuDofus->nbJoueurs));
-    if(tablotemp == NULL)
+    t_joueur *tablotemp[jeuDofus->nbJoueurs];
+    *tablotemp = (t_joueur*)malloc(sizeof(t_joueur)*(jeuDofus->nbJoueurs));
+    if(*tablotemp == NULL)
     {
         printf("Erreur dans l'allocation dynamique du tableau de joueur temp\n");
     }
@@ -43,17 +43,17 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){
     ///MELANGE ORDRE JOUEURS///
     for(j=0; j<jeuDofus->nbJoueurs; j++)    //On copie le tableau de joueurs dans un tableau temporaire dans lequel on va tirer les joueurs au sort
     {
-        tablotemp[j]=jeuDofus->tabJoueur[j];
+        *tablotemp[j]=jeuDofus->tabJoueur[j];
     }
     nombre_joueur_temp=jeuDofus->nbJoueurs; //la variable nombre joueur temporaire prend la valeur de la variable nombre de joueur car elle va être modifiée dans une boucle
     for(j=0; j<jeuDofus->nbJoueurs; j++) //Boucle qui défile pour tirer chaque joueur au sort et le placer dans le tableau de joueurs
     {
         random_player=rand()%(nombre_joueur_temp); //Fonction random qui tire un numero de joueur
-        jeuDofus->tabJoueur[j]=tablotemp[random_player]; //On place la structure du joueur tiré dans le tableau de joueurs (tableau déinitif)
+        jeuDofus->tabJoueur[j]=*tablotemp[random_player]; //On place la structure du joueur tiré dans le tableau de joueurs (tableau déinitif)
 
         for(m=random_player; m<nombre_joueur_temp-1; m++) //Boucle qui va replacer les joueurs dans le tableau temporaire en retirant celui qui vient d'être tiré et placer dans le tableau définitif
         {
-            tablotemp[m]=tablotemp[m+1]; //Replacement des joueurs dans le tableau en les rassemblant au début du tableau
+            *tablotemp[m]=*tablotemp[m+1]; //Replacement des joueurs dans le tableau en les rassemblant au début du tableau
         }
         nombre_joueur_temp--; //Diminution de la variable de nombre de joueur temporaire pour que le tirage se fasse avec un joueur en moins
     }
@@ -70,9 +70,9 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){
         {
 
             ///REINITIALISATION PA ET PM DU JOUEUR - ET MISE A JOUR NOMBRE DE TOURS SURVECU
-            jeuDofus->tabJoueur[i]->PM_perso=3;
-            jeuDofus->tabJoueur[i]->PA_perso=100;
-            jeuDofus->tabJoueur[i]->nb_tours_survecu++;
+            jeuDofus->tabJoueur[i].PM_perso=3;
+            jeuDofus->tabJoueur[i].PA_perso=100;
+            jeuDofus->tabJoueur[i].nb_tours_survecu++;
 
             do{
 
@@ -96,18 +96,18 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){
 
                 ///FIN DU TOUR
                 //S'il appuie sur le bouton joueur suivant
-                fin_tour=1
+                fin_tour=1;
 
 
 
             }while(fin_tour!=1); // Tant que le tour du joueur en cours n'est pas fini
 
             ///TEST DE VIE DU JOUEUR///
-            if(jeuDofus->tabJoueur[i]->PV_perso<=0)
+            if(jeuDofus->tabJoueur[i].PV_perso<=0)
             {
                 //sp de suppression du joueur, je (Clément) le ferai
                 joueur_elimine++;
-                if(joueur_elimine=jeuDofus->nbJoueurs-1)
+                if(joueur_elimine=(jeuDofus->nbJoueurs-1))
                 {
                     //sp de fin de partie (classement + écran de fin)
                 }
