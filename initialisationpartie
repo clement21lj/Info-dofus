@@ -440,7 +440,7 @@ void choixPseudo(BITMAP* buffer, t_joueur* joueur)
 
 void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, int messageErreur)
 {
-    //char ident[100];
+    char nom[20];
 
     ///donnes perso
     joueur->PV_perso = PV_NOUVEAU_PERSO;
@@ -457,24 +457,29 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
     case NAIN:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"belier");
-        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
+        joueur->attaques.attaque_1.attaque_portee=1;
         ///deuxieme :
-        strcpy(joueur->attaques.attaque_1.attaque,"epee");
-        joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=15;
+        strcpy(joueur->attaques.attaque_2.attaque,"epee");
+        joueur->attaques.attaque_2.attaque_pv=20;
+        joueur->attaques.attaque_2.attaque_pa=15;
+        joueur->attaques.attaque_2.attaque_portee=3;
         ///troisième:
-        strcpy(joueur->attaques.attaque_1.attaque,"hache");
-        joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=20;
+        strcpy(joueur->attaques.attaque_3.attaque,"hache");
+        joueur->attaques.attaque_3.attaque_pv=20;
+        joueur->attaques.attaque_3.attaque_pa=20;
+        joueur->attaques.attaque_3.attaque_portee=5;
         ///quatrième:
-        strcpy(joueur->attaques.attaque_1.attaque,"javelot");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=5;
+        strcpy(joueur->attaques.attaque_4.attaque,"javelot");
+        joueur->attaques.attaque_4.attaque_pv=10;
+        joueur->attaques.attaque_4.attaque_pa=20;
+        joueur->attaques.attaque_4.attaque_portee=7;
         ///cinquieme :
-        strcpy(joueur->attaques.attaque_1.attaque,"massue");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=15;
+        strcpy(joueur->attaques.attaque_5.attaque,"massue");
+        joueur->attaques.attaque_5.attaque_pv=15;
+        joueur->attaques.attaque_5.attaque_pa=15;
+        joueur->attaques.attaque_5.attaque_portee=4;
 
 
         joueur->numero_perso=NAIN;
@@ -486,25 +491,29 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
 
     case SORCIER:
         ///premiere attaque :
-        strcpy(joueur->attaques.attaque_1.attaque,"boulefeu");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=5;
-        ///deuxieme :
-        strcpy(joueur->attaques.attaque_1.attaque,"baton");
-        joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=10;
-        ///troisième:
         strcpy(joueur->attaques.attaque_1.attaque,"poignard");
         joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=10;
-        ///quatrième:
-        strcpy(joueur->attaques.attaque_1.attaque,"barrage");
-        joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
+        joueur->attaques.attaque_1.attaque_portee=1;
+        ///deuxieme :
+        strcpy(joueur->attaques.attaque_2.attaque,"baton");
+        joueur->attaques.attaque_2.attaque_pv=20;
+        joueur->attaques.attaque_2.attaque_pa=15;
+        joueur->attaques.attaque_2.attaque_portee=3;
+        ///troisième:
+        strcpy(joueur->attaques.attaque_3.attaque,"barrage");
+        joueur->attaques.attaque_3.attaque_pv=15;
+        joueur->attaques.attaque_3.attaque_pa=5;
+        ///quatrième:
+        strcpy(joueur->attaques.attaque_4.attaque,"boulefeu");
+        joueur->attaques.attaque_4.attaque_pv=10;
+        joueur->attaques.attaque_4.attaque_pa=20;
+        joueur->attaques.attaque_4.attaque_portee=7;
         ///cinquieme :
-        strcpy(joueur->attaques.attaque_1.attaque,"dormor");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=10;
+        strcpy(joueur->attaques.attaque_5.attaque,"dormor");
+        joueur->attaques.attaque_5.attaque_pv=15;
+        joueur->attaques.attaque_5.attaque_pa=15;
+        joueur->attaques.attaque_5.attaque_portee=4;
 
 
         joueur->numero_perso=SORCIER;
@@ -515,26 +524,29 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
         break;
     case ELFE:
         ///premiere attaque :
-        strcpy(joueur->attaques.attaque_1.attaque,"anneau");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=5;
-        ///deuxieme :
-        strcpy(joueur->attaques.attaque_1.attaque,"arc");
-        joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=20;
-        ///troisième:
-        strcpy(joueur->attaques.attaque_1.attaque,"epee");
-        joueur->attaques.attaque_1.attaque_pv=5;
-        joueur->attaques.attaque_1.attaque_pa=20;
-        ///quatrième:
-        strcpy(joueur->attaques.attaque_1.attaque,"epeeelfique");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=5;
-        ///cinquieme :
         strcpy(joueur->attaques.attaque_1.attaque,"lame");
         joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=15;
-
+        joueur->attaques.attaque_1.attaque_pa=5;
+        joueur->attaques.attaque_1.attaque_portee=1;
+        ///deuxieme :
+        strcpy(joueur->attaques.attaque_2.attaque,"epee");
+        joueur->attaques.attaque_2.attaque_pv=20;
+        joueur->attaques.attaque_2.attaque_pa=15;
+        joueur->attaques.attaque_2.attaque_portee=3;
+        ///troisième:
+        strcpy(joueur->attaques.attaque_3.attaque,"anneau");anneau
+        joueur->attaques.attaque_3.attaque_pv=10;
+        joueur->attaques.attaque_3.attaque_pa=20;
+        ///quatrième:
+        strcpy(joueur->attaques.attaque_4.attaque,"arc");arc
+        joueur->attaques.attaque_4.attaque_pv=10;
+        joueur->attaques.attaque_4.attaque_pa=20;
+        joueur->attaques.attaque_4.attaque_portee=7;
+        ///cinquieme :
+        strcpy(joueur->attaques.attaque_5.attaque,"epeeelfique");
+        joueur->attaques.attaque_5.attaque_pv=15;
+        joueur->attaques.attaque_5.attaque_pa=15;
+        joueur->attaques.attaque_5.attaque_portee=4;
 
         joueur->numero_perso=ELFE;
         strcpy(joueur->nomperso,"elfe");
@@ -543,24 +555,28 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
     case ORQUE:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"coup");
-        joueur->attaques.attaque_1.attaque_pv=15;
+        joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
+        joueur->attaques.attaque_1.attaque_portee=1;
         ///deuxieme :
-        strcpy(joueur->attaques.attaque_1.attaque,"dague");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=10;
+        strcpy(joueur->attaques.attaque_2.attaque,"dague");
+        joueur->attaques.attaque_2.attaque_pv=20;
+        joueur->attaques.attaque_2.attaque_pa=15;
+        joueur->attaques.attaque_2.attaque_portee=3;
         ///troisième:
-        strcpy(joueur->attaques.attaque_1.attaque,"epeearwen");
-        joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=20;
+        strcpy(joueur->attaques.attaque_3.attaque,"epeearwen");
+        joueur->attaques.attaque_3.attaque_pv=10;
+        joueur->attaques.attaque_3.attaque_pa=20;
         ///quatrième:
-        strcpy(joueur->attaques.attaque_1.attaque,"epeethorin");
-        joueur->attaques.attaque_1.attaque_pv=15;
-        joueur->attaques.attaque_1.attaque_pa=5;
+        strcpy(joueur->attaques.attaque_4.attaque,"epeethorin");
+        joueur->attaques.attaque_4.attaque_pv=10;
+        joueur->attaques.attaque_4.attaque_pa=20;
+        joueur->attaques.attaque_4.attaque_portee=7;
         ///cinquieme :
-        strcpy(joueur->attaques.attaque_1.attaque,"lame");
-        joueur->attaques.attaque_1.attaque_pv=10;
-        joueur->attaques.attaque_1.attaque_pa=15;
+        strcpy(joueur->attaques.attaque_5.attaque,"lame");
+        joueur->attaques.attaque_5.attaque_pv=15;
+        joueur->attaques.attaque_5.attaque_pa=15;
+        joueur->attaques.attaque_5.attaque_portee=4;
 
 
         joueur->numero_perso=ORQUE;
@@ -570,16 +586,12 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
         break;
     default:
         break;
-         joueur->pseudo = saisiepseudo(buffer,joueur,numeroDuJoueur);
     }
 
+    //nom = saisiepseudo(buffer,joueur,numeroDuJoueur);
+    joueur->pseudo = saisiepseudo(buffer,joueur,numeroDuJoueur);
+    //strcpy(joueur->pseudo,nom);
 
-
-
-
-    //ss prog saisi de l'ident
-    //joueur->prenom = (char *) malloc(sizeof(char) * strlen(mot));
-    //strcpy(joueur->prenom, buffer);
 
 }
 
