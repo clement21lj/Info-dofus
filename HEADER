@@ -25,6 +25,10 @@
 #define nbperso  4
 
 
+#define NB_LIGNES 19
+#define NB_COLONNES 27
+
+
 
 /////////////////
 ///STRUCTURES///
@@ -39,7 +43,6 @@ enum typeCase{
     ,SPAWN_ELFE
     ,JOUEUR_SUR_CASE
 };
-
 
 //Structure case
 typedef struct coord_case  //Puis tableau de structure case (60x40)
@@ -92,6 +95,7 @@ typedef struct joueur       //PAS FINIE je(Clément) la finirai
     char pseudo[SAISIE_MAX];
     //t_type_perso *perso[nbperso];     //Chaque type de personnage disponible
     t_attaques_perso attaques;
+    char nomperso[20];
     int numero_perso;          //Numero pour savoir quelle classe de personnage le joueur possède (1:nain, 2:sorcier, 3:elfe, 4:orque)
     int PV_perso;       //Points de Vie
     int PA_perso;       //Points d'Attaque
@@ -101,8 +105,16 @@ typedef struct joueur       //PAS FINIE je(Clément) la finirai
     int numero_case_colone;     //numero de la colonne du tableau de cases à 2 dimensions
 }t_joueur;
 
+
+typedef struct cases{
+    enum typeCase typeDeLaCase;
+    int x;
+    int y;
+}t_cases;
+
 typedef struct jeuDofus {
   //t_mapJeu mapJeu;
+  t_cases mapJeu[NB_LIGNES][NB_COLONNES];
   t_joueur *tabJoueur;
   int nbJoueurs;
 } t_jeuDofus;
@@ -115,11 +127,8 @@ typedef struct jeuDofus {
 ///PROTOTYPES SOUS-PROGRAMMES///
 ///////////////////////////////
 
-BITMAP* affichagemap(t_jeuDofus *jeuDofus, int num_joueur);
-
-
 //FONCTIONS INT
-int affichage_nouvelle_partie(BITMAP* buffer1);
+
 
 
 //FONCTIONS VOID
@@ -132,16 +141,15 @@ void regles_jeu();
 void noms_createurs();
 void quitter_jeu();
 void InitialisationNouvellePartie();
+int affichage_nouvelle_partie(BITMAP* buffer1);
 void initialisationDesJoueurs(t_jeuDofus *jeuDofus);
-void initialisationJoueur(BITMAP* buffer, t_joueur* joueur);
+void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, int messageErreur);
+void initialisationPlateauDeJeu(t_jeuDofus *jeuDofus);
 
 void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur);
 void boucleDeJeu(t_jeuDofus *jeuDofus);
+
+BITMAP* affichagemap(t_jeuDofus *jeuDofus, int num_joueur);
 char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur);
-
-//void affichagemap(t_jeuDofus *jeuDofus);
-
-void sp_deplacements(t_jeuDofus *jeuDofus, BITMAP *buffer, int numJoueur);
-void sp_attaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int numJoueur);
 
 #endif // HEADER_H_INCLUDED
