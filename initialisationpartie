@@ -295,7 +295,7 @@ void choixPseudo(BITMAP* buffer, t_joueur* joueur)
 
 
 
-void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
+void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, int messageErreur)
 {
     //char ident[100];
 
@@ -306,12 +306,12 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
     joueur->nb_tours_survecu=0;
 
     //joueur->numero_perso=choixPerso(buffer,joueur); //appelle sous prog selection perso
-    choixPerso(buffer, joueur);
+    choixPerso(buffer, joueur, numeroDuJoueur, messageErreur);
     printf("%d", joueur->numero_perso);
 
     switch(joueur->numero_perso)
     {
-    case 1:
+    case NAIN:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"belier");
         joueur->attaques.attaque_1.attaque_pv=15;
@@ -335,11 +335,13 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
 
 
         joueur->numero_perso=NAIN;
-        strmp(joueur->nomperso,"nain");
+        strcpy(joueur->nomperso,"nain");
         ///joueur->numero_case= ?????????
+        joueur->coord_x= 10;
+        joueur->coord_y= 10;
         break;
 
-    case 2:
+    case SORCIER:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"boulefeu");
         joueur->attaques.attaque_1.attaque_pv=15;
@@ -363,12 +365,12 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
 
 
         joueur->numero_perso=SORCIER;
-        strmp(joueur->nomperso,"sorcier");
+        strcpy(joueur->nomperso,"sorcier");
         ///joueur->numero_case= ?????????
 
 
         break;
-    case 3:
+    case ELFE:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"anneau");
         joueur->attaques.attaque_1.attaque_pv=15;
@@ -392,10 +394,10 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
 
 
         joueur->numero_perso=ELFE;
-        strmp(joueur->nomperso,"elfe");
+        strcpy(joueur->nomperso,"elfe");
         ///joueur->numero_case= ?????????
         break;
-    case 4:
+    case ORQUE:
         ///premiere attaque :
         strcpy(joueur->attaques.attaque_1.attaque,"coup");
         joueur->attaques.attaque_1.attaque_pv=15;
@@ -419,7 +421,7 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
 
 
         joueur->numero_perso=ORQUE;
-        strmp(joueur->nomperso,"orque");
+        strcpy(joueur->nomperso,"orque");
         ///joueur->numero_case= ?????????
 
         break;
@@ -429,14 +431,12 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur)
 
 
 
+
     //ss prog saisi de l'ident
     //joueur->prenom = (char *) malloc(sizeof(char) * strlen(mot));
     //strcpy(joueur->prenom, buffer);
 
 }
-
-
-
 
 void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 {
