@@ -2,14 +2,14 @@
 
 //a jouter en parametre : int tabPerso Dispo[NB_PERSO_DISPO]
 
-void choixPerso(BITMAP*buffer, t_joueur *joueur)
+
+void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur)
 {
 
 // BITMAP servant de buffer d'affichage (double buffer)
     //BITMAP *buffer;
     int quitter =0;
-
-    printf("Bien entre ds le ss prgrm");
+    int eviteRebondSouris = (mouse_b & 1 ? 1 : 0);
 
     // initialisation d'entree.
     BITMAP *imchoix;
@@ -71,12 +71,19 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur)
     {
 
         blit(imchoix, buffer, 0, 0,(SCREEN_W-imchoix->w)/2, (SCREEN_H-imchoix->h)/2, imchoix->w, imchoix->h);
-
+        if(messageErreur==1)
+            textout_ex(buffer, police, "PERSONNAGE DEJA SELECTIONNE",290, 440, makecol(255,0,0), -1);
         // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
         textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
 
-
-        textout_ex(buffer, police, "CHOISIS TON PERSONNAGE",270, 70, makecol(255,255,255), -1);
+        if(numeroDuJoueur==0)
+            textout_ex(buffer, police, "CHOISIS TON PERSONNAGE JOUEUR 1",240, 70, makecol(255,255,255), -1);
+        else if(numeroDuJoueur==1)
+            textout_ex(buffer, police, "CHOISIS TON PERSONNAGE JOUEUR 2",240, 70, makecol(255,255,255), -1);
+        else if(numeroDuJoueur==2)
+            textout_ex(buffer, police, "CHOISIS TON PERSONNAGE JOUEUR 3",240, 70, makecol(255,255,255), -1);
+        else if(numeroDuJoueur==3)
+            textout_ex(buffer, police, "CHOISIS TON PERSONNAGE JOUEUR 4",240, 70, makecol(255,255,255), -1);
 
         //faire une boucle tant que tout les joueurs n'ont pas selectionner leur personnage on continue
         //une fois que tous les joueurs on selectionne leur perso on detemrine l'ordre des joueurs, on affiche cet ordre
@@ -92,17 +99,14 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur)
         rect(buffer,30,520,200,560,makecol(255,255,255));
         textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(255,255,255), -1);
         if (mouse_x>=30 && mouse_x <=200 && mouse_y >= 520 && mouse_y <= 560)
-        {
-            textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(0, 147, 0), -1);
-        }
-        if (mouse_b & 1 && mouse_x>=30 && mouse_x <=200 && mouse_y >= 520 && mouse_y <= 560)
-        {
-            joueur->numero_perso = 1; //ancien choix
-            quitter =1;
-        }
-
-
-
+            {
+                textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(0, 147, 0), -1);
+                if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = NAIN;
+                    quitter=1;
+                }
+            }
 
         ///ORQUE
         draw_sprite(buffer,imorc,275,190);
@@ -116,14 +120,12 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur)
         if (mouse_x>=280 && mouse_x <=460 && mouse_y >= 520 && mouse_y <= 560)
         {
             textout_ex(buffer, police, "JE VALIDE",290, 530, makecol(0, 147, 0), -1);
+            if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = ORQUE;
+                    quitter=1;
+                }
         }
-        if (mouse_b & 1 && mouse_x>=280 && mouse_x <=460 && mouse_y >= 520 && mouse_y <= 560)
-        {
-
-            joueur->numero_perso = 4; //ancien
-            quitter =1;
-        }
-
 
 
         ///ELFE
@@ -138,16 +140,12 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur)
         if (mouse_x>=530 && mouse_x <=710 && mouse_y >= 520 && mouse_y <= 560)
         {
             textout_ex(buffer, police, "JE VALIDE",540, 530, makecol(0, 147, 0), -1);
+            if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = ELFE;
+                    quitter=1;
+            }
         }
-        if (mouse_b & 1 && mouse_x>=530 && mouse_x <=710 && mouse_y >= 520 && mouse_y <= 560)
-        {
-
-            joueur->numero_perso = 3;
-            quitter =1;
-        }
-
-
-
 
         ///SORCIER
         draw_sprite(buffer,imsorcier,730,195);
@@ -161,18 +159,16 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur)
         if (mouse_x>=760 && mouse_x <=940 && mouse_y >= 520 && mouse_y <= 560)
         {
             textout_ex(buffer, police, "JE VALIDE",770, 530, makecol(0, 147, 0), -1);
+            if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = SORCIER;
+                    quitter=1;
+            }
         }
-        if (mouse_b & 1 && mouse_x>=760 && mouse_x <=940 && mouse_y >= 520 && mouse_y <= 560)
-        {
-
-            joueur->numero_perso = 2;
-            quitter =1;
-        }
-
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
-    }
-    while(quitter!=1);
+        if(!(mouse_b & 1))
+            eviteRebondSouris = 0;
+    }while(quitter!=1);
 
     destroy_bitmap(imnain);
     destroy_bitmap(imorc);
@@ -185,7 +181,6 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur)
     destroy_bitmap(hobbit);
 
 }
-
 
 /*
 void choixPseudo(BITMAP* buffer, t_joueur* joueur)
