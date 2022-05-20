@@ -442,7 +442,7 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 {
 
     BITMAP *buffer;
-
+    int i = 0, messageErreur=0;
     //init dofus
     jeuDofus->nbJoueurs = 0;
     jeuDofus->tabJoueur = NULL;
@@ -460,10 +460,9 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 
     //int tabPersoDispo[NB_PERSO_DISPO] = {NAIN, ELFE, ORQUE, SORCIER};
 
-printf("test");
     ///affichage choix nb joueurs
     jeuDofus->nbJoueurs = affichage_nouvelle_partie(buffer);
-    printf("%d", jeuDofus->nbJoueurs);
+    printf("\nNb joueur : %d\n", jeuDofus->nbJoueurs);
 
     //allocation dynamique et vérification
     jeuDofus->tabJoueur = (t_joueur*)malloc(sizeof(t_joueur)*(jeuDofus->nbJoueurs));
@@ -471,9 +470,26 @@ printf("test");
         printf("Erreur dans l'allocation dynamique du tableau de joueur\n");
 
     //remplissage du tableau de structure joueur alloué dyn
-    for(int i = 0; i < jeuDofus->nbJoueurs; i++)
+    for(i=0 ; i < jeuDofus->nbJoueurs; i++)
     {
-        initialisationJoueur(buffer, &(jeuDofus->tabJoueur[i])); //envoyer tabPersoDispo en parametre
+        initialisationJoueur(buffer, &(jeuDofus->tabJoueur[i]),i, messageErreur); //envoyer tabPersoDispo en parametre
+        if(jeuDofus->tabJoueur[i].numero_perso==NAIN)
+            printf("DEBUG : JOUEUR %d PERSO SELEC NAIN \n",i+1);
+        if(jeuDofus->tabJoueur[i].numero_perso==SORCIER)
+            printf("DEBUG : JOUEUR %d PERSO SELEC SORCIER \n",i+1);
+        if(jeuDofus->tabJoueur[i].numero_perso==ORQUE)
+            printf("DEBUG : JOUEUR %d PERSO SELEC ORQUE \n",i+1);
+        if(jeuDofus->tabJoueur[i].numero_perso==ELFE)
+            printf("DEBUG : JOUEUR %d PERSO SELEC ELFE \n",i+1);
+        for(int j=0; j < i; j++){
+            if(jeuDofus->tabJoueur[i].numero_perso == jeuDofus->tabJoueur[j].numero_perso){
+                printf("Personnage deja selectionner veillez rechoisir ! \n");
+                j=i;
+                i--;
+                messageErreur=1;
+            }else messageErreur=0;
+        }
+
     }
 
 
