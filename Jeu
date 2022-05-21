@@ -312,6 +312,7 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){ //a inclure avec l'autre
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+
 /*BITMAP* recup_sprites(BITMAP*scr,int w,int h,int startx,int starty,int col,int element)
 // bitmap origine
 // taille de l’image élément d’une animation
@@ -333,10 +334,15 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){ //a inclure avec l'autre
     return bmp; // retour de la bitmap du sprite
 }
 
-selectattaques() //pas fini du tout a inclure dans boucle de jeu
+affichageaction()
 {
     int i=0, xanimFeu=0, yanimFeu=0, timeanimFeu=0;
     int valideS1=0, valideS2=0, valideS3=0, valideS4=0, valideS5=0;
+    int valideN1=0, valideN2=0, valideN3=0, valideN4=0, valideN5=0;
+    int valideE1=0, valideE2=0, valideE3=0, valideE4=0, valideE5=0;
+    int valideO1=0, valideO2=0, valideO3=0, valideO4=0, valideO5=0;
+
+
     //initialisation allegro mis dans un sous-programme
     initialisation_allegro();
 
@@ -413,6 +419,9 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
     dormor=load_bitmap("attaquesperso/sorcier/dormor.bmp",NULL);
     //BITMAP*animfeu
     //animfeu=load_bitmap("attaquesperso/sorcier/animboulefeu.bmp",NULL);
+
+    BITMAP*action;
+    action=load_bitmap("saisi.bmp",NULL);
 
 
 
@@ -500,17 +509,212 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
         rect(buffer,883,213,980,230,makecol(0,0,0));
 
 
+        ///OPTION DE JEU DES PERSOS
+        stretch_sprite (buffer, action, 0, 5, 190, 120);
+        textprintf_ex(buffer,font,52,33,makecol(255,255,255), -1,"ME DEPLACER");
+        if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 27 && mouse_y <= 50 )
+        {
+            textprintf_ex(buffer,font,52,33,makecol(0,147,0), -1,"ME DEPLACER");
+            if (mouse_b & 1){
+
+                ///appelle ss prog dreplacement
+            }
+        }
+
+        textprintf_ex(buffer,font,63,62,makecol(255,255,255), -1,"ATTAQUER");
+         if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 56 && mouse_y <= 80 )
+        {
+            textprintf_ex(buffer,font,63,62,makecol(0,147,0), -1,"ATTAQUER");
+            if (mouse_b & 1){
+
+                ///le joueur choisi son attaque en bas
+            }
+        }
+
+        textprintf_ex(buffer,font,37,94,makecol(255,255,255), -1,"PASSER MON TOUR");
+         if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 86 && mouse_y <= 106 )
+        {
+            textprintf_ex(buffer,font,37,94,makecol(0,147,0), -1,"PASSER MON TOUR");
+            if (mouse_b & 1){
+
+            }
+        }
 
 
 
-        /*//si c'est le tour du nain de jouer
+
+
+
+
+
+
+
+        //si c'est le tour du nain de jouer
         draw_sprite(buffer,fleche,785,85);
         stretch_sprite (buffer, nain, 318, 535 , 60, 55);
         stretch_sprite (buffer, nainbelier, 395, 558 , 45, 40);
         stretch_sprite (buffer, nainepee, 455, 560 , 45, 40);
         stretch_sprite (buffer, nainhache, 515, 560 , 45, 40);
         stretch_sprite (buffer, nainjavelot, 574, 560 , 45, 40);
-        stretch_sprite (buffer, nainmassue, 635, 560 , 45, 40);*/
+        stretch_sprite (buffer, nainmassue, 635, 560 , 45, 40);
+
+        ///affichage detail belier
+
+        if (mouse_x>=390 && mouse_x <=446 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideN1=1;
+        }
+        if(valideN1==1)
+        {
+
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE BELIER");
+            stretch_sprite (buffer, nainbelier, 740, 510, 75, 70);
+
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:5");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:1");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideN1=2;
+        }
+
+
+         ///affichage detail epee
+        if (mouse_x>=451 && mouse_x <=510 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideN2=1;
+        }
+        if(valideN2==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE EPEE");
+            stretch_sprite (buffer, nainepee, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:20");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:3");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideN2=2;
+        }
+
+         ///affichage detail hache
+        if (mouse_x>=510 && mouse_x <=568 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideN3=1;
+        }
+        if(valideN3==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE HACHE");
+            stretch_sprite (buffer, nainhache, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:20");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:20");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:5");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideN3=2;
+        }
+
+         ///affichage detail javelot
+        if (mouse_x>=570 && mouse_x <=629 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideN4=1;
+        }
+        if(valideN4==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE JAVELOT");
+            stretch_sprite (buffer, nainjavelot, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:20");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:7");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideN4=2;
+        }
+
+
+         ///affichage detail massue
+        if (mouse_x>=632 && mouse_x <=690 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideN5=1;
+        }
+        if(valideN5==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE MASSUE");
+            stretch_sprite (buffer, nainmassue, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:15");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:4");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideN5=2;
+        }
+
 
 
 
@@ -524,12 +728,173 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
         stretch_sprite (buffer, elfearc, 455, 560 , 45, 40);
         stretch_sprite (buffer, elfeepee1, 515, 560 , 45, 40);
         stretch_sprite (buffer, elfeepee2, 574, 560 , 45, 40);
-        stretch_sprite (buffer, elfelame, 635, 560 , 45, 40);*/
+        stretch_sprite (buffer, elfelame, 635, 560 , 45, 40);
+
+         ///affichage detail anneau
+
+        if (mouse_x>=390 && mouse_x <=446 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideE1=1;
+        }
+        if(valideE1==1)
+        {
+
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE ANNEAU");
+            stretch_sprite (buffer, elfeanneau, 740, 510, 75, 70);
+
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:20");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:4");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideE1=2;
+        }
+
+
+         ///affichage detail arc
+        if (mouse_x>=451 && mouse_x <=510 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideE2=1;
+        }
+        if(valideE2==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE ARC");
+            stretch_sprite (buffer, elfearc, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:20");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:7");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideE2=2;
+        }
+
+         ///affichage detail epee elfique
+        if (mouse_x>=510 && mouse_x <=568 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideE3=1;
+        }
+        if(valideE3==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE EPEE ELFIQUE");
+            stretch_sprite (buffer, elfeepee1, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:15");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:4");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideE3=2;
+        }
+
+         ///affichage detail epee
+        if (mouse_x>=570 && mouse_x <=629 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideE4=1;
+        }
+        if(valideE4==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE EPEE");
+            stretch_sprite (buffer, elfeepee2, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:20");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:3");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideE4=2;
+        }
+
+
+         ///affichage detail lame
+        if (mouse_x>=632 && mouse_x <=690 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideE5=1;
+        }
+        if(valideE5==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE LAME");
+            stretch_sprite (buffer, elfelame, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:5");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:1");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideE5=2;
+        }*/
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-        //si c'est le tour du sorcier de jouer
+       /* //si c'est le tour du sorcier de jouer
         draw_sprite(buffer,fleche,784,195);
         stretch_sprite (buffer, sorcier, 318, 535, 60, 55);
         stretch_sprite (buffer, boulefeu, 395, 558, 45, 40);
@@ -691,7 +1056,7 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
 
             textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
             textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:20");
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"PP:7");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:7");
             textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
             rect(buffer,840,560,940,585,makecol(68,29,133));
             if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
@@ -723,7 +1088,7 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
             stretch_sprite (buffer, baton, 740, 510, 75, 70);
             textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:20");
             textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"PP:3");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:3");
             textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
             rect(buffer,840,560,940,585,makecol(68,29,133));
             if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
@@ -753,7 +1118,7 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
             stretch_sprite (buffer, poignard, 740, 510, 75, 70);
             textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
             textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:5");
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"PP:1");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:1");
             textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
             rect(buffer,840,560,940,585,makecol(68,29,133));
             if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
@@ -783,7 +1148,7 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
             stretch_sprite (buffer, barrage, 740, 510, 75, 70);
             textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:15");
             textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:5");
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"PP:2");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:2");
             textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
             rect(buffer,840,560,940,585,makecol(68,29,133));
             if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
@@ -802,9 +1167,9 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
          ///affichage detail dormor
         if (mouse_x>=632 && mouse_x <=690 && mouse_y >= 557 && mouse_y <= 599)
         {
-            valideS3=1;
+            valideS5=1;
         }
-        if(valideS3==1)
+        if(valideS5==1)
         {
             rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
             rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
@@ -813,7 +1178,7 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
             stretch_sprite (buffer, dormor, 740, 510, 75, 70);
             textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:15");
             textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"PP:4");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:4");
             textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
             rect(buffer,840,560,940,585,makecol(68,29,133));
             if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
@@ -826,20 +1191,179 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
         }
         if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
         {
-            valideS3=2;
-        }
+            valideS5=2;
+        }*/
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /*//si c'est le tour du Orque de jouer
+       /* //si c'est le tour du Orque de jouer
         draw_sprite(buffer,fleche,785,135);
         stretch_sprite (buffer, orque, 318, 535 , 60, 55);
         stretch_sprite (buffer, orquecoup, 395, 558 , 45, 40);
         stretch_sprite (buffer, orquedague, 455, 560 , 45, 40);
         stretch_sprite (buffer, orqueepee1, 515, 560 , 45, 40);
         stretch_sprite (buffer, orqueepee2, 574, 560 , 45, 40);
-        stretch_sprite (buffer, orquelame, 635, 560 , 45, 40);*/
+        stretch_sprite (buffer, orquelame, 635, 560 , 45, 40);
+
+        ///affichage detail coup
+
+        if (mouse_x>=390 && mouse_x <=446 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideO1=1;
+        }
+        if(valideO1==1)
+        {
+
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE COUP");
+            stretch_sprite (buffer, orquecoup, 740, 510, 75, 70);
+
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:5");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:1");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideO1=2;
+        }
+
+
+         ///affichage detail dague
+        if (mouse_x>=451 && mouse_x <=510 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideO2=1;
+        }
+        if(valideO2==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE DAGUE");
+            stretch_sprite (buffer, orquedague, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:20");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:3");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideO2=2;
+        }
+
+         ///affichage detail epee arwen
+        if (mouse_x>=510 && mouse_x <=568 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideO3=1;
+        }
+        if(valideO3==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE EPEE D'ARWEN");
+            stretch_sprite (buffer, orqueepee1, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:12");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:4");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideO3=2;
+        }
+
+         ///affichage detail epee thorin
+        if (mouse_x>=570 && mouse_x <=629 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideO4=1;
+        }
+        if(valideO4==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE EPEE THRORIN");
+            stretch_sprite (buffer, orqueepee2, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:10");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:20");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:7");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideO4=2;
+        }
+
+
+         ///affichage detail lame
+        if (mouse_x>=632 && mouse_x <=690 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            valideO5=1;
+        }
+        if(valideO5==1)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE LAME-KI-KOUPE");
+            stretch_sprite (buffer, orquelame, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:15");
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:15");
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:4");
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+            if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+            {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                //if(mouse_b & 1 {
+                ///le joueur utilise cet attaque
+                //}
+            }
+        }
+        if (mouse_x>=0 && mouse_x <=740 && mouse_y >= 0 && mouse_y <= 510 && mouse_b & 1)
+        {
+            valideO5=2;
+        }
+*/
+
 
 
 
@@ -863,5 +1387,3 @@ selectattaques() //pas fini du tout a inclure dans boucle de jeu
 
     }
 }*/
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
