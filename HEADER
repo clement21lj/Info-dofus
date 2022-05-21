@@ -90,7 +90,7 @@ typedef struct type_perso
 }t_type_perso;
 
 //Structure joueur (toutes les données du joueur)
-typedef struct joueur       //PAS FINIE je(Clément) la finirai
+typedef struct joueur       
 {
     char pseudo[SAISIE_MAX];
     //t_type_perso *perso[nbperso];     //Chaque type de personnage disponible
@@ -101,6 +101,9 @@ typedef struct joueur       //PAS FINIE je(Clément) la finirai
     int PA_perso;       //Points d'Attaque
     int PM_perso;       //Points de Mouvement
     int nb_tours_survecu;//Nombre de tours survécus par le joueur, permettant d'établir le classement à la fin
+    int coord_x;        //Coordonnées x du personnage
+    int coord_y;        //Coordonnées y du personnage
+    int numero_case;    //numero de la case du tableau de structures de cases (CREER UN TABLEAU DE STUCTURES DE CASES)
     int numero_case_ligne;    //numero de la ligne du tableau de cases à 2 dimensions
     int numero_case_colone;     //numero de la colonne du tableau de cases à 2 dimensions
 }t_joueur;
@@ -118,6 +121,8 @@ typedef struct jeuDofus {
   t_joueur *tabJoueur;
   int nbJoueurs;
 } t_jeuDofus;
+//Structure joueur (toutes les données du joueur)
+
 
 
 
