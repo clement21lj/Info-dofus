@@ -9,7 +9,13 @@
 /////////////////
 #include "header.h"
 
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*
+* AUTEUR : NAYA
+* Nom : affichagePersonnageEnHautADroite
+* Input : t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *nain, BITMAP *sorcier, BITMAP *orque, BITMAP *elfe, BITMAP *fleche, int numDuJoueurQuiJoue
+* Output : //
+* Role : affiche le spersonnage de la partie en focntion des choix des joueurs
+*/
 void affichagePersonnageEnHautADroite(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *nain, BITMAP *sorcier, BITMAP *orque, BITMAP *elfe, BITMAP *fleche, int numDuJoueurQuiJoue)
 {
     for(int i = 0; i < jeuDofus->nbJoueurs; i++)
@@ -51,6 +57,13 @@ void affichagePersonnageEnHautADroite(t_jeuDofus *jeuDofus, BITMAP *buffer, BITM
     }
 }
 
+/*
+* AUTEUR : NAYA
+* Nom : affichageJoueurQuiJoue
+* Input : t_jeuDofus *jeuDofus, BITMAP *buffer, t_joueur joueur, BITMAP *personnage
+* Output : //
+* Role : affcihe le perso ses carac et ses attaques quand il joue
+*/
 void affichageJoueurQuiJoue(t_jeuDofus *jeuDofus, BITMAP *buffer, t_joueur joueur, BITMAP *personnage)
 {
 
@@ -75,7 +88,13 @@ void affichageJoueurQuiJoue(t_jeuDofus *jeuDofus, BITMAP *buffer, t_joueur joueu
     printf("attaque afficher\n");
 }
 
-
+/*
+* AUTEUR : NAYA
+* Nom : dessineLesDifferentsJoueurs
+* Input : t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *elfe, BITMAP *sorcier, BITMAP *orque, BITMAP *nain
+* Output : //
+* Role : affiche les persos sur la map en debut de partie
+*/
 //void dessineLesDifférentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *elfe, BITMAP *sorcier, BITMAP *orque, BITMAP *nain){
 void dessineLesDifferentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *elfe, BITMAP *sorcier, BITMAP *orque, BITMAP *nain)
 {
@@ -104,6 +123,13 @@ void dessineLesDifferentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *e
     }
 }
 
+/*
+* AUTEUR : NAYA
+* Nom : gereLesAttaques
+* Input : t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *eviteRebondSouris, int i
+* Output : 0
+* Role : affiche les details des attaques sur le coté droit quand on met la souris dessus
+*/
 int gereLesAttaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *eviteRebondSouris, int i)
 {
 
@@ -215,13 +241,25 @@ int gereLesAttaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *evit
     return 0;
 }
 
-
+/*
+* AUTEUR : CLEMENT
+* Nom : gereActionAttaque
+* Input : 
+* Output : //
+* Role : action des attaques
+*/
 void gereActionAttaque()
 {
 
 }
 
-
+/*
+* AUTEUR : NAYA
+* Nom : recup_sprites
+* Input : BITMAP*scr,int w,int h,int startx,int starty,int col,int element
+* Output : bmp
+* Role : renvoie la bitmzp zvec les coordonnés souhaités
+*/
 BITMAP* recup_sprites(BITMAP*scr,int w,int h,int startx,int starty,int col,int element)
 // bitmap origine
 // taille de l’image élément d’une animation
@@ -243,7 +281,13 @@ BITMAP* recup_sprites(BITMAP*scr,int w,int h,int startx,int starty,int col,int e
     return bmp; // retour de la bitmap du sprite
 }
 
-
+/*
+* AUTEUR : NAYA
+* Nom : gereSablier
+* Input : int *timeSablier, int xsablier, int ysablier, BITMAP *SablierTab[15], BITMAP *buffer
+* Output : //
+* Role : affichage du sprite d'animation
+*/
 
 void gereSablier(int *timeSablier, int xsablier, int ysablier, BITMAP *SablierTab[15], BITMAP *buffer)
 {
@@ -319,10 +363,23 @@ void gereSablier(int *timeSablier, int xsablier, int ysablier, BITMAP *SablierTa
 
 }
 
-void deplacement(){
-
-
+/*
+* AUTEUR : SEBASTIEN
+* Nom : deplacement
+* Input : BITMAP *buffer
+* Output : 
+* Role : gere les deplacements des perso
+*/
+void deplacement(BITMAP *buffer){
 }
+
+/*
+* AUTEUR : NAYA et CLEMENT
+* Nom : boucleDeJeu
+* Input : t_jeuDofus *jeuDofus
+* Output : //
+* Role : déroulement du jeu 
+*/
 void boucleDeJeu(t_jeuDofus *jeuDofus)
 {
     ///DECLARATIONS///
@@ -468,7 +525,7 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
 
         if(optionMeDeplacerOn==1)
         {
-            deplacement();
+            deplacement(buffer);
 
         }
 
