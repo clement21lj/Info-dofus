@@ -28,6 +28,9 @@
 #define NB_LIGNES 19
 #define NB_COLONNES 27
 
+#define HAUTEUR_CASE 600/NB_LIGNES
+#define LARGEUR_CASE 1000/NB_COLONNES
+
 
 
 /////////////////
