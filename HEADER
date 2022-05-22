@@ -109,6 +109,7 @@ typedef struct joueur
     int numero_case;    //numero de la case du tableau de structures de cases (CREER UN TABLEAU DE STUCTURES DE CASES)
     int numero_case_ligne;    //numero de la ligne du tableau de cases à 2 dimensions
     int numero_case_colone;     //numero de la colonne du tableau de cases à 2 dimensions
+    BITMAP *bit_perso;
 }t_joueur;
 
 
