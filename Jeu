@@ -64,7 +64,7 @@ void affichageJoueurQuiJoue(t_jeuDofus *jeuDofus, BITMAP *buffer, t_joueur joueu
     textprintf_ex(buffer,font,397,537,makecol(255,255,255), -1,"PV : %d",joueur.PV_perso);
     textprintf_ex(buffer,font,497,537,makecol(255,255,255), -1,"PM : %d",joueur.PM_perso);
     textprintf_ex(buffer,font,597,537,makecol(255,255,255), -1,"PA : %d",joueur.PA_perso);
-printf("On affiche les attaques : \n");
+    printf("On affiche les attaques : \n");
 
     stretch_sprite (buffer, personnage, 318, 535, 60, 55);
     stretch_sprite (buffer, joueur.attaques.attaque_1.image, 395, 558, 45, 40);
@@ -104,117 +104,120 @@ void dessineLesDifferentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *e
     }
 }
 
-int gereLesAttaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *eviteRebondSouris, int i){
+int gereLesAttaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *eviteRebondSouris, int i)
+{
 
-     ///Affichage du detail des attaques
+    ///Affichage du detail des attaques
 
-        if (mouse_x>=390 && mouse_x <=446 && mouse_y >= 557 && mouse_y <= 599)
-        {
-            *valide=1;
-        }
-        if(*valide==1)
-        {
+    if (mouse_x>=390 && mouse_x <=446 && mouse_y >= 557 && mouse_y <= 599)
+    {
+        *valide=1;
+    }
+    if(*valide==1)
+    {
 
-            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
-            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
-            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
-            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque);
-            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_1.image, 740, 510, 75, 70);
+        rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+        rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+        rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+        textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque);
+        stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_1.image, 740, 510, 75, 70);
 
-            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_pv);
-            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_pa);
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_portee);
-            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
-            rect(buffer,840,560,940,585,makecol(68,29,133));
-        }
-        ///affichage detail epee
-        if (mouse_x>=451 && mouse_x <=510 && mouse_y >= 557 && mouse_y <= 599)
-        {
-            *valide=2;
-        }
-        if(*valide==2)
-        {
-            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
-            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
-            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
-            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque);
-            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_2.image, 740, 510, 75, 70);
-            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_pv);
-            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_pa);
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_portee);
-            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
-            rect(buffer,840,560,940,585,makecol(68,29,133));
-        }
-         ///affichage detail hache
-        if (mouse_x>=510 && mouse_x <=568 && mouse_y >= 557 && mouse_y <= 599)
-        {
-            *valide=3;
-        }
-        if(*valide==3)
-        {
-            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
-            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
-            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
-            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque);
-            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_3.image, 740, 510, 75, 70);
-            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_pv);
-            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_pa);
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_portee);
-            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
-            rect(buffer,840,560,940,585,makecol(68,29,133));
-        }
+        textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_pv);
+        textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_pa);
+        textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_portee);
+        textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+        rect(buffer,840,560,940,585,makecol(68,29,133));
+    }
+    ///affichage detail epee
+    if (mouse_x>=451 && mouse_x <=510 && mouse_y >= 557 && mouse_y <= 599)
+    {
+        *valide=2;
+    }
+    if(*valide==2)
+    {
+        rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+        rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+        rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+        textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque);
+        stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_2.image, 740, 510, 75, 70);
+        textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_pv);
+        textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_pa);
+        textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_portee);
+        textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+        rect(buffer,840,560,940,585,makecol(68,29,133));
+    }
+    ///affichage detail hache
+    if (mouse_x>=510 && mouse_x <=568 && mouse_y >= 557 && mouse_y <= 599)
+    {
+        *valide=3;
+    }
+    if(*valide==3)
+    {
+        rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+        rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+        rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+        textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque);
+        stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_3.image, 740, 510, 75, 70);
+        textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_pv);
+        textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_pa);
+        textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_portee);
+        textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+        rect(buffer,840,560,940,585,makecol(68,29,133));
+    }
 
-         ///affichage detail javelot
-        if (mouse_x>=570 && mouse_x <=629 && mouse_y >= 557 && mouse_y <= 599)
-        {
-            *valide=4;
-        }
-        if(*valide==4)
-        {
-            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
-            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
-            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
-            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque);
-            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_4.image, 740, 510, 75, 70);
-            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_pv);
-            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_pa);
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_portee);
-            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
-            rect(buffer,840,560,940,585,makecol(68,29,133));
-        }
-         ///affichage detail massue
-        if (mouse_x>=632 && mouse_x <=690 && mouse_y >= 557 && mouse_y <= 599)
-        {
-            *valide=5;
-        }
-        if(*valide==5)
-        {
-            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
-            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
-            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
-            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque);
-            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_5.image, 740, 510, 75, 70);
-            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_pv);
-            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_pa);
-            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_portee);
-            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
-            rect(buffer,840,560,940,585,makecol(68,29,133));
-        }
+    ///affichage detail javelot
+    if (mouse_x>=570 && mouse_x <=629 && mouse_y >= 557 && mouse_y <= 599)
+    {
+        *valide=4;
+    }
+    if(*valide==4)
+    {
+        rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+        rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+        rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+        textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque);
+        stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_4.image, 740, 510, 75, 70);
+        textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_pv);
+        textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_pa);
+        textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_portee);
+        textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+        rect(buffer,840,560,940,585,makecol(68,29,133));
+    }
+    ///affichage detail massue
+    if (mouse_x>=632 && mouse_x <=690 && mouse_y >= 557 && mouse_y <= 599)
+    {
+        *valide=5;
+    }
+    if(*valide==5)
+    {
+        rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+        rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+        rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+        textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque);
+        stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_5.image, 740, 510, 75, 70);
+        textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_pv);
+        textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_pa);
+        textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_portee);
+        textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+        rect(buffer,840,560,940,585,makecol(68,29,133));
+    }
 
 
-        if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+    if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+    {
+        textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+        if(mouse_b & 1 && *eviteRebondSouris==0)
         {
-                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
-                if(mouse_b & 1 && *eviteRebondSouris==0){
-                    *eviteRebondSouris=1;
-                    return *valide;
-                }
+            *eviteRebondSouris=1;
+            return *valide;
         }
-        return 0;
+    }
+    return 0;
 }
 
 
-void gereActionAttaque(){
+void gereActionAttaque()
+{
 
 }
 
@@ -242,76 +245,83 @@ BITMAP* recup_sprites(BITMAP*scr,int w,int h,int startx,int starty,int col,int e
 
 
 
-void gereSablier(int *timeSablier, int xsablier, int ysablier, BITMAP *SablierTab[15], BITMAP *buffer){
-            BITMAP *Sablier;
-            (*timeSablier)++;
-            printf("%d",*timeSablier);
-            if(*timeSablier >= 0)
-            {
-                Sablier = SablierTab[0];
-            }
-            if(*timeSablier >= 100)
-            {
-                Sablier = SablierTab[1];
-            }
-            if(*timeSablier >= 200)
-            {
-                Sablier = SablierTab[2];
-            }
-            if(*timeSablier >= 300)
-            {
-                Sablier = SablierTab[3];
-            }
-            if(*timeSablier >= 400)
-            {
-                Sablier = SablierTab[4];
-            }
-            if(*timeSablier >= 500)
-            {
-                Sablier = SablierTab[5];
-            }
-            if(*timeSablier >= 600)
-            {
-                Sablier = SablierTab[6];
-            }
-            if(*timeSablier >= 700)
-            {
-                Sablier = SablierTab[7];
-            }
-            if(*timeSablier >= 800)
-            {
-                Sablier = SablierTab[8];
-            }
-            if(*timeSablier >= 900)
-            {
-                Sablier = SablierTab[9];
-            }
-            if(*timeSablier >= 1000)
-            {
-                Sablier = SablierTab[10];
-            }
-            if(*timeSablier >= 1100)
-            {
-                Sablier = SablierTab[11];
-            }
-            if(*timeSablier >= 1200)
-            {
-                Sablier = SablierTab[12];
-            }
-            if(*timeSablier >= 1300)
-            {
-                Sablier = SablierTab[13];
-            }
-            if(*timeSablier >= 1400)
-            {
-                Sablier = SablierTab[14];
-            }
-            if(*timeSablier >= 1500)
-            {
-                *timeSablier=0;
-                Sablier = SablierTab[0];
-            }
-            stretch_sprite(buffer, Sablier, xsablier, ysablier , 65, 72);
+void gereSablier(int *timeSablier, int xsablier, int ysablier, BITMAP *SablierTab[15], BITMAP *buffer)
+{
+    BITMAP *Sablier;
+    (*timeSablier)++;
+    printf("%d",*timeSablier);
+    if(*timeSablier >= 0)
+    {
+        Sablier = SablierTab[0];
+    }
+    if(*timeSablier >= 100)
+    {
+        Sablier = SablierTab[1];
+    }
+    if(*timeSablier >= 200)
+    {
+        Sablier = SablierTab[2];
+    }
+    if(*timeSablier >= 300)
+    {
+        Sablier = SablierTab[3];
+    }
+    if(*timeSablier >= 400)
+    {
+        Sablier = SablierTab[4];
+    }
+    if(*timeSablier >= 500)
+    {
+        Sablier = SablierTab[5];
+    }
+    if(*timeSablier >= 600)
+    {
+        Sablier = SablierTab[6];
+    }
+    if(*timeSablier >= 700)
+    {
+        Sablier = SablierTab[7];
+    }
+    if(*timeSablier >= 800)
+    {
+        Sablier = SablierTab[8];
+    }
+    if(*timeSablier >= 900)
+    {
+        Sablier = SablierTab[9];
+    }
+    if(*timeSablier >= 1000)
+    {
+        Sablier = SablierTab[10];
+    }
+    if(*timeSablier >= 1100)
+    {
+        Sablier = SablierTab[11];
+    }
+    if(*timeSablier >= 1200)
+    {
+        Sablier = SablierTab[12];
+    }
+    if(*timeSablier >= 1300)
+    {
+        Sablier = SablierTab[13];
+    }
+    if(*timeSablier >= 1400)
+    {
+        Sablier = SablierTab[14];
+    }
+    if(*timeSablier >= 1500)
+    {
+        *timeSablier=0;
+        Sablier = SablierTab[0];
+    }
+    stretch_sprite(buffer, Sablier, xsablier, ysablier, 65, 72);
+
+}
+
+void deplacement(){
+
+
 }
 void boucleDeJeu(t_jeuDofus *jeuDofus)
 {
@@ -414,7 +424,8 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
         if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 27 && mouse_y <= 50 )
         {
             textprintf_ex(buffer,font,52,33,makecol(0,147,0), -1,"ME DEPLACER");
-            if (mouse_b & 1 && eviteRebondSouris == 0){
+            if (mouse_b & 1 && eviteRebondSouris == 0)
+            {
                 eviteRebondSouris=1;
                 optionMeDeplacerOn=1;
                 ///appelle ss prog dreplacement
@@ -422,33 +433,43 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
         }
 
         textprintf_ex(buffer,font,63,62,makecol(255,255,255), -1,"ATTAQUER");
-         if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 56 && mouse_y <= 80 )
+        if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 56 && mouse_y <= 80 )
         {
             textprintf_ex(buffer,font,63,62,makecol(0,147,0), -1,"ATTAQUER");
-            if (mouse_b & 1 && eviteRebondSouris==0){
-                 eviteRebondSouris=1;
-                 optionAttaquerOn=1;
+            if (mouse_b & 1 && eviteRebondSouris==0)
+            {
+                eviteRebondSouris=1;
+                optionAttaquerOn=1;
             }
         }
 
         textprintf_ex(buffer,font,37,94,makecol(255,255,255), -1,"PASSER MON TOUR");
-         if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 86 && mouse_y <= 106 )
+        if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 86 && mouse_y <= 106 )
         {
             textprintf_ex(buffer,font,37,94,makecol(0,147,0), -1,"PASSER MON TOUR");
-            if (mouse_b & 1 && eviteRebondSouris==0){
+            if (mouse_b & 1 && eviteRebondSouris==0)
+            {
                 eviteRebondSouris=1;
                 action_execute=1;
             }
         }
 
 
-        if(optionAttaquerOn==1){
+        if(optionAttaquerOn==1)
+        {
             choixAttaque=gereLesAttaques(jeuDofus,buffer,&valide,&eviteRebondSouris, i);
-            if(choixAttaque!=0){
+            if(choixAttaque!=0)
+            {
                 optionAttaquerOn=0;
                 gereActionAttaque();
                 action_execute=1;
             }
+        }
+
+        if(optionMeDeplacerOn==1)
+        {
+            deplacement();
+
         }
 
         ///Affichage du buffer sur l'écran
@@ -469,6 +490,8 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
         }
     }
 }
+
+
 
 
 
