@@ -21,14 +21,14 @@ void effet_attaques(BITMAP*buffer, t_jeuDofus *jeuDofus, t_joueur *joueur, t_car
     int i=0;        //Compteur servant à plusieurs boucles
     int cible_case=0;
     int resultat=0;
-    
+
     BITMAP *elfeanneau, *elfearc, *elfeepee1, *elfeepee2, *elfelame;
     BITMAP *nainbelier, *nainepee, *nainhache, *nainjavelot, *nainmassue;
     BITMAP *orquecoup, *orquedague, *orqueepee1, *orqueepee2, *orquelame;
     BITMAP *boulefeu, *baton, *poignard, *barrage, *dormor;
-    
-    
-    
+
+
+
     ///Load des attaques des personnages :
     //load des bitmaps attaques du l'elfe
     elfeanneau=load_bitmap("attaquesperso/elfe/anneauelfique.bmp",NULL);
@@ -59,8 +59,8 @@ void effet_attaques(BITMAP*buffer, t_jeuDofus *jeuDofus, t_joueur *joueur, t_car
     dormor=load_bitmap("attaquesperso/sorcier/dormor.bmp",NULL);
 
 
-    
-    
+
+
     ///Vérification de la cible sur la case
     for(i=0; i<jeuDofus->nbJoueurs; i++)
     {
@@ -76,133 +76,133 @@ void effet_attaques(BITMAP*buffer, t_jeuDofus *jeuDofus, t_joueur *joueur, t_car
         }
 
     }
-    
+
     ///Affichage attaque
-    
+
     //Nain
     if(joueur->numero_perso==1) //Chaque type de personnage a un numéro qui lui est attribué, donc on regarde lequel c'est
     {
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);  //On compare les attaques pour voir laquelle c'est, et si c'est la bonne on met la bitmap de l'attaque sur le buffer à la position de la case attaquée
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1.attaque);  //On compare les attaques pour voir laquelle c'est, et si c'est la bonne on met la bitmap de l'attaque sur le buffer à la position de la case attaquée
         if(resultat==0)
         {
-            blit(nainbelier, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(nainbelier, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2.attaque);
         if(resultat==0)
         {
-            blit(nainepee, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(nainepee, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3.attaque);
         if(resultat==0)
         {
-            blit(nainhache, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(nainhache, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4.attaque);
         if(resultat==0)
         {
-            blit(nainjavelot, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(nainjavelot, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5.attaque);
         if(resultat==0)
         {
-            blit(nainmassue, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(nainmassue, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        
+
     }
-    
+
     //Sorcier
     if(joueur->numero_perso==2)
     {
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1.attaque);
         if(resultat==0)
         {
-            blit(poignard, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(poignard, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2.attaque);
         if(resultat==0)
         {
-            blit(baton, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(baton, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3.attaque);
         if(resultat==0)
         {
-            blit(barrage, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(barrage, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4.attaque);
         if(resultat==0)
         {
-            blit(boulefeu, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(boulefeu, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5.attaque);
         if(resultat==0)
         {
-            blit(dormor, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(dormor, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        
+
     }
-    
+
     //Elfe
     if(joueur->numero_perso==3)
     {
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1.attaque);
         if(resultat==0)
         {
-            blit(elfelame, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(elfelame, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2.attaque);
         if(resultat==0)
         {
-            blit(elfeepee1, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(elfeepee1, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3.attaque);
         if(resultat==0)
         {
-            blit(elfeanneau, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(elfeanneau, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4.attaque);
         if(resultat==0)
         {
-            blit(elfearc, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(elfearc, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5.attaque);
         if(resultat==0)
         {
-            blit(elfeepee2, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(elfeepee2, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        
+
     }
-    
+
     //Orque
     if(joueur->numero_perso==4)
     {
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1.attaque);
         if(resultat==0)
         {
-            blit(orquecoup, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(orquecoup, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2.attaque);
         if(resultat==0)
         {
-            blit(orquedague, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(orquedague, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3.attaque);
         if(resultat==0)
         {
-            blit(orqueepee1, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(orqueepee1, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4.attaque);
         if(resultat==0)
         {
-            blit(orqueepee2, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(orqueepee2, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5.attaque);
         if(resultat==0)
         {
-            blit(orquelame, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+            blit(orquelame, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15);
         }
-        
+
     }
-    
+
 
 
     ///Retrait des PA de l'attaquant
