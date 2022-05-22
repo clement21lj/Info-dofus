@@ -1,5 +1,14 @@
 ///Bibliothèques///
 #include "header.h"
+
+
+/*
+* AUTEUR : NAYA
+* Nom : affichage_nouvelle_partie
+* Input : BITMAP* buffer1
+* Output : nombre
+* Role : choix du nombre de joueurs
+*/
 int affichage_nouvelle_partie(BITMAP* buffer1)
 {
     int eviteRebondSouris = (mouse_b & 1 ? 1 : 0);
