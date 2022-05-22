@@ -10,97 +10,338 @@
 #include "header.h"
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-void affichagePersonnageEnHautADroite(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *nain, BITMAP *sorcier, BITMAP *orque, BITMAP *elfe, BITMAP *fleche, int numDuJoueurQuiJoue){
-    for(int i = 0; i < jeuDofus->nbJoueurs; i++){
-        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "elfe")==0){
+void affichagePersonnageEnHautADroite(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *nain, BITMAP *sorcier, BITMAP *orque, BITMAP *elfe, BITMAP *fleche, int numDuJoueurQuiJoue)
+{
+    for(int i = 0; i < jeuDofus->nbJoueurs; i++)
+    {
+        printf("i = %d : ",i);
+        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "elfe")==0)
+        {
+            printf("elfe : ");
             if(numDuJoueurQuiJoue==i)
-               draw_sprite(buffer,fleche,785,25);
+                draw_sprite(buffer,fleche,785,25);
             stretch_sprite (buffer, elfe, 810, 10, 70, 65);
             rect(buffer,883,33,980,50,makecol(0,0,0));
         }
-        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "nain")==0){
+        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "nain")==0)
+        {
+            printf("nain : ");
             if(numDuJoueurQuiJoue==i)
-               draw_sprite(buffer,fleche,785,85);
+                draw_sprite(buffer,fleche,785,85);
             stretch_sprite (buffer, nain, 815, 70, 65, 60);
             rect(buffer,883,93,980,110,makecol(0,0,0));
         }
-        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "orque")==0){
+        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "orque")==0)
+        {
+            printf("orque : ");
             if(numDuJoueurQuiJoue==i)
-               draw_sprite(buffer,fleche,785,135);
+                draw_sprite(buffer,fleche,785,135);
             stretch_sprite (buffer, orque, 818, 130, 60, 55);
             rect(buffer,883,153,980,170,makecol(0,0,0));
         }
-        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "sorcier")==0){
+        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "sorcier")==0)
+        {
+            printf("sorcier : ");
             if(numDuJoueurQuiJoue==i)
-               draw_sprite(buffer,fleche,784,195);
+                draw_sprite(buffer,fleche,784,195);
             stretch_sprite (buffer, sorcier, 815, 190, 65, 60);
             rect(buffer,883,213,980,230,makecol(0,0,0));
         }
+        printf("nb joueur : %d\n",jeuDofus->nbJoueurs);
     }
 }
 
-void affichageJoueurQuiJoue(t_jeuDofus *jeuDofus, BITMAP *buffer, t_joueur joueur, BITMAP *personnage, BITMAP *attaque1, BITMAP *attaque2, BITMAP *attaque3, BITMAP *attaque4, BITMAP *attaque5){
+void affichageJoueurQuiJoue(t_jeuDofus *jeuDofus, BITMAP *buffer, t_joueur joueur, BITMAP *personnage)
+{
 
-        line(buffer, 388, 555, 686, 555, makecol(255,255,255));
-        line(buffer, 388, 528, 388, 599, makecol(255,255,255));
-        line(buffer, 448, 555, 448, 599, makecol(255,255,255));
-        line(buffer, 508, 555, 508, 599, makecol(255,255,255));
-        line(buffer, 568, 555, 568, 599, makecol(255,255,255));
-        line(buffer, 628, 555, 628, 599, makecol(255,255,255));
+    line(buffer, 388, 555, 686, 555, makecol(255,255,255));
+    line(buffer, 388, 528, 388, 599, makecol(255,255,255));
+    line(buffer, 448, 555, 448, 599, makecol(255,255,255));
+    line(buffer, 508, 555, 508, 599, makecol(255,255,255));
+    line(buffer, 568, 555, 568, 599, makecol(255,255,255));
+    line(buffer, 628, 555, 628, 599, makecol(255,255,255));
 
-        textprintf_ex(buffer,font,397,537,makecol(255,255,255), -1,"PV : %d",joueur.PV_perso);
-        textprintf_ex(buffer,font,497,537,makecol(255,255,255), -1,"PM : %d",joueur.PM_perso);
-        textprintf_ex(buffer,font,597,537,makecol(255,255,255), -1,"PA : %d",joueur.PA_perso);
+    textprintf_ex(buffer,font,397,537,makecol(255,255,255), -1,"PV : %d",joueur.PV_perso);
+    textprintf_ex(buffer,font,497,537,makecol(255,255,255), -1,"PM : %d",joueur.PM_perso);
+    textprintf_ex(buffer,font,597,537,makecol(255,255,255), -1,"PA : %d",joueur.PA_perso);
+printf("On affiche les attaques : \n");
 
-
-        stretch_sprite (buffer, personnage, 318, 535 , 60, 55);
-        stretch_sprite (buffer, attaque1, 395, 558 , 45, 40);
-        stretch_sprite (buffer, attaque2, 455, 560 , 45, 40);
-        stretch_sprite (buffer, attaque3, 515, 560 , 45, 40);
-        stretch_sprite (buffer, attaque4, 574, 560 , 45, 40);
-        stretch_sprite (buffer, attaque5, 635, 560 , 45, 40);
+    stretch_sprite (buffer, personnage, 318, 535, 60, 55);
+    stretch_sprite (buffer, joueur.attaques.attaque_1.image, 395, 558, 45, 40);
+    stretch_sprite (buffer, joueur.attaques.attaque_2.image, 455, 560, 45, 40);
+    stretch_sprite (buffer, joueur.attaques.attaque_3.image, 515, 560, 45, 40);
+    stretch_sprite (buffer, joueur.attaques.attaque_4.image, 574, 560, 45, 40);
+    stretch_sprite (buffer, joueur.attaques.attaque_5.image, 635, 560, 45, 40);
+    printf("attaque afficher\n");
 }
 
 
 //void dessineLesDifférentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *elfe, BITMAP *sorcier, BITMAP *orque, BITMAP *nain){
-void dessineLesDifferentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *elfe, BITMAP *sorcier, BITMAP *orque, BITMAP *nain){
-    for(int i = 0; i < jeuDofus->nbJoueurs; i++){
-        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "nain")==0){
-           // printf("nain : x = %d / y= %d / HAUTEUR_CASE = %d / LARGEUR_CASE = %d / calcul x =%d /calcul y = %d\n",jeuDofus->tabJoueur[i].coord_x, jeuDofus->tabJoueur[i].coord_y, HAUTEUR_CASE, LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE );
-            stretch_sprite(buffer, nain,jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE,  LARGEUR_CASE ,  HAUTEUR_CASE);
-        }else if(strcmp(jeuDofus->tabJoueur[i].nomperso, "orque")==0){
+void dessineLesDifferentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *elfe, BITMAP *sorcier, BITMAP *orque, BITMAP *nain)
+{
+    for(int i = 0; i < jeuDofus->nbJoueurs; i++)
+    {
+        if(strcmp(jeuDofus->tabJoueur[i].nomperso, "nain")==0)
+        {
+            // printf("nain : x = %d / y= %d / HAUTEUR_CASE = %d / LARGEUR_CASE = %d / calcul x =%d /calcul y = %d\n",jeuDofus->tabJoueur[i].coord_x, jeuDofus->tabJoueur[i].coord_y, HAUTEUR_CASE, LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE );
+            stretch_sprite(buffer, nain,jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE,  LARGEUR_CASE,  HAUTEUR_CASE);
+        }
+        else if(strcmp(jeuDofus->tabJoueur[i].nomperso, "orque")==0)
+        {
             //printf("orque : x = %d / y= %d / HAUTEUR_CASE = %d / LARGEUR_CASE = %d / calcul x =%d /calcul y = %d\n",jeuDofus->tabJoueur[i].coord_x, jeuDofus->tabJoueur[i].coord_y, HAUTEUR_CASE, LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE );
             stretch_sprite(buffer, orque,  jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, LARGEUR_CASE, HAUTEUR_CASE);
-        }else if(strcmp(jeuDofus->tabJoueur[i].nomperso, "sorcier")==0){
-           // printf("sorcier : x = %d / y= %d / HAUTEUR_CASE = %d / LARGEUR_CASE = %d / calcul x =%d /calcul y = %d\n",jeuDofus->tabJoueur[i].coord_x, jeuDofus->tabJoueur[i].coord_y, HAUTEUR_CASE, LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE );
+        }
+        else if(strcmp(jeuDofus->tabJoueur[i].nomperso, "sorcier")==0)
+        {
+            // printf("sorcier : x = %d / y= %d / HAUTEUR_CASE = %d / LARGEUR_CASE = %d / calcul x =%d /calcul y = %d\n",jeuDofus->tabJoueur[i].coord_x, jeuDofus->tabJoueur[i].coord_y, HAUTEUR_CASE, LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE );
             stretch_sprite(buffer, sorcier,  jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, LARGEUR_CASE, HAUTEUR_CASE);
-        }else if(strcmp(jeuDofus->tabJoueur[i].nomperso, "elfe")==0){
-           // printf("elfe : x = %d / y= %d / HAUTEUR_CASE = %d / LARGEUR_CASE = %d / calcul x =%d /calcul y = %d\n",jeuDofus->tabJoueur[i].coord_x, jeuDofus->tabJoueur[i].coord_y, HAUTEUR_CASE, LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE );
+        }
+        else if(strcmp(jeuDofus->tabJoueur[i].nomperso, "elfe")==0)
+        {
+            // printf("elfe : x = %d / y= %d / HAUTEUR_CASE = %d / LARGEUR_CASE = %d / calcul x =%d /calcul y = %d\n",jeuDofus->tabJoueur[i].coord_x, jeuDofus->tabJoueur[i].coord_y, HAUTEUR_CASE, LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE );
             stretch_sprite(buffer, elfe,  jeuDofus->tabJoueur[i].coord_y*LARGEUR_CASE, jeuDofus->tabJoueur[i].coord_x*HAUTEUR_CASE, LARGEUR_CASE, HAUTEUR_CASE);
         }
     }
 }
 
+int gereLesAttaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *eviteRebondSouris, int i){
 
-void boucleDeJeu(t_jeuDofus *jeuDofus){ //a inclure avec l'autre
-   ///DECLARATIONS///
+     ///Affichage du detail des attaques
+
+        if (mouse_x>=390 && mouse_x <=446 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            *valide=1;
+        }
+        if(*valide==1)
+        {
+
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque);
+            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_1.image, 740, 510, 75, 70);
+
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_pv);
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_pa);
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d", jeuDofus->tabJoueur[i].attaques.attaque_1.attaque_portee);
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+        }
+        ///affichage detail epee
+        if (mouse_x>=451 && mouse_x <=510 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            *valide=2;
+        }
+        if(*valide==2)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque);
+            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_2.image, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_pv);
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_pa);
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_2.attaque_portee);
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+        }
+         ///affichage detail hache
+        if (mouse_x>=510 && mouse_x <=568 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            *valide=3;
+        }
+        if(*valide==3)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque);
+            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_3.image, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_pv);
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_pa);
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_3.attaque_portee);
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+        }
+
+         ///affichage detail javelot
+        if (mouse_x>=570 && mouse_x <=629 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            *valide=4;
+        }
+        if(*valide==4)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque);
+            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_4.image, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_pv);
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_pa);
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_4.attaque_portee);
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+        }
+         ///affichage detail massue
+        if (mouse_x>=632 && mouse_x <=690 && mouse_y >= 557 && mouse_y <= 599)
+        {
+            *valide=5;
+        }
+        if(*valide==5)
+        {
+            rectfill(buffer, 726, 486, 998, 599, makecol(255,255,255));
+            rect(buffer, 726, 486, 998, 599, makecol(68,29,133));
+            rect(buffer, 728, 488, 996, 597, makecol(68,29,133));
+            textprintf_ex(buffer,font,820,510,makecol(68,29,133), -1,"ATTAQUE %s",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque);
+            stretch_sprite (buffer, jeuDofus->tabJoueur[i].attaques.attaque_5.image, 740, 510, 75, 70);
+            textprintf_ex(buffer,font,820,537,makecol(68,29,133), -1,"PV:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_pv);
+            textprintf_ex(buffer,font,870,537,makecol(68,29,133), -1,"PA:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_pa);
+            textprintf_ex(buffer,font,920,537,makecol(68,29,133), -1,"Portee:%d",jeuDofus->tabJoueur[i].attaques.attaque_5.attaque_portee);
+            textprintf_ex(buffer,font,850,569,makecol(68,29,133), -1,"JE VALIDE");
+            rect(buffer,840,560,940,585,makecol(68,29,133));
+        }
+
+
+        if (mouse_x>=842 && mouse_x <=940 && mouse_y >= 562 && mouse_y <= 585)
+        {
+                textprintf_ex(buffer,font,850,569,makecol(0, 147, 0), -1,"JE VALIDE");
+                if(mouse_b & 1 && *eviteRebondSouris==0){
+                    *eviteRebondSouris=1;
+                    return *valide;
+                }
+        }
+        return 0;
+}
+
+
+void gereActionAttaque(){
+
+}
+
+
+BITMAP* recup_sprites(BITMAP*scr,int w,int h,int startx,int starty,int col,int element)
+// bitmap origine
+// taille de l’image élément d’une animation
+//
+// début de la séquence voulue à partir de la position
+// x et y
+// nombre de colonnes dans la bitmap origine
+// numéro de l’image voulue dans la séquence
+{
+    BITMAP*bmp;
+    int x,y;
+    bmp=create_bitmap(w,h); // création d’une bitmap pour le sprite
+    if (bmp!=NULL)
+    {
+        x = startx + (element%col)*w; // calcul de la position réelle du sprite dans la bitmap
+        y = starty + (element/col)*h; // d’origine
+        blit( scr, bmp, x, y, 0, 0, w, h); //recopie du sprite voulu
+    }
+    return bmp; // retour de la bitmap du sprite
+}
+
+
+
+void gereSablier(int *timeSablier, int xsablier, int ysablier, BITMAP *SablierTab[15], BITMAP *buffer){
+            BITMAP *Sablier;
+            (*timeSablier)++;
+            printf("%d",*timeSablier);
+            if(*timeSablier >= 0)
+            {
+                Sablier = SablierTab[0];
+            }
+            if(*timeSablier >= 100)
+            {
+                Sablier = SablierTab[1];
+            }
+            if(*timeSablier >= 200)
+            {
+                Sablier = SablierTab[2];
+            }
+            if(*timeSablier >= 300)
+            {
+                Sablier = SablierTab[3];
+            }
+            if(*timeSablier >= 400)
+            {
+                Sablier = SablierTab[4];
+            }
+            if(*timeSablier >= 500)
+            {
+                Sablier = SablierTab[5];
+            }
+            if(*timeSablier >= 600)
+            {
+                Sablier = SablierTab[6];
+            }
+            if(*timeSablier >= 700)
+            {
+                Sablier = SablierTab[7];
+            }
+            if(*timeSablier >= 800)
+            {
+                Sablier = SablierTab[8];
+            }
+            if(*timeSablier >= 900)
+            {
+                Sablier = SablierTab[9];
+            }
+            if(*timeSablier >= 1000)
+            {
+                Sablier = SablierTab[10];
+            }
+            if(*timeSablier >= 1100)
+            {
+                Sablier = SablierTab[11];
+            }
+            if(*timeSablier >= 1200)
+            {
+                Sablier = SablierTab[12];
+            }
+            if(*timeSablier >= 1300)
+            {
+                Sablier = SablierTab[13];
+            }
+            if(*timeSablier >= 1400)
+            {
+                Sablier = SablierTab[14];
+            }
+            if(*timeSablier >= 1500)
+            {
+                *timeSablier=0;
+                Sablier = SablierTab[0];
+            }
+            stretch_sprite(buffer, Sablier, xsablier, ysablier , 65, 72);
+}
+void boucleDeJeu(t_jeuDofus *jeuDofus)
+{
+    ///DECLARATIONS///
     // BITMAP servant de buffer d'affichage (double buffer)
     BITMAP *buffer, *map, *elfe, *nain, *orque, *sorcier;
-    BITMAP *elfeanneau, *elfearc, *elfeepee1, *elfeepee2, *elfelame;
-    BITMAP *nainbelier, *nainepee, *nainhache, *nainjavelot, *nainmassue;
-    BITMAP *orquecoup, *orquedague, *orqueepee1, *orqueepee2, *orquelame;
-    BITMAP *boulefeu, *baton, *poignard, *barrage, *dormor;
+    int valide=0;
+    BITMAP *commencer;
     BITMAP *fleche;
+    BITMAP *action;
+    BITMAP *temp, *SablierTab[15];
     FONT *police;
 
     //Variables
+    int xsablier=15, ysablier=120, timeSablier=0;
     int i=0;    //compteur pour le joueur dont c'est le tour
     int j=0, m=0;    //compteurs pouvant servir à ce qu'on veut (notamment tirage ordre des joueurs)
     int joueur_elimine=0;   //compteur du nombre de joueur éliminé pour savoir quand il n'en reste qu'un (#Kohlanta)
     int fin=0;     //Variable d'etat égale à 0 tant que le tour du joueur n'est pas fini
     int fin_jeu=0;      //Variable d'etat égale à 0 tant que le jeu n'est pas fini
-    int action_execute=0;
+    int action_execute=0,optionMeDeplacerOn=0, optionAttaquerOn=0;
+    int eviteRebondSouris = (mouse_b & 1 ? 1 : 0);
     char bufferPhrase[50];
+    int choixAttaque=0;
+    temp=load_bitmap("sablier.bmp", NULL);
+    /// On découpe le sprite
+    for(j = 0; j<15; j++)
+    {
+        SablierTab[j] = recup_sprites(temp, 42, 42, 0, 0, 15, j);
+    }
 
     // création du double buffer.
     map = create_bitmap(SCREEN_W, SCREEN_H);
@@ -121,36 +362,11 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){ //a inclure avec l'autre
     sorcier=load_bitmap("imsorcier.bmp",NULL);
 
 
-    fleche=load_bitmap("fleche2.bmp",NULL);
-    ///load des attaques des personnages :
+    fleche=load_bitmap("fleche2.bmp", NULL);
+    action=load_bitmap("saisi.bmp",NULL);
 
-    //load des bitmaps attaques du l'elfe
-    elfeanneau=load_bitmap("attaquesperso/elfe/anneauelfique.bmp",NULL);
-    elfearc=load_bitmap("attaquesperso/elfe/arc.bmp",NULL);
-    elfeepee1=load_bitmap("attaquesperso/elfe/epeeelfique.bmp",NULL);
-    elfeepee2=load_bitmap("attaquesperso/elfe/epee.bmp",NULL);
-    elfelame=load_bitmap("attaquesperso/elfe/lameelfique.bmp",NULL);
-
-    //load des bitmaps attaques du nain
-    nainbelier=load_bitmap("attaquesperso/nain/belier.bmp",NULL);
-    nainepee=load_bitmap("attaquesperso/nain/epee.bmp",NULL);
-    nainhache=load_bitmap("attaquesperso/nain/hache.bmp",NULL);
-    nainjavelot=load_bitmap("attaquesperso/nain/javelot.bmp",NULL);
-    nainmassue=load_bitmap("attaquesperso/nain/massue.bmp",NULL);
-
-    //load des bitmaps attaques de l'orque
-    orquecoup=load_bitmap("attaquesperso/orque/couppied.bmp",NULL);
-    orquedague=load_bitmap("attaquesperso/orque/dague.bmp",NULL);
-    orqueepee1=load_bitmap("attaquesperso/orque/epeearwen.bmp",NULL);
-    orqueepee2=load_bitmap("attaquesperso/orque/epeethorin.bmp",NULL);
-    orquelame=load_bitmap("attaquesperso/orque/lame-ki-koupe.bmp",NULL);
-
-    //load des bitmaps attaques du sorcier
-    boulefeu=load_bitmap("attaquesperso/sorcier/boulefeu.bmp",NULL);
-    baton=load_bitmap("attaquesperso/sorcier/baton.bmp",NULL);
-    poignard=load_bitmap("attaquesperso/sorcier/poignard.bmp",NULL);
-    barrage=load_bitmap("attaquesperso/sorcier/barrage.bmp",NULL);
-    dormor=load_bitmap("attaquesperso/sorcier/dormor.bmp",NULL);
+    //loadbitmap ecran joueur qui commence
+    commencer=load_bitmap("commencer.bmp",NULL);
 
 
     buffer=create_bitmap(SCREEN_W,SCREEN_H);
@@ -160,36 +376,92 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){ //a inclure avec l'autre
     printf("Joueur numero %d ! \n", i);
 
     ///je vais rajouter une image allegro
-   while(!key[KEY_SPACE]){
-        textout_ex(buffer, police, "TIRAGE DU JOUEUR QUI DOIT JOUER EN PREMIER...", 120, 100, makecol(255,255,255), -1);
+    while(!key[KEY_SPACE])
+    {
+        blit(commencer, buffer, 0, 0,(SCREEN_W-commencer->w)/2, (SCREEN_H-commencer->h)/2, map->w, commencer->h);
+        textout_ex(buffer, police, "TIRAGE DU JOUEUR QUI DOIT JOUER EN PREMIER...", 120, 150, makecol(255,255,255), -1);
         sprintf(bufferPhrase, "LE PERSONNAGE %s (JOUEUR %d) COMMENCE A JOUER ! ", jeuDofus->tabJoueur[i].nomperso, i+1);
-        textprintf_ex(buffer,police,100,250,makecol(255,255,255),makecol(0,0,0),"%s",bufferPhrase);
-        textout_ex(buffer, police, "APPUIER SUR [ESP] POUR CONTINUER", 215, 400, makecol(255,0,0), -1);
+        textprintf_ex(buffer,police,90,310,makecol(255,255,255),-1,"%s",bufferPhrase);
+        textout_ex(buffer, police, "APPUIER SUR [ESP] POUR CONTINUER", 215, 480, makecol(0,147,0), -1);
 
         ///Affichage du buffer sur l'écran
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-   }
+    }
 
-    while(!fin){
+    while(!fin)
+    {
         blit(map, buffer, 0, 0,(SCREEN_W-map->w)/2, (SCREEN_H-map->h)/2, map->w, map->h);
+        gereSablier(&timeSablier, xsablier, ysablier, SablierTab, buffer);
         // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
         textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
-
+        printf("yo\n");
         affichagePersonnageEnHautADroite(jeuDofus,buffer, nain, sorcier, orque, elfe, fleche, i);
+        printf("test\n");
         if(strcmp(jeuDofus->tabJoueur[i].nomperso,"sorcier")==0)
-          affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i],sorcier, boulefeu, baton, poignard, barrage, dormor);
+            affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i],sorcier);
         else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"nain")==0)
-          affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i], nain, nainbelier, nainepee, nainhache, nainjavelot, nainmassue);
+            affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i], nain);
         else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"elfe")==0)
-          affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i], elfe, elfeanneau, elfearc, elfeepee1, elfeepee2, elfelame);
+            affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i], elfe);
         else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"orque")==0)
-          affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i], orque, orquecoup, orquedague, orqueepee1, orqueepee2, orquelame);
+            affichageJoueurQuiJoue(jeuDofus, buffer, jeuDofus->tabJoueur[i], orque);
         dessineLesDifferentsJoueurs(jeuDofus, buffer, elfe, sorcier, orque, nain);
+        printf("mgl\n");
+
+        ///OPTION DE JEU DES PERSOS
+        stretch_sprite (buffer, action, 0, 5, 190, 120);
+        textprintf_ex(buffer,font,52,33,makecol(255,255,255), -1,"ME DEPLACER");
+        if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 27 && mouse_y <= 50 )
+        {
+            textprintf_ex(buffer,font,52,33,makecol(0,147,0), -1,"ME DEPLACER");
+            if (mouse_b & 1 && eviteRebondSouris == 0){
+                eviteRebondSouris=1;
+                optionMeDeplacerOn=1;
+                ///appelle ss prog dreplacement
+            }
+        }
+
+        textprintf_ex(buffer,font,63,62,makecol(255,255,255), -1,"ATTAQUER");
+         if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 56 && mouse_y <= 80 )
+        {
+            textprintf_ex(buffer,font,63,62,makecol(0,147,0), -1,"ATTAQUER");
+            if (mouse_b & 1 && eviteRebondSouris==0){
+                 eviteRebondSouris=1;
+                 optionAttaquerOn=1;
+            }
+        }
+
+        textprintf_ex(buffer,font,37,94,makecol(255,255,255), -1,"PASSER MON TOUR");
+         if (mouse_x>=44 && mouse_x <=146 && mouse_y >= 86 && mouse_y <= 106 )
+        {
+            textprintf_ex(buffer,font,37,94,makecol(0,147,0), -1,"PASSER MON TOUR");
+            if (mouse_b & 1 && eviteRebondSouris==0){
+                eviteRebondSouris=1;
+                action_execute=1;
+            }
+        }
+
+
+        if(optionAttaquerOn==1){
+            choixAttaque=gereLesAttaques(jeuDofus,buffer,&valide,&eviteRebondSouris, i);
+            if(choixAttaque!=0){
+                optionAttaquerOn=0;
+                gereActionAttaque();
+                action_execute=1;
+            }
+        }
 
         ///Affichage du buffer sur l'écran
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-        if(action_execute){
+
+        if(!(mouse_b & 1))
+            eviteRebondSouris = 0;
+
+        if(action_execute)
+        {
             action_execute=0;
+            optionMeDeplacerOn=0;
+            optionAttaquerOn=0;
             //changement de joueur
             i ++;
             if(i==jeuDofus->nbJoueurs)
@@ -197,6 +469,9 @@ void boucleDeJeu(t_jeuDofus *jeuDofus){ //a inclure avec l'autre
         }
     }
 }
+
+
+
 
 
 
