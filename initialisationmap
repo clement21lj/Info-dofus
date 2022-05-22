@@ -1,3 +1,10 @@
+/*
+* AUTEUR : BIANCA
+* Nom : initialisationCase
+* Input : enum typeCase typeDeLaCase, int x, int y
+* Output : nouvelleCase
+* Role : renvoi le type de case
+*/
 t_cases initialisationCase(enum typeCase typeDeLaCase, int x, int y){
     t_cases nouvelleCase;
     nouvelleCase.x=x;
@@ -5,7 +12,13 @@ t_cases initialisationCase(enum typeCase typeDeLaCase, int x, int y){
     nouvelleCase.typeDeLaCase=typeDeLaCase;
     return nouvelleCase;
 }
-
+/*
+* AUTEUR : BIANCA
+* Nom : changementTypeCase
+* Input : t_jeuDofus *jeuDofus, int x, int y, enum typeCase typeDeLaCase
+* Output : //
+* Role : change de type
+*/
 void changementTypeCase(t_jeuDofus *jeuDofus, int x, int y, enum typeCase typeDeLaCase){
     jeuDofus->mapJeu[x][y].typeDeLaCase= typeDeLaCase;
 }
