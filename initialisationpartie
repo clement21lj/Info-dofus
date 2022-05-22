@@ -1,6 +1,6 @@
 #include "header.h"
 
-//a jouter en parametre : int tabPerso Dispo[NB_PERSO_DISPO]
+#include "header.h"
 
 
 void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur)
@@ -99,15 +99,14 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
         rect(buffer,30,520,200,560,makecol(255,255,255));
         textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(255,255,255), -1);
         if (mouse_x>=30 && mouse_x <=200 && mouse_y >= 520 && mouse_y <= 560)
-        {
-            textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(0, 147, 0), -1);
-            if(mouse_b & 1 && eviteRebondSouris==0)
             {
-                eviteRebondSouris=1;
-                joueur->numero_perso = NAIN;
-                quitter=1;
+                textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(0, 147, 0), -1);
+                if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = NAIN;
+                    quitter=1;
+                }
             }
-        }
 
         ///ORQUE
         draw_sprite(buffer,imorc,275,190);
@@ -121,12 +120,11 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
         if (mouse_x>=280 && mouse_x <=460 && mouse_y >= 520 && mouse_y <= 560)
         {
             textout_ex(buffer, police, "JE VALIDE",290, 530, makecol(0, 147, 0), -1);
-            if(mouse_b & 1 && eviteRebondSouris==0)
-            {
-                eviteRebondSouris=1;
-                joueur->numero_perso = ORQUE;
-                quitter=1;
-            }
+            if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = ORQUE;
+                    quitter=1;
+                }
         }
 
 
@@ -142,11 +140,10 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
         if (mouse_x>=530 && mouse_x <=710 && mouse_y >= 520 && mouse_y <= 560)
         {
             textout_ex(buffer, police, "JE VALIDE",540, 530, makecol(0, 147, 0), -1);
-            if(mouse_b & 1 && eviteRebondSouris==0)
-            {
-                eviteRebondSouris=1;
-                joueur->numero_perso = ELFE;
-                quitter=1;
+            if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = ELFE;
+                    quitter=1;
             }
         }
 
@@ -162,18 +159,16 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
         if (mouse_x>=760 && mouse_x <=940 && mouse_y >= 520 && mouse_y <= 560)
         {
             textout_ex(buffer, police, "JE VALIDE",770, 530, makecol(0, 147, 0), -1);
-            if(mouse_b & 1 && eviteRebondSouris==0)
-            {
-                eviteRebondSouris=1;
-                joueur->numero_perso = SORCIER;
-                quitter=1;
+            if(mouse_b & 1 && eviteRebondSouris==0){
+                    eviteRebondSouris=1;
+                    joueur->numero_perso = SORCIER;
+                    quitter=1;
             }
         }
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         if(!(mouse_b & 1))
             eviteRebondSouris = 0;
-    }
-    while(quitter!=1);
+    }while(quitter!=1);
 
     destroy_bitmap(imnain);
     destroy_bitmap(imorc);
@@ -186,6 +181,7 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
     destroy_bitmap(hobbit);
 
 }
+
 char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
 {
 
@@ -226,7 +222,7 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
         exit(EXIT_FAILURE);
     }
 
-    int touche, touche1, touche2;
+    int touche, a, b;
 
     int i=0;
     char masaisie[SAISIE_MAX+1]; // stockage de la totalité de la saisie
@@ -265,34 +261,35 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
 
 
         touche=readkey();
-        touche1=touche & 0xFF; // code ASCII
-        touche2=touche >> 8;   // scancode
+        a=touche & 0xFF; // code ASCII
+        b=touche >> 8;   // scancode
         // affiche code numerique de la touche saisie...
         textout_ex(buffer, police, "                                            ",350, 300,makecol(255, 255, 255), -1);
         //textprintf(buffer,font,350,300,makecol(255,255,255),"                                    ");
 
-        if (( touche1>31 && touche1<58) || ( touche1>64 && touche1<123))
+        if (( a>31 && a<58) || ( a>64 && a<123))
         {
             if (i>=SAISIE_MAX)
                 i=SAISIE_MAX;
             else
             {
-                masaisie[i]=touche1;
-                dernsaisie[0]=touche1;
+                masaisie[i]=a;
+                dernsaisie[0]=a;
                 masaisie[i+1]=0;
                 /*  on affiche la touche saisie */
                 //textprintf(buffer,font,350+8*i,300,makecol(255,255,255),"%s",dernsaisie);
 
-                textprintf(buffer,police,350+20*i,300,makecol(255,255,255)-1,"%s",dernsaisie);
+                textprintf_ex(buffer,police,350+20*i,300,makecol(255,255,255),-1,"%s",dernsaisie);
+
                 i++;
-                textprintf(buffer,police,350+20*i,300,makecol(255,255,255)-1,"_");
+                textprintf(buffer,police,350+20*i,300,makecol(255,255,255),"_");
                 /* textprintf(buffer,police,10+8*i,30,makecol(255,255,255),"%s",dernsaisie);
                  i++;
                  textprintf(buffer,police,10+8*i,30,makecol(255,255,255),"_");*/
             }
         }
         //* si effacement
-        if ( touche2==KEY_BACKSPACE )
+        if ( b==KEY_BACKSPACE )
         {
             i--;
             if ( i<0 )
@@ -302,7 +299,7 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
         }
 
         //* si validation
-        if ( (touche2==KEY_ENTER_PAD) || (touche2==KEY_ENTER) )
+        if ( (b==KEY_ENTER_PAD) || (b==KEY_ENTER) )
         {
             textprintf(buffer,police,350+20*i,300,makecol(255,255,255)," ");
             if (i==0)
@@ -310,9 +307,9 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
             masaisie[i+1]=0;
         }
     }
-    textprintf(screen,font,350,450,makecol(255,255,255),"votre saisie est : %s", masaisie);
+    textprintf_ex(screen,font,350,450,makecol(255,255,255), -1,"votre saisie est : %s", masaisie);
 
-    textprintf(screen,font,350,470,makecol(255,255,255),"Appuyer sur une touche pour continuer");
+    textprintf_ex(screen,font,350,470,makecol(255,255,255), -1,"Appuyer sur une touche pour continuer");
 
 
 
@@ -330,10 +327,9 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
 
 }
 
-
 void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, int messageErreur)
 {
-    char nom[20];
+    //char ident[100];
 
     ///donnes perso
     joueur->PV_perso = PV_NOUVEAU_PERSO;
@@ -342,33 +338,41 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
     joueur->nb_tours_survecu=0;
 
     //joueur->numero_perso=choixPerso(buffer,joueur); //appelle sous prog selection perso
+
+    *joueur->pseudo = saisiepseudo(buffer,joueur,numeroDuJoueur);
+
     choixPerso(buffer, joueur, numeroDuJoueur, messageErreur);
     printf("%d", joueur->numero_perso);
 
     switch(joueur->numero_perso)
     {
-    case NAIN:
+     case NAIN:
         ///premiere attaque :
+        joueur->attaques.attaque_1.image = load_bitmap("attaquesperso/nain/belier.bmp",NULL);
         strcpy(joueur->attaques.attaque_1.attaque,"belier");
         joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
         joueur->attaques.attaque_1.attaque_portee=1;
         ///deuxieme :
+        joueur->attaques.attaque_2.image = load_bitmap("attaquesperso/nain/epee.bmp",NULL);
         strcpy(joueur->attaques.attaque_2.attaque,"epee");
         joueur->attaques.attaque_2.attaque_pv=20;
         joueur->attaques.attaque_2.attaque_pa=15;
         joueur->attaques.attaque_2.attaque_portee=3;
         ///troisième:
+        joueur->attaques.attaque_3.image = load_bitmap("attaquesperso/nain/hache.bmp",NULL);
         strcpy(joueur->attaques.attaque_3.attaque,"hache");
         joueur->attaques.attaque_3.attaque_pv=20;
         joueur->attaques.attaque_3.attaque_pa=20;
         joueur->attaques.attaque_3.attaque_portee=5;
         ///quatrième:
+        joueur->attaques.attaque_4.image = load_bitmap("attaquesperso/nain/javelot.bmp",NULL);
         strcpy(joueur->attaques.attaque_4.attaque,"javelot");
         joueur->attaques.attaque_4.attaque_pv=10;
         joueur->attaques.attaque_4.attaque_pa=20;
         joueur->attaques.attaque_4.attaque_portee=7;
         ///cinquieme :
+        joueur->attaques.attaque_5.image = load_bitmap("attaquesperso/nain/massue.bmp",NULL);
         strcpy(joueur->attaques.attaque_5.attaque,"massue");
         joueur->attaques.attaque_5.attaque_pv=15;
         joueur->attaques.attaque_5.attaque_pa=15;
@@ -379,63 +383,76 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
         strcpy(joueur->nomperso,"nain");
         ///joueur->numero_case= ?????????
         joueur->coord_x= 10;
-        joueur->coord_y= 10;
+        joueur->coord_y= 26;
+
         break;
 
-    case SORCIER:
+   case SORCIER:
         ///premiere attaque :
+        joueur->attaques.attaque_1.image = load_bitmap("attaquesperso/sorcier/poignard.bmp",NULL);
         strcpy(joueur->attaques.attaque_1.attaque,"poignard");
         joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
         joueur->attaques.attaque_1.attaque_portee=1;
         ///deuxieme :
+        joueur->attaques.attaque_2.image = load_bitmap("attaquesperso/sorcier/baton.bmp",NULL);
         strcpy(joueur->attaques.attaque_2.attaque,"baton");
         joueur->attaques.attaque_2.attaque_pv=20;
         joueur->attaques.attaque_2.attaque_pa=15;
         joueur->attaques.attaque_2.attaque_portee=3;
         ///troisième:
+        joueur->attaques.attaque_3.image = load_bitmap("attaquesperso/sorcier/barrage.bmp",NULL);
         strcpy(joueur->attaques.attaque_3.attaque,"barrage");
         joueur->attaques.attaque_3.attaque_pv=15;
         joueur->attaques.attaque_3.attaque_pa=5;
+        joueur->attaques.attaque_3.attaque_portee=2;
         ///quatrième:
+        joueur->attaques.attaque_4.image = load_bitmap("attaquesperso/sorcier/boulefeu.bmp",NULL);
         strcpy(joueur->attaques.attaque_4.attaque,"boulefeu");
         joueur->attaques.attaque_4.attaque_pv=10;
         joueur->attaques.attaque_4.attaque_pa=20;
         joueur->attaques.attaque_4.attaque_portee=7;
         ///cinquieme :
+        joueur->attaques.attaque_5.image = load_bitmap("attaquesperso/sorcier/dormor.bmp",NULL);
         strcpy(joueur->attaques.attaque_5.attaque,"dormor");
         joueur->attaques.attaque_5.attaque_pv=15;
         joueur->attaques.attaque_5.attaque_pa=15;
         joueur->attaques.attaque_5.attaque_portee=4;
 
-
         joueur->numero_perso=SORCIER;
         strcpy(joueur->nomperso,"sorcier");
-        ///joueur->numero_case= ?????????
 
+        joueur->coord_x=18;
+        joueur->coord_y=24;
 
         break;
     case ELFE:
         ///premiere attaque :
+        joueur->attaques.attaque_1.image = load_bitmap("attaquesperso/elfe/lameelfique.bmp",NULL);
         strcpy(joueur->attaques.attaque_1.attaque,"lame");
         joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
         joueur->attaques.attaque_1.attaque_portee=1;
         ///deuxieme :
+        joueur->attaques.attaque_2.image = load_bitmap("attaquesperso/elfe/epee.bmp",NULL);
         strcpy(joueur->attaques.attaque_2.attaque,"epee");
         joueur->attaques.attaque_2.attaque_pv=20;
         joueur->attaques.attaque_2.attaque_pa=15;
         joueur->attaques.attaque_2.attaque_portee=3;
         ///troisième:
-        strcpy(joueur->attaques.attaque_3.attaque,"anneau");anneau
+        joueur->attaques.attaque_3.image = load_bitmap("attaquesperso/elfe/anneauelfique.bmp",NULL);
+        strcpy(joueur->attaques.attaque_3.attaque,"anneau");
         joueur->attaques.attaque_3.attaque_pv=10;
         joueur->attaques.attaque_3.attaque_pa=20;
+        joueur->attaques.attaque_3.attaque_portee=4;
         ///quatrième:
-        strcpy(joueur->attaques.attaque_4.attaque,"arc");arc
+        joueur->attaques.attaque_4.image = load_bitmap("attaquesperso/elfe/arc.bmp",NULL);
+        strcpy(joueur->attaques.attaque_4.attaque,"arc");
         joueur->attaques.attaque_4.attaque_pv=10;
         joueur->attaques.attaque_4.attaque_pa=20;
         joueur->attaques.attaque_4.attaque_portee=7;
         ///cinquieme :
+        joueur->attaques.attaque_5.image = load_bitmap("attaquesperso/elfe/epeeelfique.bmp",NULL);
         strcpy(joueur->attaques.attaque_5.attaque,"epeeelfique");
         joueur->attaques.attaque_5.attaque_pv=15;
         joueur->attaques.attaque_5.attaque_pa=15;
@@ -443,141 +460,66 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
 
         joueur->numero_perso=ELFE;
         strcpy(joueur->nomperso,"elfe");
-        ///joueur->numero_case= ?????????
+        joueur->coord_x=14;
+        joueur->coord_y=0;
         break;
     case ORQUE:
         ///premiere attaque :
+        joueur->attaques.attaque_1.image = load_bitmap("attaquesperso/orque/couppied.bmp",NULL);
+        if(joueur->attaques.attaque_1.image==NULL)
+            printf("Erreur chargement image attaque 1 orque\n");
         strcpy(joueur->attaques.attaque_1.attaque,"coup");
         joueur->attaques.attaque_1.attaque_pv=10;
         joueur->attaques.attaque_1.attaque_pa=5;
         joueur->attaques.attaque_1.attaque_portee=1;
         ///deuxieme :
+        joueur->attaques.attaque_2.image = load_bitmap("attaquesperso/orque/dague.bmp",NULL);
+        if(joueur->attaques.attaque_2.image==NULL)
+            printf("Erreur chargement image attaque 2 orque\n");
         strcpy(joueur->attaques.attaque_2.attaque,"dague");
         joueur->attaques.attaque_2.attaque_pv=20;
         joueur->attaques.attaque_2.attaque_pa=15;
         joueur->attaques.attaque_2.attaque_portee=3;
         ///troisième:
+        joueur->attaques.attaque_3.image = load_bitmap("attaquesperso/orque/epeearwen.bmp",NULL);
+        if(joueur->attaques.attaque_3.image==NULL)
+            printf("Erreur chargement image attaque 3 orque\n");
         strcpy(joueur->attaques.attaque_3.attaque,"epeearwen");
         joueur->attaques.attaque_3.attaque_pv=10;
         joueur->attaques.attaque_3.attaque_pa=20;
+        joueur->attaques.attaque_3.attaque_portee=4;
         ///quatrième:
+        joueur->attaques.attaque_4.image = load_bitmap("attaquesperso/orque/epeethorin.bmp",NULL);
+        if(joueur->attaques.attaque_4.image==NULL)
+            printf("Erreur chargement image attaque 4 orque\n");
         strcpy(joueur->attaques.attaque_4.attaque,"epeethorin");
         joueur->attaques.attaque_4.attaque_pv=10;
         joueur->attaques.attaque_4.attaque_pa=20;
         joueur->attaques.attaque_4.attaque_portee=7;
         ///cinquieme :
+        joueur->attaques.attaque_5.image = load_bitmap("attaquesperso/orque/lame-ki-koupe.bmp",NULL);
+        if(joueur->attaques.attaque_5.image==NULL)
+            printf("Erreur chargement image attaque 5 orque\n");
         strcpy(joueur->attaques.attaque_5.attaque,"lame");
         joueur->attaques.attaque_5.attaque_pv=15;
         joueur->attaques.attaque_5.attaque_pa=15;
         joueur->attaques.attaque_5.attaque_portee=4;
 
-
         joueur->numero_perso=ORQUE;
         strcpy(joueur->nomperso,"orque");
-        ///joueur->numero_case= ?????????
-
+        joueur->coord_x=0;
+        joueur->coord_y=8;
         break;
     default:
         break;
     }
 
-    //nom = saisiepseudo(buffer,joueur,numeroDuJoueur);
-    joueur->pseudo = saisiepseudo(buffer,joueur,numeroDuJoueur);
-    //strcpy(joueur->pseudo,nom);
 
 
-}
+    //ss prog saisi de l'ident
+    //joueur->prenom = (char *) malloc(sizeof(char) * strlen(mot));
+    //strcpy(joueur->prenom, buffer);
 
-int affichage_nouvelle_partie(BITMAP* buffer1)
-{
-    int eviteRebondSouris = (mouse_b & 1 ? 1 : 0);
-    //allegro_message("Je suis dans nouvelle partie");
-    int quitter=0;
-    int nombre = 0;
-    //Image de séléction du nombre de joueur
-    BITMAP *imjoueur;
-
-    imjoueur = create_bitmap(SCREEN_W, SCREEN_H);
-    imjoueur=load_bitmap("nbjoueur.bmp",NULL);
-    // on verifie que l'image a bien été chargée au cas où.
-    if (!imjoueur)
-    {
-        allegro_message("pas pu imjoueur.bmp");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-
-    //téléchargement des polices
-    FONT *police = NULL; /// Initialisation Polices
-    police = load_font("police.pcx",NULL,NULL);
-    if(!police)
-    {
-        allegro_message("Erreur chargement police");
-    }
-
-
-    do
-    {
-
-        //allegro_message("Bonsoir");
-
-        blit(imjoueur, buffer1, 0, 0,(SCREEN_W-imjoueur->w)/2, (SCREEN_H-imjoueur->h)/2, imjoueur->w, imjoueur->h);
-
-        // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
-        textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
-
-
-        textout_ex(buffer1, police, "NOMBRE DE JOUEURS",340, 260, makecol(244, 187, 91), -1);
-
-        textout_ex(buffer1, police, "TROIS",460, 440, makecol(244, 187, 91), -1);
-        if (mouse_x>=425 && mouse_x <=576 && mouse_y >= 419 && mouse_y <= 481)
-        {
-            textout_ex(buffer1, police, "TROIS",460, 440, makecol(255, 255, 255), -1);
-            if(mouse_b & 1 && eviteRebondSouris==0)
-            {
-                eviteRebondSouris=1;
-                nombre=3;
-                quitter=1;
-            }
-        }
-
-        textout_ex(buffer1, police, "DEUX",250, 440, makecol(244, 187, 91), -1);
-
-        if (mouse_x>=205 && mouse_x <=415 && mouse_y >= 365 && mouse_y <= 485)
-        {
-            textout_ex(buffer1, police, "DEUX",250, 440, makecol(255, 255, 255), -1);
-            if(mouse_b & 1 && eviteRebondSouris==0)
-            {
-                eviteRebondSouris=1;
-                nombre=2;
-                quitter=1;
-            }
-        }
-
-
-        textout_ex(buffer1, police, "QUATRE",665, 440, makecol(244, 187, 91), -1);
-        if (mouse_x>=642 && mouse_x <=791 && mouse_y >= 418 && mouse_y <= 478)
-        {
-            textout_ex(buffer1, police, "QUATRE",665, 440, makecol(255, 255, 255), -1);
-            if(mouse_b & 1 && eviteRebondSouris==0)
-            {
-                eviteRebondSouris=1;
-                nombre=4;
-                quitter=1;
-            }
-
-        }
-
-        //Affichage du buffer sur l'écran
-        blit(buffer1, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-        if(!(mouse_b & 1))
-            eviteRebondSouris = 0;
-    }
-    while(quitter!=1);
-
-    destroy_bitmap(imjoueur);
-
-    return nombre;
 }
 
 
@@ -625,16 +567,13 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
             printf("DEBUG : JOUEUR %d PERSO SELEC ORQUE \n",i+1);
         if(jeuDofus->tabJoueur[i].numero_perso==ELFE)
             printf("DEBUG : JOUEUR %d PERSO SELEC ELFE \n",i+1);
-        for(int j=0; j < i; j++)
-        {
-            if(jeuDofus->tabJoueur[i].numero_perso == jeuDofus->tabJoueur[j].numero_perso)
-            {
+        for(int j=0; j < i; j++){
+            if(jeuDofus->tabJoueur[i].numero_perso == jeuDofus->tabJoueur[j].numero_perso){
                 printf("Personnage deja selectionner veillez rechoisir ! \n");
                 j=i;
                 i--;
                 messageErreur=1;
-            }
-            else messageErreur=0;
+            }else messageErreur=0;
         }
 
     }
@@ -644,114 +583,3 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 
 
 
-void initialisationNouvellePartie(t_jeuDofus *jeuDofus)
-{
-    //initialisationMap();
-    initialisationDesJoueurs(jeuDofus);
-}
-
-void nouvellePartie(t_jeuDofus *jeuDofus)
-{
-    printf("Nouvelle partie ! \n");
-    initialisationNouvellePartie(jeuDofus);
-    initialisationPlateauDeJeu(jeuDofus);
-    //boucleDeJeu(jeuDofus);
-}
-
-
-
-void initialisation_allegro()
-{
-    allegro_init();
-
-    install_keyboard();
-    install_mouse();
-
-    set_color_depth(desktop_color_depth());
-    if((set_gfx_mode(GFX_AUTODETECT_WINDOWED,1000,600,0,0))!=0)
-    {
-        allegro_message("Probleme de mode graphique");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-    show_mouse(screen); // pour voir le pointeur de la souris
-}
-
-t_cases initialisationCase(enum typeCase typeDeLaCase, int x, int y)
-{
-    t_cases nouvelleCase;
-    nouvelleCase.x=x;
-    nouvelleCase.y=y;
-    nouvelleCase.typeDeLaCase=typeDeLaCase;
-    return nouvelleCase;
-}
-
-void changementTypeCase(t_jeuDofus *jeuDofus, int x, int y, enum typeCase typeDeLaCase)
-{
-    jeuDofus->mapJeu[x][y].typeDeLaCase= typeDeLaCase;
-}
-
-void affichageDebugMapConsoleText(t_jeuDofus *jeuDofus)
-{
-    printf("DEBUG du plateau : \n\n\n");
-    for(int i = 0; i < NB_LIGNES; i ++)
-    {
-        for(int j = 0; j < NB_COLONNES; j++)
-        {
-            printf("Case [%d][%d] : type : %d / x : %d / y = %d\n",i,j,jeuDofus->mapJeu[i][j].typeDeLaCase,jeuDofus->mapJeu[i][j].x, jeuDofus->mapJeu[i][j].y );
-        }
-    }
-}
-void affichageDebugMapConsoleDessin(t_jeuDofus *jeuDofus)
-{
-    printf("DEBUG PLATEAU DESSIN : \n\n\n");
-    for(int i= 0; i < NB_LIGNES; i++)
-    {
-        for(int j = 0; j < NB_COLONNES; j++)
-        {
-            if(jeuDofus->mapJeu[i][j].typeDeLaCase != CHEMIN)
-                printf("%d", jeuDofus->mapJeu[i][j].typeDeLaCase);
-            else printf(" ");
-        }
-        printf("\n");
-    }
-}
-void initialisationPlateauDeJeu(t_jeuDofus *jeuDofus)
-{
-
-///initialisation des cases par defaut sur inaccessible
-    for(int i = 0; i < NB_LIGNES; i ++)
-        for(int j = 0; j < NB_COLONNES; j++)
-        {
-            jeuDofus->mapJeu[i][j]=initialisationCase(INACCESSIBLE, i, j);
-        }
-
-    ///initialisation des couloirs :
-    for(int i =0; i < NB_LIGNES; i++)
-    {
-        for(int j = 0; j < NB_COLONNES; j++)
-        {
-            if((i==14)||(i==10 && j >3)||(i==7 && j>7 && j<12)||(i==12 && j>19 && j <25)||(i==5 && j >10 && j<21)||(i==0 && j>7 && j<12)
-                    ||(j==8 && i >0 && i < 11)||(j==3 && i >13 && i < 19)||(j==4 && i > 6 && i < 11)||(j==5 && i >9 && i < 15)||(j==11 && i <6)||(j==13 && i>2 && i<6)||(j==14 && i>2 && i < 6)
-                    ||(j==16 && i < 6)||(j==19 && i >4 && i < 11)||(j==24 && i>9))
-                changementTypeCase(jeuDofus, i, j, CHEMIN);
-
-        }
-    }
-
-    ///initialisation des cases de spawn
-    for(int i = 0; i < jeuDofus->nbJoueurs; i++)
-    {
-        if(strcmp(jeuDofus->tabJoueur[i].nomperso,"orque")==0)
-            changementTypeCase(jeuDofus, 0, 8, SPAWN_ORQUE);
-        else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"elfe")==0)
-            changementTypeCase(jeuDofus, 14, 0, SPAWN_ELFE);
-        else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"nain")==0)
-            changementTypeCase(jeuDofus, 10, 26, SPAWN_NAIN);
-        else if(strcmp(jeuDofus->tabJoueur[i].nomperso,"sorcier")==0)
-            changementTypeCase(jeuDofus, 18, 24, SPAWN_SORCIER);
-    }
-
-    affichageDebugMapConsoleText(jeuDofus);
-    affichageDebugMapConsoleDessin(jeuDofus);
-}
