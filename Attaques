@@ -1,0 +1,218 @@
+                                                ////////////////////////////////
+                                                ///SOUS-PROGRAMMES D'ATTAQUES///
+                                                ////////////////////////////////
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+///////////////////
+///BIBLIOTHEQUE///
+/////////////////
+#include "header.h"
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/////////////////////////
+///SP EFFETS ATTAQUES///
+///////////////////////
+void effet_attaques(BITMAP*buffer, t_jeuDofus *jeuDofus, t_joueur *joueur, t_carac_attaque_perso *attaque_choisie, int case_coord_x, int case_coord_y) //Prgm appelé par le programme de Bianca de portée des sorts
+{
+    ///Déclarations variables
+    int i=0;        //Compteur servant à plusieurs boucles
+    int cible_case=0;
+    int resultat=0;
+    
+    BITMAP *elfeanneau, *elfearc, *elfeepee1, *elfeepee2, *elfelame;
+    BITMAP *nainbelier, *nainepee, *nainhache, *nainjavelot, *nainmassue;
+    BITMAP *orquecoup, *orquedague, *orqueepee1, *orqueepee2, *orquelame;
+    BITMAP *boulefeu, *baton, *poignard, *barrage, *dormor;
+    
+    
+    
+    ///Load des attaques des personnages :
+    //load des bitmaps attaques du l'elfe
+    elfeanneau=load_bitmap("attaquesperso/elfe/anneauelfique.bmp",NULL);
+    elfearc=load_bitmap("attaquesperso/elfe/arc.bmp",NULL);
+    elfeepee1=load_bitmap("attaquesperso/elfe/epeeelfique.bmp",NULL);
+    elfeepee2=load_bitmap("attaquesperso/elfe/epee.bmp",NULL);
+    elfelame=load_bitmap("attaquesperso/elfe/lameelfique.bmp",NULL);
+
+    //load des bitmaps attaques du nain
+    nainbelier=load_bitmap("attaquesperso/nain/belier.bmp",NULL);
+    nainepee=load_bitmap("attaquesperso/nain/epee.bmp",NULL);
+    nainhache=load_bitmap("attaquesperso/nain/hache.bmp",NULL);
+    nainjavelot=load_bitmap("attaquesperso/nain/javelot.bmp",NULL);
+    nainmassue=load_bitmap("attaquesperso/nain/massue.bmp",NULL);
+
+    //load des bitmaps attaques de l'orque
+    orquecoup=load_bitmap("attaquesperso/orque/couppied.bmp",NULL);
+    orquedague=load_bitmap("attaquesperso/orque/dague.bmp",NULL);
+    orqueepee1=load_bitmap("attaquesperso/orque/epeearwen.bmp",NULL);
+    orqueepee2=load_bitmap("attaquesperso/orque/epeethorin.bmp",NULL);
+    orquelame=load_bitmap("attaquesperso/orque/lame-ki-koupe.bmp",NULL);
+
+    //load des bitmaps attaques du sorcier
+    boulefeu=load_bitmap("attaquesperso/sorcier/boulefeu.bmp",NULL);
+    baton=load_bitmap("attaquesperso/sorcier/baton.bmp",NULL);
+    poignard=load_bitmap("attaquesperso/sorcier/poignard.bmp",NULL);
+    barrage=load_bitmap("attaquesperso/sorcier/barrage.bmp",NULL);
+    dormor=load_bitmap("attaquesperso/sorcier/dormor.bmp",NULL);
+
+
+    
+    
+    ///Vérification de la cible sur la case
+    for(i=0; i<jeuDofus->nbJoueurs; i++)
+    {
+        /*
+        if(jeuDofus->tabJoueur[i].numero_case==num_case_cible)
+        {
+            cible_case=i;
+        }
+        */
+        if(jeuDofus->tabJoueur[i].coord_x==case_coord_x && jeuDofus->tabJoueur[i].coord_y==case_coord_y)
+        {
+            cible_case=i;
+        }
+
+    }
+    
+    ///Affichage attaque
+    
+    //Nain
+    if(joueur->numero_perso==1)
+    {
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        if(resultat==0)
+        {
+            blit(nainbelier, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        if(resultat==0)
+        {
+            blit(nainepee, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        if(resultat==0)
+        {
+            blit(nainhache, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        if(resultat==0)
+        {
+            blit(nainjavelot, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        if(resultat==0)
+        {
+            blit(nainmassue, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        
+    }
+    
+    //Sorcier
+    if(joueur->numero_perso==2)
+    {
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        if(resultat==0)
+        {
+            blit(poignard, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        if(resultat==0)
+        {
+            blit(baton, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        if(resultat==0)
+        {
+            blit(barrage, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        if(resultat==0)
+        {
+            blit(boulefeu, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        if(resultat==0)
+        {
+            blit(dormor, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        
+    }
+    
+    //Elfe
+    if(joueur->numero_perso==3)
+    {
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        if(resultat==0)
+        {
+            blit(elfelame, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        if(resultat==0)
+        {
+            blit(elfeepee1, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        if(resultat==0)
+        {
+            blit(elfeanneau, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        if(resultat==0)
+        {
+            blit(elfearc, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        if(resultat==0)
+        {
+            blit(elfeepee2, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        
+    }
+    
+    //Orque
+    if(joueur->numero_perso==4)
+    {
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        if(resultat==0)
+        {
+            blit(orquecoup, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_2);
+        if(resultat==0)
+        {
+            blit(orquedague, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_3);
+        if(resultat==0)
+        {
+            blit(orqueepee1, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_4);
+        if(resultat==0)
+        {
+            blit(orqueepee2, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_5);
+        if(resultat==0)
+        {
+            blit(orquelame, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
+        }
+        
+    }
+    
+
+
+    ///Retrait des PA de l'attaquant
+    joueur->PA_perso = joueur->PA_perso - attaque_choisie->attaque_pa;
+
+    ///Retrait des PV de l'attaqué
+    if(cible_case!=0)
+    {
+        jeuDofus->tabJoueur[cible_case].PV_perso = jeuDofus->tabJoueur[cible_case].PV_perso - attaque_choisie->attaque_pv;
+    }
+
+}
+
