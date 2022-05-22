@@ -1,6 +1,5 @@
 #include "header.h"
 
-#include "header.h"
 
 
 void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur)
