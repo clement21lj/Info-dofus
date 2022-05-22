@@ -566,10 +566,16 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
 
     //Tableaux
     t_joueur *tablotemp[jeuDofus->nbJoueurs];
-    *tablotemp = (t_joueur*)malloc(sizeof(t_joueur)*(jeuDofus->nbJoueurs));
+    *tablotemp = (t_joueur*)malloc(sizeof(t_joueur*)*(jeuDofus->nbJoueurs));
     if(*tablotemp == NULL)
     {
         printf("Erreur dans l'allocation dynamique du tableau de joueur temp\n");
+    }
+    t_joueur *tablo_classement[jeuDofus->nbJoueurs];
+    *tablo_classement = (t_joueur*)malloc(sizeof(t_joueur*)*(jeuDofus->nbJoueurs));
+    if(*tablo_classement == NULL)
+    {
+        printf("Erreur dans l'allocation dynamique du tableau de classement de joueur temp\n");
     }
 
     //Variables
@@ -577,6 +583,7 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
     int j=0, m=0;    //compteurs pouvant servir à ce qu'on veut (notamment tirage ordre des joueurs)
     int nombre_joueur_temp=0;   //Variable temporaire contenant le nombre de joueurs
     int random_player=0;    //Tirage aléatoire du numéro du joueur qui va être placé dans le tableau des joueurs
+    int attaque_en_cours=0; //Permet de mettre en pause le programme pendant l'animation de l'attaque
     int joueur_elimine=0;   //compteur du nombre de joueur éliminé pour savoir quand il n'en reste qu'un (#Kohlanta)
     int fin_tour=0;     //Variable égale à 0 tant que le tour du joueur n'est pas fini
     int fin_jeu=0;      //Variable égale à 0 tant que le jeu n'est pas fini
@@ -621,6 +628,10 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
             do{
 
                 ///AFFICHAGE
+                if(attaque_en_cours==1)
+                {
+                    rest(1000);
+                }
                 buffer=affichagemap(jeuDofus, i);   //Sp qui affiche la map, l'ordre des joueurs, et les données du joueur en train de jouer
                 //IMPORTANT : ADAPTER AFFICHAGE POUR PERSO AVEC NUM PERSO
 
@@ -637,6 +648,7 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
                 ///ATTAQUES
                 //S'il appuie sur le bouton d'attaque
                 sp_attaques(jeuDofus, buffer, i);   //Sp qui propose des zones d'attaque en fonctions de l'attaque sélectionnée
+                attaque_en_cours=1;
 
                 ///FIN DU TOUR
                 //S'il appuie sur le bouton joueur suivant
@@ -650,10 +662,28 @@ void boucleDeJeu(t_jeuDofus *jeuDofus)
             if(jeuDofus->tabJoueur[i].PV_perso<=0)
             {
                 //sp de suppression du joueur, je (Clément) le ferai
+                *tablo_classement[joueur_elimine]=jeuDofus->tabJoueur[i];
                 joueur_elimine++;
-                if(joueur_elimine=(jeuDofus->nbJoueurs-1))
+
+                //On retire le joueur de la boucle de jeu
+                for(j=i; j<jeuDofus->nbJoueurs; j++)
+                {
+                    if(j+1==jeuDofus->nbJoueurs)    //Si c'est le dernier joueur du tableau, on le retire simplement
+                    {
+                        jeuDofus->tabJoueur[j]=NULL;
+                    }
+                    else
+                    {
+                        jeuDofus->tabJoueur[j]=jeuDofus->tabJoueur[j+1];
+                    }
+                }
+
+                //Si tous les joueurs ont été éliminés sauf 1
+                if(joueur_elimine=jeuDofus->nbJoueurs-1)
                 {
                     //sp de fin de partie (classement + écran de fin)
+
+
                 }
             }
 
