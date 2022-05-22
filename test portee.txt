@@ -1,0 +1,47 @@
+//tableau deplacement ( o et 1) initialisé dans header 
+for (i=0; i<attaques.attaque_[numero_perso].attaque_portee ; i++)
+{
+ 
+  int  case_x = (mouse_x - 15)/16;
+  int case_y = mouse_y/15;
+  t_joueur joueur;
+  
+
+  for(int y = 0; y < 40; y++) //lignes
+     {
+      for(int x = 0; x < 60; x++)  //colonnes
+        {
+         if((case_x == x)&&(case_y == y)) //position de la souris
+           {
+            if (mon_tab[y][x] == 1) //comparaison au tableau 
+             {
+              state = 1; // non 
+             }
+            else {
+              state = 0; // oui
+                 }
+              }
+            }
+            if(state == 1)
+            {
+                blit(not_good, buffer1,0,0, case_x*16, case_y*15, SCREEN_W, SCREEN_H); //affichage de la case en rouge
+
+            }
+            else
+            {
+                blit(good, buffer1,0,0, case_x*16, case_y*15, SCREEN_W, SCREEN_H); // affichage de la case en vert
+                if ( mouse_b && 1)
+                 { joueur.numero_case_ligne = case_x;
+                  joueur.numero_case_colone = case_y; }  //on fait le meme cheminement le nb de p
+                   
+
+             }
+if (case_occupee == 1) //on vérifie qu'on attaque bien quelqu'un
+{
+  //sousprogattaque
+}
+else
+{ 
+  printf("l'attaque a échouée car personne n'est sur cette case");
+}
+                
