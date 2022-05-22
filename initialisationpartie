@@ -2,6 +2,13 @@
 
 
 
+/*
+* AUTEUR : NAYA
+* Nom : choixPerso
+* Input : BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur
+* Output : //
+* Role : le joueur choisi son personnage
+*/
 void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int messageErreur)
 {
 
@@ -181,6 +188,13 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
 
 }
 
+/*
+* AUTEUR : NAYA
+* Nom : saisiepseudo
+* Input : BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur
+* Output : masaisie
+* Role : le joueur saisi son pseudo au clavier
+*/
 char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
 {
 
@@ -326,6 +340,13 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
 
 }
 
+/*
+* AUTEUR : NAYA aide de CLEMENT
+* Nom : initialisationJoueur
+* Input : BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, int messageErreur
+* Output ://
+* Role : initialisation des données de chacun des joueurs 
+*/
 void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, int messageErreur)
 {
     //char ident[100];
@@ -522,7 +543,13 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
 }
 
 
-
+/*
+* AUTEUR : NAYA
+* Nom : initialisationDesJoueurs
+* Input : t_jeuDofus *jeuDofus
+* Output : //
+* Role : appelle l'initialisation de chacun des joueurs en focntion du nombre de joueurs
+*/
 void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 {
 
@@ -581,4 +608,32 @@ void initialisationDesJoueurs(t_jeuDofus *jeuDofus)
 }
 
 
+/*
+* AUTEUR : NAYA
+* Nom : initialisationNouvellePartie
+* Input : t_jeuDofus *jeuDofus
+* Output : //
+* Role : appelle des programmes d'initialisation
+*/
+void initialisationNouvellePartie(t_jeuDofus *jeuDofus)
+{
+    //initialisationMap();
+    initialisationDesJoueurs(jeuDofus);
+    initialisationPlateauDeJeu(jeuDofus);
+}
 
+/*
+* AUTEUR : NAYA
+* Nom : nouvellePartie
+* Input : t_jeuDofus *jeuDofus
+* Output : //
+* Role : appelle l'initialisation et la boucle de jeu
+*/
+void nouvellePartie(t_jeuDofus *jeuDofus)
+{
+    printf("Nouvelle partie ! \n");
+    initialisationNouvellePartie(jeuDofus);
+
+    boucleDeJeu(jeuDofus);
+//boucleDeJeu(jeuDofus);
+}
