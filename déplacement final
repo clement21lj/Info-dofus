@@ -1,0 +1,315 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <allegro.h>
+
+
+void initialisation_allegro()
+{
+    allegro_init();
+
+    install_keyboard();
+    install_mouse();
+
+    set_color_depth(desktop_color_depth());
+    if((set_gfx_mode(GFX_AUTODETECT_WINDOWED,1000,600,0,0))!=0)
+    {
+        allegro_message("Probleme de mode graphique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    //show_mouse(screen); // pour voir le pointeur de la souris
+}
+
+//Structure des caractéristiques de l'attaque d'un perso
+typedef struct carac_attaque_perso
+{
+    char attaque[20];
+    int attaque_pv;
+    int attaque_pa;
+}t_carac_attaque_perso;
+
+//Structures des attaques des différents perso
+typedef struct attaques_perso
+{
+    t_carac_attaque_perso attaque_1;
+    t_carac_attaque_perso attaque_2;
+    t_carac_attaque_perso attaque_3;
+    t_carac_attaque_perso attaque_4;
+    t_carac_attaque_perso attaque_5;
+}t_attaques_perso;
+
+//Structure PNJ (OPTION)    On verra ça à la fin mais j'ai (Clément) des bonnes idées pour ça
+typedef struct carac_PNJ
+{
+    int attaque_pv;
+    int attaque_pa;
+    int numero_case_aleatoire;
+}t_struct_PNJ;
+
+//Structure des types de personnages (4 types dispo)
+
+
+typedef struct type_perso
+{
+    t_attaques_perso nain_1;
+    t_attaques_perso sorcier_2;
+    t_attaques_perso elfe_3;
+    t_attaques_perso orque_4;
+}t_type_perso;
+
+typedef struct joueur       //PAS FINIE je(Clément) la finirai
+{
+    char *prenom;
+    //t_type_perso *perso[nbperso];     //Chaque type de personnage disponible
+    t_attaques_perso attaques;
+    int numero_perso;          //Numero pour savoir quelle classe de personnage le joueur possède (1:nain, 2:sorcier, 3:elfe, 4:orque)
+    int PV_perso;              //Points de Vie
+    int PA_perso;              //Points d'Attaque
+    int PM_perso;              //Points de Mouvement
+    int nb_tours_survecu;      //Nombre de tours survécus par le joueur, permettant d'établir le classement à la fin
+    //int coord_x;             //Coordonnées x du personnage
+    //int coord_y;             //Coordonnées y du personnage
+    int numero_case_ligne;     //numero de la ligne du tableau de cases à 2 dimensions
+    int numero_case_colone;    //numero de la colonne du tableau de cases à 2 dimensions
+    BITMAP *bit_perso;
+}t_joueur;
+
+typedef struct coord_cases  //Puis tableau de structure case (60x40)
+{
+    int coord_x;        //Coordonnées x de la case
+    int coord_y;        //Coordonnées y de la case
+}t_cases;
+
+void mouvement()
+{
+    int terrain[40][60]; // lignes puis colonnes
+    int i,j;
+
+    //ouverture ficher texte pour le déplacement.
+    FILE* fichier = NULL;
+    fichier = fopen("fichier texte cases map naya.txt", "r"); // on met le ficher en lecture seule (pour eviter de faire une erreur).
+    if (fichier == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("fichier non trouvé...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    //création du buffer
+    BITMAP *buffer;
+    buffer = create_bitmap(SCREEN_W, SCREEN_H); // création du double buffer.
+
+    if (buffer == NULL) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pb creation buffer...");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    clear_bitmap(buffer);
+
+    BITMAP *image; // initialisation de buffer.
+
+    image=load_bitmap("mapvf.bmp",NULL); // décalaration et initialisation de l'image.
+
+    if (!image) // on verifie que l'image a bien été chargée au cas où.
+    {
+        allegro_message("pas pu trouver mapvf.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    for (i=0; i<40; i++)
+    {
+        for (j=0; j<60; j++)
+        {
+            terrain[i][j] = fgetc(fichier);
+        }
+    }
+
+
+
+    BITMAP *souris = load_bitmap("epee_souris.bmp", NULL);
+    BITMAP *good = load_bitmap("case_good.bmp", NULL);
+    BITMAP *not_good = load_bitmap("case_nop.bmp", NULL);
+    int case_x = 0;
+    int case_y = 0;
+    int state = 0;
+
+    while(!key[KEY_ESC])
+    {
+        clear_bitmap(buffer);
+
+        blit(image,buffer,0,0, (SCREEN_W-image->w)/2, (SCREEN_H-image->h)/2, SCREEN_W, SCREEN_H); // met l'image sur le buffer
+
+        /*rectfill(buffer, 992, 0, 1000, 650, makecol(0,0,0)); // ligne verticale droite.
+        rectfill(buffer, 0, 0, 8, 650, makecol(0,0,0)); // ligne verticale gauche.
+        rectfill(buffer, 0, 0, 1000, 8, makecol(0,0,0)); // ligne horizontale en haut.
+        rectfill(buffer, 0, 650, 1000, 642, makecol(0,0,0)); // ligne horizontale en bas.
+
+        //rectfill(buffer, 270, 605, 730, 642, makecol(64,157,83)); // emplacement sorts
+        rectfill(buffer, 8, 8, 190, 220, makecol(64,157,83)); // emplacement caracteristiques.
+        //rectfill(buffer, 900, 188, 990, 8, makecol(64,157,83)); // emplacement ordre des joueurs
+
+        rectfill(buffer, 900, 8, 990, 47, makecol(0,0,0)); // joueur 1
+        rectfill(buffer, 900, 47, 990, 94, makecol(255,0,0)); // joueur 2
+        rectfill(buffer, 900, 94, 990,141, makecol(0,255,0)); // joueur 3
+        rectfill(buffer, 900, 141, 990, 188, makecol(0,0,255)); // joueur 4
+
+        rectfill(buffer, 270, 600, 375, 614, makecol(255,0,0)); // emplacement PV.
+        rectfill(buffer, 270, 614, 375, 628, makecol(0,255,0)); // emplacement PA.
+        rectfill(buffer, 270, 628, 375, 642, makecol(0,0,255)); // emplacement PM.
+        rectfill(buffer, 375, 600, 447, 642, makecol(255,0,0)); // emplacement corps à corps.
+        rectfill(buffer, 447, 600, 517, 642, makecol(0,255,0)); // emplacement sort 1.
+        rectfill(buffer, 517, 600, 588, 642, makecol(0,0,255)); // emplacement sort 2.
+        rectfill(buffer, 588, 600, 659, 642, makecol(255,255,0)); // emplacement sort 3.
+        rectfill(buffer, 659, 600, 730, 642, makecol(255,0,255)); // emplacement sort 4.*/
+
+
+
+        int case1;
+    //initAllegro();
+    BITMAP *map;
+    BITMAP *buffer1;
+    BITMAP *buffer2;
+    BITMAP *buffer3;
+
+    int color;
+
+    ///innitialisation sloppy d'un perso test
+
+    t_joueur perso_1;
+    perso_1.bit_perso = load_bitmap("perso_elfe.bmp", NULL);
+    perso_1.numero_case_colone = 5;
+    perso_1.numero_case_ligne = 20;
+
+    ///fin innit
+
+    map=load_bitmap("mapvf.bmp",NULL);
+    buffer1=create_bitmap(SCREEN_W,SCREEN_H);
+    buffer2=create_bitmap(SCREEN_W,SCREEN_H);
+    buffer3 = create_bitmap(SCREEN_W,SCREEN_H);
+    if(map==NULL)
+        printf("PBm load bitmap");
+
+    while ( !key[KEY_ESC] )
+    {
+        blit(map,buffer1,0,0,0,0,SCREEN_W,SCREEN_H);
+
+
+
+
+        t_cases cases[39][59];
+        t_joueur participants;
+
+
+        //map en binaire
+        int mon_tab [39][59]={
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//0
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//1
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//2
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//3
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//4
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//5
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//6
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//7
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//8
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//9
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1},//10
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1},//11
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1},//12
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1},//13
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//14
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//15
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//16
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//17
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//18
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//19
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//20
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//21
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//22
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},//23
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},//24
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},//25
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},//26
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},//27
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},//28
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//29
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//30
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//31
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//32
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//33
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//34
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//35
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//36
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//37
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//38
+            {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},//39
+        }; // pour les lignes, 1 case = 15 pixels. pour les colonnes,
+
+
+            case_x = (mouse_x - 15)/16;
+            case_y = mouse_y/15;
+            for(int y = 0; y < 40; y++)
+            {
+                for(int x = 0; x < 60; x++)
+                {
+                    if((case_x == x)&&(case_y == y))
+                    {
+                        if (mon_tab[y][x] == 1)
+                        {
+                            state = 1;
+                        }
+                        else
+                            state = 0;
+                    }
+                }
+            }
+            if(state == 1)
+            {
+                blit(not_good, buffer1,0,0, case_x*16, case_y*15, SCREEN_W, SCREEN_H);
+
+            }
+            else
+            {
+                if(((case_x - perso_1.numero_case_ligne) + (case_y - perso_1.numero_case_colone) < 4)&&((case_x - perso_1.numero_case_ligne) + (case_y - perso_1.numero_case_colone) > -4))
+                    blit(good, buffer1,0,0, case_x*16, case_y*15, SCREEN_W, SCREEN_H);
+                else
+                    blit(not_good,buffer1,0,0,case_x*16,case_y*15,SCREEN_W,SCREEN_H);
+
+                if(mouse_b == 1)            ///si clic il y a
+                {
+                    //if nananinannana
+                    if(((case_x - perso_1.numero_case_ligne) + (case_y - perso_1.numero_case_colone) < 4)&&((case_x - perso_1.numero_case_ligne) + (case_y - perso_1.numero_case_colone) > -4))
+                    {
+                        perso_1.numero_case_ligne = case_x;
+                        perso_1.numero_case_colone = case_y;
+                    }
+
+
+
+                }
+                do              ///ne fait rien tant que le clic
+                {
+
+                }while(mouse_b==1);
+            }
+            masked_blit(perso_1.bit_perso, buffer1, 0,0, perso_1.numero_case_ligne*16, perso_1.numero_case_colone*15-5, SCREEN_W, SCREEN_H);
+            masked_blit(souris, buffer1,0,0, mouse_x - 25, mouse_y-3, SCREEN_W, SCREEN_H);
+            blit(buffer1,screen,0,0,0,0,SCREEN_W,SCREEN_H);
+            clear_bitmap(buffer1);
+        }
+        destroy_bitmap(map);
+
+        }
+    fclose(fichier); // On ferme le fichier pour liberer la place.
+    allegro_exit();
+    return 0;
+}
+
+int main()
+{
+    initialisation_allegro();
+    mouvement();
+
+}
+END_OF_MAIN();
