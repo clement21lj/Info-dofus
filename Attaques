@@ -80,9 +80,9 @@ void effet_attaques(BITMAP*buffer, t_jeuDofus *jeuDofus, t_joueur *joueur, t_car
     ///Affichage attaque
     
     //Nain
-    if(joueur->numero_perso==1)
+    if(joueur->numero_perso==1) //Chaque type de personnage a un numéro qui lui est attribué, donc on regarde lequel c'est
     {
-        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);
+        resultat=strcmp(attaque_choisie->attaque, joueur->attaques.attaque_1);  //On compare les attaques pour voir laquelle c'est, et si c'est la bonne on met la bitmap de l'attaque sur le buffer à la position de la case attaquée
         if(resultat==0)
         {
             blit(nainbelier, buffer, 0, 0, case_coord_x, case_coord_y, 15, 15)
