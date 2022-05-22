@@ -17,7 +17,7 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
     int quitter =0;
     int eviteRebondSouris = (mouse_b & 1 ? 1 : 0);
 
-    // initialisation d'entree.
+    // initialisations d'entree.
     BITMAP *imchoix;
 
     BITMAP *imnain;
@@ -75,13 +75,14 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
     }
     do
     {
-
+        //on blit lecran de fond
         blit(imchoix, buffer, 0, 0,(SCREEN_W-imchoix->w)/2, (SCREEN_H-imchoix->h)/2, imchoix->w, imchoix->h);
         if(messageErreur==1)
             textout_ex(buffer, police, "PERSONNAGE DEJA SELECTIONNE",290, 440, makecol(255,0,0), -1);
         // afficher coordonnées de la souris (%4d = format numérique largeur fixe sur 4 caractères)
-        textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
-
+        //textprintf_ex(screen,font,60,300,makecol(255,255,255),makecol(0,0,0),"%4d %4d",mouse_x,mouse_y);
+        
+        //demande de choix de perso en fonction de son num
         if(numeroDuJoueur==0)
             textout_ex(buffer, police, "CHOISIS TON PERSONNAGE JOUEUR 1",240, 70, makecol(255,255,255), -1);
         else if(numeroDuJoueur==1)
@@ -104,6 +105,7 @@ void choixPerso(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur, int message
         }
         rect(buffer,30,520,200,560,makecol(255,255,255));
         textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(255,255,255), -1);
+        //changement de couleur de police si on met la souris
         if (mouse_x>=30 && mouse_x <=200 && mouse_y >= 520 && mouse_y <= 560)
             {
                 textout_ex(buffer, police, "JE VALIDE",40, 530, makecol(0, 147, 0), -1);
@@ -247,7 +249,8 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
 
     clear_bitmap(buffer);
     blit(impseudo, buffer, 0, 0,(SCREEN_W-impseudo->w)/2, (SCREEN_H-impseudo->h)/2, impseudo->w, impseudo->h);
-
+    
+    //on demande d'entrer le pseudo en fonction de son num de joueur
     if(numeroDuJoueur==0)
         textout_ex(buffer, police, "ENTRE TON PSEUDO JOUEUR 1",300, 100, makecol(255,255,255), -1);
     else if(numeroDuJoueur==1)
@@ -266,12 +269,7 @@ char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur)
     while(!key[KEY_ENTER] && !key[KEY_ENTER_PAD])
     {
 
-
-
-
-
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
 
         touche=readkey();
         a=touche & 0xFF; // code ASCII
@@ -363,7 +361,8 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
 
     choixPerso(buffer, joueur, numeroDuJoueur, messageErreur);
     printf("%d", joueur->numero_perso);
-
+    
+    //initialisation des attaques de chaque perso
     switch(joueur->numero_perso)
     {
      case NAIN:
@@ -480,6 +479,7 @@ void initialisationJoueur(BITMAP* buffer, t_joueur* joueur, int numeroDuJoueur, 
 
         joueur->numero_perso=ELFE;
         strcpy(joueur->nomperso,"elfe");
+        
         joueur->coord_x=14;
         joueur->coord_y=0;
         break;
