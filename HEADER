@@ -156,5 +156,15 @@ void boucleDeJeu(t_jeuDofus *jeuDofus);
 
 BITMAP* affichagemap(t_jeuDofus *jeuDofus, int num_joueur);
 char saisiepseudo(BITMAP*buffer, t_joueur *joueur, int numeroDuJoueur);
+int gereLesAttaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *eviteRebondSouris, int i);
+void affichagePersonnageEnHautADroite(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *nain, BITMAP *sorcier, BITMAP *orque, BITMAP *elfe, BITMAP *fleche, int numDuJoueurQuiJoue);
+void affichageJoueurQuiJoue(t_jeuDofus *jeuDofus, BITMAP *buffer, t_joueur joueur, BITMAP *personnage);
+void dessineLesDifferentsJoueurs(t_jeuDofus *jeuDofus, BITMAP *buffer, BITMAP *elfe, BITMAP *sorcier, BITMAP *orque, BITMAP *nain);
+
+int gereLesAttaques(t_jeuDofus *jeuDofus, BITMAP *buffer, int *valide, int *eviteRebondSouris, int i);
+void gereActionAttaque();
+
+BITMAP* recup_sprites(BITMAP*scr,int w,int h,int startx,int starty,int col,int element);
+void gereSablier(int *timeSablier, int xsablier, int ysablier, BITMAP *SablierTab[15], BITMAP *buffer);
 
 #endif // HEADER_H_INCLUDED
